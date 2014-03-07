@@ -11,5 +11,7 @@ setup(
     license='LICENSE.txt',
     description='Build system for font development',
     long_description=open('README.txt').read(),
-    install_requires=[],
+    install_requires=[
+        'virtualenv'
+    ],
 )
