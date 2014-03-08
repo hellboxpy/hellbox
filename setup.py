@@ -10,7 +10,7 @@ setup(
     url='http://github.com/jackjennings/Hellbox',
     license='LICENSE.txt',
     description='Build system for font development',
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
     install_requires=[
         'virtualenv'
     ],
