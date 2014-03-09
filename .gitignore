@@ -1,4 +1,6 @@
+Hellbox.egg-info
 docs/_build/*
 build/*
+dist/*
 *.pyc
 sample.py

@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='Hellbox',
@@ -6,7 +6,6 @@ setup(
     author='Jack Jennings',
     author_email='j@ckjennin.gs',
     packages=['hellbox', 'hellbox.test'],
-    scripts=['bin/hell'],
     url='http://github.com/jackjennings/Hellbox',
     license='LICENSE.txt',
     description='Build system for font development',
@@ -14,4 +13,9 @@ setup(
     install_requires=[
         'virtualenv'
     ],
+    entry_points={
+        "console_scripts": [
+            "hell=hellbox:main"
+        ]
+    }
 )
