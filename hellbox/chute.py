@@ -1,2 +1,0 @@
-class Chute(object):
-    pass
