@@ -1,7 +1,7 @@
 import os
 import subprocess
 from argparse import ArgumentParser
-from .hellbox import Hellbox
+from .hellbox import *
 
 __version__ = "0.0.2"
 __self_requirements__ = [

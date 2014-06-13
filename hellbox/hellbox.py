@@ -28,7 +28,7 @@ class Hellbox(object):
 
     @classmethod
     def write(cls, path):
-        print "\tWrites: %s" % path
+        write(path)
         pass
         
     @classmethod
@@ -49,3 +49,6 @@ class Hellbox(object):
         def to(self, chute):
             print "\tChute: %s" % chute
             return self
+
+def write(path):
+    print "\tWrites: %s" % path
