@@ -10,7 +10,7 @@ __self_requirements__ = [
 __all__ = ['Hellbox']
 
 
-def main(args=None):
+def main():
 
     def init(options=None):
         path = os.getcwd()
@@ -113,6 +113,6 @@ def main(args=None):
     """)
     run_parser.add_argument('task', nargs='?')
     run_parser.set_defaults(func=run)
-
-    namespace = parser.parse_args(args)
+    
+    namespace = parser.parse_args()
     namespace.func(namespace)
