@@ -10,7 +10,7 @@ Hellbox is a modular build system designed for font development.
   Hellbox.autoimport()
   
   with Hellbox('build') as task:
-      task.source('*.ufo').to(GenerateOTF()).to(Hellbox.write('otf'))
+      task.source('*.ufo').to(GenerateOTF()).to(Hellbox.write('./otf'))
 
   Hellbox.default('build')
 
