@@ -39,10 +39,10 @@ Hellbox comes with a command line tool ``hell`` which offers a thin layer over `
 
 Sets up a new project by:
 
-* Creating a new Python install in the ``.hellbox`` directory using ``virtualenv``. 
+* Creating a new Python and ``pip`` install in the ``.hellbox`` directory
 * Installing ``hellbox``
 * Freezing all packages into ``requirements.txt``
-* Creating an empty fill called ``Hellfile.py`` for defining tasks
+* Creating a minimal ``Hellfile.py`` for defining tasks
 
 ``hell run {task}``
 
