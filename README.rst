@@ -1,7 +1,7 @@
 Hellbox
 =======
 
-Hellbox is a modular build system designed for font development.
+Hellbox is a modular, editor-agnostic build system designed for font development.
 
 .. code-block:: python
   
