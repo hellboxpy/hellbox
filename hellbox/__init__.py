@@ -74,7 +74,7 @@ def main():
         run_task(options.task or "default")
 
     def run_task(task):
-        script = 'execfile("Hellfile.py"); Hellbox.execute("%s")' % task
+        script = 'execfile("Hellfile.py"); Hellbox.run_task("%s")' % task
         subprocess.call(['./.hellbox/bin/python', '-c', script])
 
     parser = ArgumentParser(description="""

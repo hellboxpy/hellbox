@@ -1,6 +1,7 @@
 from .task import Task
 from .autoimporter import Autoimporter
 
+
 class Hellbox(object):
     __tasks = []
     default = None
@@ -23,7 +24,7 @@ class Hellbox(object):
         return next((t for t in cls.__tasks if t.name == name), None)
 
     @classmethod
-    def execute(cls, name):
+    def run_task(cls, name):
         if name is 'default':
             name = cls.default
         task = cls.find_task(name)
@@ -37,8 +38,10 @@ class Hellbox(object):
     def autoimport(cls):
         autoimport()
 
+
 def write(path):
     print "\tWrites: %s" % path
+
 
 def autoimport(path='requirements.txt'):
     Autoimporter(path).execute()
