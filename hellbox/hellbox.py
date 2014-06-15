@@ -20,10 +20,7 @@ class Hellbox(object):
 
     @classmethod
     def find_task(cls, name):
-        try:
-            return (t for t in cls.__tasks if t.name == name).next()
-        except:
-            return None
+        return next((t for t in cls.__tasks if t.name == name), None)
 
     @classmethod
     def execute(cls, name):
