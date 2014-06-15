@@ -1,5 +1,6 @@
 from .chute import Chute, OpenFiles
 
+
 class Task(object):
 
     def __init__(self, name):
@@ -11,7 +12,7 @@ class Task(object):
         chute = OpenFiles(*globs)
         self.chutes.append(chute)
         return chute
-        
+
     def execute(self):
         for chute in self.chutes:
             chute([])

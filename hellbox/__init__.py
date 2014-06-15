@@ -42,7 +42,7 @@ def main():
         requirements, err = output.communicate()
         with open('requirements.txt', 'w') as f:
             f.write(requirements)
-    
+
     def install(options=None):
         if options and options.package:
             install_package(options.package)
@@ -84,8 +84,8 @@ def main():
     subparsers = parser.add_subparsers()
 
     init_parser = subparsers.add_parser('init', description="""
-        Creates a isolated environment in .hellbox for installing 
-        plugins and dependencies and creates a blank Hellfile to define 
+        Creates a isolated environment in .hellbox for installing
+        plugins and dependencies and creates a blank Hellfile to define
         tasks within.
     """)
     init_parser.set_defaults(func=init)
@@ -96,7 +96,7 @@ def main():
     freeze_parser.set_defaults(func=freeze)
 
     install_parser = subparsers.add_parser('install', description="""
-        Installs a package and freezes dependencies, or installs all 
+        Installs a package and freezes dependencies, or installs all
         dependencies from requirements.txt if no package specified
     """)
     install_parser.add_argument('package', nargs='?')
@@ -113,6 +113,6 @@ def main():
     """)
     run_parser.add_argument('task', nargs='?')
     run_parser.set_defaults(func=run)
-    
+
     namespace = parser.parse_args()
     namespace.func(namespace)

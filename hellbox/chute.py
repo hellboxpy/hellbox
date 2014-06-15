@@ -17,6 +17,7 @@ class Chute(object):
         self.callbacks.append(chute)
         return chute
 
+
 def OpenFiles(*globs):
     print "\tOpens: %s" % ', '.join(globs)
 
@@ -25,6 +26,7 @@ def OpenFiles(*globs):
         return []
 
     return Chute(open_files)
+
 
 def WriteFiles(path):
     print "\tWrites: %s" % path

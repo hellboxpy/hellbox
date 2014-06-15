@@ -2,6 +2,7 @@ from .task import Task
 from .autoimporter import Autoimporter
 from .chute import WriteFiles
 
+
 class Hellbox(object):
     __tasks = []
     default = None
