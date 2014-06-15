@@ -15,4 +15,4 @@ class Task(object):
         
     def execute(self):
         for chute in self.chutes:
-            chute()
+            print chute

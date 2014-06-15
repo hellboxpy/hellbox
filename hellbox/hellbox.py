@@ -4,7 +4,7 @@ from .autoimporter import Autoimporter
 class Hellbox(object):
     __tasks = []
     default = None
-    
+
     def __init__(self, task_name, *args, **kwargs):
         self.task = Task(task_name)
 
@@ -19,23 +19,29 @@ class Hellbox(object):
         cls.__tasks.append(task)
 
     @classmethod
-    def autoimport(cls):
-        autoimport()
+    def find_task(cls, name):
+        try:
+            return (t for t in cls.__tasks if t.name == name).next()
+        except:
+            return None
 
     @classmethod
     def execute(cls, name):
         if name is 'default':
             name = cls.default
-        task = (t for t in cls.__tasks if t.name == name).next()
-        print task.name
+        task = cls.find_task(name)
+        task.execute()
 
     @classmethod
     def write(cls, path):
         write(path)
-        pass
-        
+
+    @classmethod
+    def autoimport(cls):
+        autoimport()
+
 def write(path):
     print "\tWrites: %s" % path
 
-def autoimport():
-    Autoimporter('requirements.txt').execute()
+def autoimport(path='requirements.txt'):
+    Autoimporter(path).execute()
