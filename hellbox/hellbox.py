@@ -29,7 +29,7 @@ class Hellbox(object):
         if name is 'default':
             name = cls.default
         task = cls.find_task(name)
-        task.execute()
+        task.run()
 
     @classmethod
     def write(cls, path):

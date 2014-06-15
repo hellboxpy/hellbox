@@ -13,6 +13,6 @@ class Task(object):
         self.chutes.append(chute)
         return chute
 
-    def execute(self):
+    def run(self):
         for chute in self.chutes:
             chute([])
