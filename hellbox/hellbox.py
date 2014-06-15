@@ -1,6 +1,6 @@
 from .task import Task
 from .autoimporter import Autoimporter
-
+from .chute import WriteFiles
 
 class Hellbox(object):
     __tasks = []
@@ -40,7 +40,7 @@ class Hellbox(object):
 
 
 def write(path):
-    print "\tWrites: %s" % path
+    return WriteFiles(path)
 
 
 def autoimport(path='requirements.txt'):
