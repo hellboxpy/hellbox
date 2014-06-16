@@ -32,8 +32,17 @@ class Hellbox(object):
         task.run()
 
     @classmethod
+    def compose(cls, *chutes):
+        chutes = list(chutes)
+        head = chutes[0]
+        def compose_chain(chain, chute):
+            return chain.to(chute)
+        reduce(compose_chain, chutes)
+        return head
+
+    @classmethod
     def write(cls, path):
-        write(path)
+        return write(path)
 
     @classmethod
     def autoimport(cls):

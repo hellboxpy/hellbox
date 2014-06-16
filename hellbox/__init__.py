@@ -4,9 +4,6 @@ from argparse import ArgumentParser
 from .hellbox import *
 
 __version__ = "0.0.2"
-__self_requirements__ = [
-    'virtualenv'
-]
 __all__ = ['Hellbox']
 
 

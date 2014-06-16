@@ -13,7 +13,6 @@ class Chute(object):
         return '<Chute %s>' % self.func.__name__
 
     def to(self, chute):
-        print "\tChute: %s" % chute
         self.callbacks.append(chute)
         return chute
 
@@ -32,7 +31,7 @@ def WriteFiles(path):
     print "\tWrites: %s" % path
 
     def write_files(files):
-        print "Writing to: `%s`" % path
+        print "Writing to: %s" % path
         return files
 
     return Chute(write_files)
