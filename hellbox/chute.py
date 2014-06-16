@@ -18,11 +18,13 @@ class Chute(object):
 
 
 def OpenFiles(*globs):
+    import glob2
     print "\tOpens: %s" % ', '.join(globs)
 
     def open_files(files):
-        print "Opening: %s" % ', '.join(globs)
-        return []
+        files = reduce(lambda f,g: f + glob2.glob(g), globs, files)
+        print "Opening: %s" % ', '.join(files)
+        return files
 
     return Chute(open_files)
 
