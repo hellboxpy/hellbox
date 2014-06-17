@@ -27,17 +27,22 @@ class Hellbox(object):
     @classmethod
     def run_task(cls, name):
         name = cls.get_task_name(name)
+        print(name)
         task = cls.find_task(name)
+        print(task)
         task.run()
         
     @classmethod
     def get_task_name(cls, name):
-        return cls.default if name is 'default' else name
+        return cls.default if name == 'default' else name
 
     @classmethod
     def compose(cls, *chutes):
-        reduce(lambda chain, chute: chain.to(chute), chutes)
-        return chutes[0]
+        chutes = list(chutes)
+        chain = head = chutes.pop(0)
+        for chute in chutes:
+            chain = chain.to(chute)
+        return head
 
     @classmethod
     def write(cls, *args):

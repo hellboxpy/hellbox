@@ -15,21 +15,21 @@ class Chute(object):
 
 def OpenFiles(*globs):
     import glob2
-    print "\tOpens: %s" % ', '.join(globs)
+    print("\tOpens: %s" % ', '.join(globs))
 
     def open_files(files):
         files = reduce(lambda f,g: f + glob2.glob(g), globs, files)
-        print "Opening: %s" % ', '.join(files)
+        print("Opening: %s" % ', '.join(files))
         return files
 
     return Chute(open_files)
 
 
 def WriteFiles(path):
-    print "\tWrites: %s" % path
+    print("\tWrites: %s" % path)
 
     def write_files(files):
-        print "Writing to: %s" % path
+        print("Writing to: %s" % path)
         return files
 
     return Chute(write_files)

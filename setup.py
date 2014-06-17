@@ -6,7 +6,7 @@ setup(
     version=__version__,
     author='Jack Jennings',
     author_email='j@ckjennin.gs',
-    packages=['hellbox', 'hellbox.test'],
+    packages=['hellbox'],
     url='http://github.com/jackjennings/hellbox',
     license='LICENSE.txt',
     description='Build system for font development',

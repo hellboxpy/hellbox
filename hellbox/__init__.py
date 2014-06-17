@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import subprocess
 from argparse import ArgumentParser
@@ -62,7 +63,7 @@ def main():
 
     def run(options):
         if not os.path.exists('Hellfile.py'):
-            print 'No Hellfile found'
+            print('No Hellfile found')
             return
 
         if not os.path.isdir('.hellbox'):
