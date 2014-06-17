@@ -4,7 +4,6 @@ from .chute import Chute, OpenFiles
 class Task(object):
 
     def __init__(self, name):
-        print "Setting up: %s" % name
         self.name = name
         self.chutes = []
 
