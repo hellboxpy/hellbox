@@ -1,5 +1,6 @@
 from hellbox import Hellbox, Task
 from hellbox.chute import Chute
+from hellbox.test.mock import Mock
 
 
 class TestHellbox:
@@ -23,12 +24,10 @@ class TestHellbox:
         assert Hellbox.find_task('foo')
 
     def test_get_default_task_name(self):
-        Hellbox('bar')
         Hellbox.default = 'bar'
         assert Hellbox.get_task_name('default') is 'bar'
 
     def test_get_task_name(self):
-        Hellbox('bar')
         assert Hellbox.get_task_name('bar') is 'bar'
 
     def test_compose_many(self):
@@ -51,3 +50,11 @@ class TestHellbox:
 
     def test_write(self):
         assert type(Hellbox.write('otf')) is Chute
+
+    def test_run_task(self):
+        f = Mock()
+        task = Task('foobaz')
+        task.start_chain(Chute(f))
+        Hellbox.add_task(task)
+        Hellbox.run_task('foobaz')
+        assert f.called
