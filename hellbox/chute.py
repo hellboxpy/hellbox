@@ -9,13 +9,9 @@ class Chute(object):
         for callback in self.callbacks:
             callback(files)
 
-    def __repr__(self):
-        return '<Chute %s>' % self.func.__name__
-
     def to(self, chute):
         self.callbacks.append(chute)
         return chute
-
 
 def OpenFiles(*globs):
     import glob2
