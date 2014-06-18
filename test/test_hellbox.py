@@ -6,6 +6,9 @@ from mock import Mock
 
 class TestHellbox:
 
+    def teardown(self):
+        Hellbox._Hellbox__tasks = []
+
     def test_init(self):
         h = Hellbox('foo')
         assert hasattr(h, 'task')
