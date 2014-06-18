@@ -2,10 +2,30 @@ from __future__ import print_function
 import os
 import subprocess
 from argparse import ArgumentParser
-from .hellbox import *
+from .hellbox import Hellbox
 
 __version__ = "0.0.2"
 __all__ = ['Hellbox']
+
+
+@Hellbox.proxy
+def compose(*chutes):
+    chain = chutes[0]
+    for chute in chutes[1:]:
+        chain = chain.to(chute)
+    return chutes[0]
+
+
+@Hellbox.proxy
+def write(path):
+    from .chute import WriteFiles
+    return WriteFiles(path)
+
+
+@Hellbox.proxy
+def autoimport(path='requirements.txt'):
+    from .autoimporter import Autoimporter
+    Autoimporter(path).execute()
 
 
 def main():
@@ -72,8 +92,13 @@ def main():
         run_task(options.task or "default")
 
     def run_task(task):
-        script = 'execfile("Hellfile.py"); import hellbox; hellbox.Hellbox.run_task("%s")' % task
-        subprocess.call(['./.hellbox/bin/python', '-c', script])
+        script = ';'.join([
+            'execfile("Hellfile.py")',
+            'import hellbox',
+            'hellbox.Hellbox.run_task("%s")' % task
+        ])
+        cmd = ['./.hellbox/bin/python', '-c', script]
+        subprocess.call(cmd)
 
     parser = ArgumentParser(description="""
         Lightweight wrapper around virtualenv and pip for running the Hellbox

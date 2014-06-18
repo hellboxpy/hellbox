@@ -27,9 +27,7 @@ class Hellbox(object):
     @classmethod
     def run_task(cls, name):
         name = cls.get_task_name(name)
-        print(name)
         task = cls.find_task(name)
-        print(task)
         task.run()
         
     @classmethod
@@ -37,28 +35,7 @@ class Hellbox(object):
         return cls.default if name == 'default' else name
 
     @classmethod
-    def compose(cls, *args):
-        return compose(*args)
-
-    @classmethod
-    def write(cls, *args):
-        return write(*args)
-
-    @classmethod
-    def autoimport(cls, *args):
-        autoimport(*args)
-
-
-def compose(*chutes):
-    chain = chutes[0]
-    for chute in chutes[1:]:
-        chain = chain.to(chute)
-    return chutes[0]
-
-
-def write(path):
-    return WriteFiles(path)
-
-
-def autoimport(path='requirements.txt'):
-    Autoimporter(path).execute()
+    def proxy(cls, fn):
+        def proxied_method(cls, *args, **kwargs): return fn(*args, **kwargs)
+        setattr(cls, fn.__name__, classmethod(proxied_method))
+        return fn
