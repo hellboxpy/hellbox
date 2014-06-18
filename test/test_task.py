@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from hellbox import Task
+from hellbox.task import Task
 from hellbox.chute import Chute
 from mock import Mock
 

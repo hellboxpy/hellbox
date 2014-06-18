@@ -1,6 +1,7 @@
 from __future__ import absolute_import
-from hellbox import Hellbox, Task
+from hellbox import Hellbox
 from hellbox.chute import Chute
+from hellbox.task import Task
 from mock import Mock
 
 
@@ -62,3 +63,9 @@ class TestHellbox:
         Hellbox.add_task(task)
         Hellbox.run_task('foobaz')
         assert f.called
+
+    def test_proxy_decorator(self):
+        @Hellbox.proxy
+        def test_proxy_decorator_method(self): pass
+        assert hasattr(Hellbox, 'test_proxy_decorator_method')
+        assert test_proxy_decorator_method is not None
