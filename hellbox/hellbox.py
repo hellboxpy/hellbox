@@ -21,17 +21,17 @@ class Hellbox(object):
         cls.__tasks.append(task)
 
     @classmethod
-    def find_task(cls, name):
+    def find_task_by_name(cls, name):
         return next((t for t in cls.__tasks if t.name == name), None)
 
     @classmethod
     def run_task(cls, name):
-        name = cls.get_task_name(name)
-        task = cls.find_task(name)
+        name = cls.get_task_name_or_default(name)
+        task = cls.find_task_by_name(name)
         task.run()
         
     @classmethod
-    def get_task_name(cls, name):
+    def get_task_name_or_default(cls, name):
         return cls.default if name == 'default' else name
 
     @classmethod
