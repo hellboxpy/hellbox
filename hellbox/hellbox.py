@@ -37,12 +37,8 @@ class Hellbox(object):
         return cls.default if name == 'default' else name
 
     @classmethod
-    def compose(cls, *chutes):
-        chutes = list(chutes)
-        chain = head = chutes.pop(0)
-        for chute in chutes:
-            chain = chain.to(chute)
-        return head
+    def compose(cls, *args):
+        return compose(*args)
 
     @classmethod
     def write(cls, *args):
@@ -51,6 +47,13 @@ class Hellbox(object):
     @classmethod
     def autoimport(cls, *args):
         autoimport(*args)
+
+
+def compose(*chutes):
+    chain = chutes[0]
+    for chute in chutes[1:]:
+        chain = chain.to(chute)
+    return chutes[0]
 
 
 def write(path):
