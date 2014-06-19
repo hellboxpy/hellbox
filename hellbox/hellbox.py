@@ -39,3 +39,18 @@ class Hellbox(object):
         def proxied_method(cls, *args, **kwargs): return fn(*args, **kwargs)
         setattr(cls, fn.__name__, classmethod(proxied_method))
         return fn
+
+    @classmethod
+    def inspect(cls):
+        def print_chutes(chutes, indent=0):
+            for chute in chutes:
+                name = chute.func.__name__
+                box = u"\u2517\u2501 "
+                tab = len(box) * " " * indent
+                print(u"%s%s%s" % (tab, box, name))
+                print_chutes(chute.callbacks, indent=indent+1)
+        
+        for task in cls.__tasks:
+            print("Task: %s" % task.name)
+            print_chutes(task.chains)
+            print

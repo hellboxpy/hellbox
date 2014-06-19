@@ -64,6 +64,17 @@ Uninstalls a package using ``pip`` from the project's Python installation and fr
 
 Freezes all installed modules into ``requirements.txt``
 
+``hell inspect``
+
+Runs the ``Hellfile.py`` and displayed the defined tasks:
+
+.. code-block:: python
+  
+  Task: font
+  ┗━ OpenFiles: '*.ufo'
+     ┗━ GenerateOTF
+        ┗━ WriteFiles: './otf'
+
 Plugins
 -------
 

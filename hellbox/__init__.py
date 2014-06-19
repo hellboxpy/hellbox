@@ -91,14 +91,21 @@ def main():
 
         run_task(options.task or "default")
 
-    def run_task(task):
-        script = ';'.join([
+    def run_hellfile_commands(commands=None):
+        script = [
             'execfile("Hellfile.py")',
-            'import hellbox',
-            'hellbox.Hellbox.run_task("%s")' % task
-        ])
-        cmd = ['./.hellbox/bin/python', '-c', script]
+            'import hellbox'
+        ]
+        if commands is not None:
+            script.extend(commands)
+        cmd = ['./.hellbox/bin/python', '-c', ';'.join(script)]
         subprocess.call(cmd)
+
+    def run_task(task):
+        run_hellfile_commands(['hellbox.Hellbox.run_task("%s")' % task])
+
+    def inspect(options):
+        run_hellfile_commands(['hellbox.Hellbox.inspect()'])
 
     parser = ArgumentParser(description="""
         Lightweight wrapper around virtualenv and pip for running the Hellbox
@@ -136,6 +143,9 @@ def main():
     """)
     run_parser.add_argument('task', nargs='?')
     run_parser.set_defaults(func=run)
+
+    inspect_parser = subparsers.add_parser('inspect', description="""""")
+    inspect_parser.set_defaults(func=inspect)
 
     namespace = parser.parse_args()
     namespace.func(namespace)

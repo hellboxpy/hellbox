@@ -16,21 +16,17 @@ class Chute(object):
 
 def OpenFiles(*globs):
     import glob2
-    print("\tOpens: %s" % ', '.join(globs))
 
     def open_files(files):
         files = [f for g in globs for f in glob2.glob(g)]
-        print("Opening: %s" % ', '.join(files))
         return files
 
     return Chute(open_files)
 
 
 def WriteFiles(path):
-    print("\tWrites: %s" % path)
 
     def write_files(files):
-        print("Writing to: %s" % path)
         return files
 
     return Chute(write_files)
