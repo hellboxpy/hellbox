@@ -66,9 +66,9 @@ Freezes all installed modules into ``requirements.txt``
 
 ``hell inspect``
 
-Runs the ``Hellfile.py`` and displayed the defined tasks:
+Runs the ``Hellfile.py`` and displays the defined tasks:
 
-.. code-block:: python
+.. code-block:: 
   
   Task: font
   ┗━ OpenFiles: '*.ufo'
