@@ -13,12 +13,13 @@ class Chute(object):
         self.callbacks.append(chute)
         return chute
 
+
 def OpenFiles(*globs):
     import glob2
     print("\tOpens: %s" % ', '.join(globs))
 
     def open_files(files):
-        files = reduce(lambda f,g: f + glob2.glob(g), globs, files)
+        files = [f for g in globs for f in glob2.glob(g)]
         print("Opening: %s" % ', '.join(files))
         return files
 

@@ -29,7 +29,7 @@ class Hellbox(object):
         name = cls.get_task_name_or_default(name)
         task = cls.find_task_by_name(name)
         task.run()
-        
+
     @classmethod
     def get_task_name_or_default(cls, name):
         return cls.default if name == 'default' else name
