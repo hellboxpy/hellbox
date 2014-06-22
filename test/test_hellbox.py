@@ -15,25 +15,25 @@ class TestHellbox:
         assert hasattr(h, 'task')
         assert type(h.task) is Task
 
-    def test_find_task(self):
+    def test_find_task_by_name(self):
         Hellbox.add_task(Task('foo'))
-        assert Hellbox.find_task('foo')
+        assert Hellbox.find_task_by_name('foo')
 
     def test_find_missing_task(self):
-        assert Hellbox.find_task('bazzio') is None
+        assert Hellbox.find_task_by_name('bazzio') is None
 
     def test_with(self):
         with Hellbox('foo') as task: 
             assert task
             assert type(task) is Task
-        assert Hellbox.find_task('foo')
+        assert Hellbox.find_task_by_name('foo')
 
     def test_get_default_task_name(self):
         Hellbox.default = 'bar'
-        assert Hellbox.get_task_name('default') is 'bar'
+        assert Hellbox.get_task_name_or_default('default') is 'bar'
 
     def test_get_task_name(self):
-        assert Hellbox.get_task_name('bar') is 'bar'
+        assert Hellbox.get_task_name_or_default('bar') is 'bar'
 
     def test_compose_many(self):
         noop = lambda x: x
