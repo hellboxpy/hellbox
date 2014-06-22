@@ -1,5 +1,5 @@
 import traceback
-from .task import Task
+from .task import Task, NullTask
 from .autoimporter import Autoimporter
 from .chute import WriteFiles
 
@@ -30,13 +30,12 @@ class Hellbox(object):
 
     @classmethod
     def find_task_by_name(cls, name):
-        return next((t for t in cls.__tasks if t.name == name), None)
+        return next((t for t in cls.__tasks if t.name == name), NullTask(name))
 
     @classmethod
     def run_task(cls, name):
         name = cls.get_task_name_or_default(name)
         task = cls.find_task_by_name(name)
-        Hellbox.info("Running %s" % task.name)
         task.run()
 
     @classmethod

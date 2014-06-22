@@ -15,5 +15,18 @@ class Task(object):
         return chute
 
     def run(self):
+        from .hellbox import Hellbox
+        Hellbox.info("Running %s" % self.name)
         for chute in self.chains:
             chute([])
+
+
+class NullTask(Task):
+
+    def run(self):
+        from .hellbox import Hellbox
+        if self.name is None:
+            warning = "Trying to run default task but no default supplied"
+        else:
+            warning = "Trying to run task %s but no definition found" % self.name
+        Hellbox.warn(warning)

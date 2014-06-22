@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from hellbox import Hellbox
 from hellbox.chute import Chute
-from hellbox.task import Task
+from hellbox.task import Task, NullTask
 from mock import Mock
 
 
@@ -20,7 +20,7 @@ class TestHellbox:
         assert Hellbox.find_task_by_name('foo')
 
     def test_find_missing_task(self):
-        assert Hellbox.find_task_by_name('bazzio') is None
+        assert type(Hellbox.find_task_by_name('bazzio')) is NullTask
 
     def test_with(self):
         with Hellbox('foo') as task: 
