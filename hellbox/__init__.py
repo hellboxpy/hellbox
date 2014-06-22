@@ -28,6 +28,16 @@ def autoimport(path='requirements.txt'):
     Autoimporter(path).execute()
 
 
+@Hellbox.proxy
+def warn(message):
+    print("WARN: %s" % message)
+
+
+@Hellbox.proxy
+def info(message):
+    print("INFO: %s" % message)
+
+
 def main():
 
     def init(options=None):

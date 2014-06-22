@@ -1,3 +1,4 @@
+import traceback
 from .task import Task
 from .autoimporter import Autoimporter
 from .chute import WriteFiles
@@ -13,8 +14,15 @@ class Hellbox(object):
     def __enter__(self):
         return self.task
 
-    def __exit__(self, type, value, traceback):
-        self.__class__.add_task(self.task)
+    def __exit__(self, type, value, trace):
+        if type is not None:
+            message = "Error when setting up %s: %s\n" % (self.task.name, value)
+            message += "\n".join(traceback.format_tb(trace))
+            Hellbox.warn(message)
+            return True # Suppresses displaying error
+        else:
+            Hellbox.info("Added %s" % self.task.name)
+            self.__class__.add_task(self.task)
 
     @classmethod
     def add_task(cls, task):
@@ -28,6 +36,7 @@ class Hellbox(object):
     def run_task(cls, name):
         name = cls.get_task_name_or_default(name)
         task = cls.find_task_by_name(name)
+        Hellbox.info("Running %s" % task.name)
         task.run()
 
     @classmethod
