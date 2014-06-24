@@ -1,6 +1,5 @@
 import traceback
 from .task import Task, NullTask
-from .autoimporter import Autoimporter
 from .chute import WriteFiles
 
 
