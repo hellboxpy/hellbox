@@ -5,8 +5,8 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 
 **Hellbox is in the early stages of development. This document is more of a roadmap than documentation of the current implementation. Expect API changes without notice until v0.1.**
 
-.. image:: https://travis-ci.org/jackjennings/hellbox.svg?branch=master
-    :target: https://travis-ci.org/jackjennings/hellbox
+.. image:: https://travis-ci.org/hellboxpy/hellbox.svg?branch=master
+    :target: https://travis-ci.org/hellboxpy/hellbox
 
 .. code-block:: python
   
