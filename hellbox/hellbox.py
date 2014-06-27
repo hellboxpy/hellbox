@@ -20,11 +20,11 @@ class Hellbox(object):
             Hellbox.warn(message)
             return True # Suppresses displaying error
         else:
-            Hellbox.info("Added %s" % self.task.name)
             self.__class__.add_task(self.task)
 
     @classmethod
     def add_task(cls, task):
+        Hellbox.info("Added %s" % task.name)
         cls.__tasks.append(task)
 
     @classmethod
