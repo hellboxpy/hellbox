@@ -57,5 +57,7 @@ class Hellbox(object):
         
         for task in cls.__tasks:
             print("Task: %s" % task.name)
+            if task.description:
+                print(task.description)
             print_chutes(task.chains)
             print

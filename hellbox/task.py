@@ -5,6 +5,7 @@ class Task(object):
 
     def __init__(self, name):
         self.name = name
+        self.description = None
         self.chains = []
 
     def source(self, *globs):
@@ -20,6 +21,8 @@ class Task(object):
         for chute in self.chains:
             chute([])
 
+    def describe(self, desc):
+        self.description = desc
 
 class NullTask(Task):
 

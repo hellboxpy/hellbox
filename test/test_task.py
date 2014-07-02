@@ -21,3 +21,8 @@ class TestTask(object):
         task.run()
         assert f.called
         assert f.args == ([],)
+
+    def test_describe(self):
+        task = Task('foo')
+        task.describe('something')
+        assert task.description is 'something'
