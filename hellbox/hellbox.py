@@ -1,4 +1,3 @@
-import traceback
 from .task import Task, NullTask
 from .chute import WriteFiles
 
@@ -15,9 +14,8 @@ class Hellbox(object):
 
     def __exit__(self, type, value, trace):
         if type is not None:
-            message = "Error when setting up %s: %s\n" % (self.task.name, value)
-            message += "\n".join(traceback.format_tb(trace))
-            Hellbox.warn(message)
+            message = "Error when setting up %s: %s" % (self.task.name, value)
+            Hellbox.warn(message, trace=trace)
             return True # Suppresses displaying error
         else:
             self.__class__.add_task(self.task)

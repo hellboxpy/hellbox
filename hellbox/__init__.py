@@ -1,6 +1,7 @@
 from __future__ import print_function
 import os
 import subprocess
+import traceback
 from argparse import ArgumentParser
 from .hellbox import Hellbox
 
@@ -29,13 +30,20 @@ def autoimport(path='requirements.txt'):
 
 
 @Hellbox.proxy
-def warn(message):
-    print("WARN: %s" % message)
+def warn(*args, **kwargs):
+    log('WARN', *args, **kwargs)
 
 
 @Hellbox.proxy
-def info(message):
-    print("INFO: %s" % message)
+def info(*args, **kwargs):
+    log('INFO', *args, **kwargs)
+
+
+@Hellbox.proxy
+def log(level, message, trace=None):
+    print("%s: %s" % (level, message))
+    if trace:
+        print("\n".join(traceback.format_tb(trace)))
 
 
 def main():
