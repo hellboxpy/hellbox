@@ -33,6 +33,44 @@ Goals
 * **Modularity** Hellbox packages should be resuable and composable, while maintaining flexibility for bespoke workflows.
 * **Isolation** Hellbox tasks and packages are version locked and isolated from other Python installations.
 
+Chutes
+------
+
+There are two ways of defining a Hellbox chute, depending on the complexity and amound of configuration required.
+
+The basic setup for defining your own chutes requires you to create a new class subclassing Chute. You must only define a method ``run`` which is called taking the ``files`` argument (an array) and returning a new array of modified files.
+
+.. code-block:: python
+
+  from hellbox.chute import Chute
+  
+  class FilterFilesByExt(Chute):
+    
+    def __init__(ext="ufo"):
+      self.ext = ext
+      
+    def run(self, files):
+      return [f for f in files if f.ext is self.ext]
+
+You can then use your chute in your Hellfile as such:
+
+.. cofe-block:: python
+  
+  with Hellbox('build') as task:
+    filter = FilterFilesByExt('ufo')
+    task.source('*').to(filter).to(Hellbox.write('backup'))
+
+If your chute doesn't require arguments when initialized, you may prefer to use a function instead of a class. Using the `@Chute.create` function decorator makes a function definition act like a subclass of Chute:
+
+.. code-block:: python
+
+  from hellbox.chute import Chute
+  
+  @Chute.create
+  def GenerateWOFF(files):
+    # do something to files...
+    return files
+
 CLI
 ---
 
@@ -77,11 +115,6 @@ Runs the ``Hellfile.py`` and displays the defined tasks:
   ┗━ OpenFiles: '*.ufo'
      ┗━ GenerateOTF
         ┗━ WriteFiles: './otf'
-
-Plugins
--------
-
-``TODO``
 
 
 .. _`install pip`: https://pip.pypa.io/en/latest/installing.html

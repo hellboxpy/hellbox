@@ -1,8 +1,9 @@
 from hellbox.chute import Chute
 
-def BuildRoboFontExtension(info_format="plist"):
+class BuildRoboFontExtension(Chute):
     
-    def build_extension(files):
+    def __init__(self, info_format="plist"):
+        self.info_format = info_format
+    
+    def run(self, files):
         return files
-    
-    return Chute(build_extension)

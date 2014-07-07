@@ -24,6 +24,7 @@ class Task(object):
     def describe(self, desc):
         self.description = desc
 
+
 class NullTask(Task):
 
     def run(self):

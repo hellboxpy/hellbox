@@ -6,3 +6,7 @@ class Mock(object):
     def __call__(self, *args):
         self.called = True
         self.args = args
+
+    @property
+    def __name__(self):
+        return 'Mock'

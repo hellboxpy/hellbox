@@ -49,7 +49,7 @@ class Hellbox(object):
     def inspect(cls):
         def print_chutes(chutes, indent=0):
             for chute in chutes:
-                name = chute.func.__name__
+                name = chute.__class__.__name__
                 box = u"\u2517\u2501 "
                 tab = len(box) * " " * indent
                 print(u"%s%s%s" % (tab, box, name))

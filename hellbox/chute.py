@@ -1,32 +1,46 @@
 class Chute(object):
 
-    def __init__(self, func):
-        self.func = func
-        self.callbacks = []
+    @classmethod
+    def create(cls, fn):
+        def run(self, files): fn(files)
+        return type(fn.__name__, (cls,), { 'run': run })
 
     def __call__(self, files=None):
-        files = self.func(files)
+        files = self.run(files)
         for callback in self.callbacks:
             callback(files)
+
+    def run(self, files):
+        return files
 
     def to(self, chute):
         self.callbacks.append(chute)
         return chute
 
+    @property
+    def callbacks(self):
+        try:
+            return self.__callbacks
+        except AttributeError:
+            self.__callbacks = []
+            return self.__callbacks
 
-def OpenFiles(*globs):
-    import glob2
 
-    def open_files(files):
-        files = [f for g in globs for f in glob2.glob(g)]
+class OpenFiles(Chute):
+
+    def __init__(self, *globs):
+        self.globs = globs
+
+    def run(self, files):
+        import glob2
+        files = [f for g in self.globs for f in glob2.glob(g)]
         return files
 
-    return Chute(open_files)
 
+class WriteFiles(Chute):
 
-def WriteFiles(path):
+    def __init__(self, path):
+        self.path = path
 
     def write_files(files):
         return files
-
-    return Chute(write_files)

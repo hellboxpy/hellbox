@@ -37,9 +37,9 @@ class TestHellbox:
 
     def test_compose_many(self):
         noop = lambda x: x
-        foo = Chute(noop)
-        bar = Chute(noop)
-        baz = Chute(noop)
+        foo = Chute.create(noop)()
+        bar = Chute.create(noop)()
+        baz = Chute.create(noop)()
         head = Hellbox.compose(foo, bar, baz)
         assert head is foo
         assert bar in foo.callbacks
@@ -47,19 +47,19 @@ class TestHellbox:
 
     def test_compose(self):
         noop = lambda x: x
-        foo = Chute(noop)
-        bar = Chute(noop)
+        foo = Chute.create(noop)()
+        bar = Chute.create(noop)()
         head = Hellbox.compose(foo, bar)
         assert head is foo
         assert bar in foo.callbacks
 
     def test_write(self):
-        assert type(Hellbox.write('otf')) is Chute
+        assert isinstance(Hellbox.write('otf'), Chute)
 
     def test_run_task(self):
         f = Mock()
         task = Task('foobaz')
-        task.start_chain(Chute(f))
+        task.start_chain(Chute.create(f)())
         Hellbox.add_task(task)
         Hellbox.run_task('foobaz')
         assert f.called

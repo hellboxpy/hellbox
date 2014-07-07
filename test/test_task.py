@@ -11,13 +11,13 @@ class TestTask(object):
     def test_source(self):
         task = Task('foo')
         chute = task.source('*.ufo')
-        assert type(chute) is Chute
+        assert isinstance(chute, Chute)
         assert chute in task.chains
 
     def test_run(self):
         f = Mock()
         task = Task('foo')
-        task.start_chain(Chute(f))
+        task.start_chain(Chute.create(f)())
         task.run()
         assert f.called
         assert f.args == ([],)
