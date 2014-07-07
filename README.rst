@@ -46,7 +46,7 @@ The basic setup for defining your own chutes requires you to create a new class 
   
   class FilterFilesByExt(Chute):
     
-    def __init__(ext="ufo"):
+    def __init__(self, ext="ufo"):
       self.ext = ext
       
     def run(self, files):
