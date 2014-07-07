@@ -73,7 +73,7 @@ If your chute doesn't require arguments when initialized, you may prefer to use 
   
   with Hellbox('woff') as task:
     generate_woff = GenerateWOFF()
-    task.source('*.otf').to('generate_woff').to(Hellbox.write('webfonts'))
+    task.source('*.otf').to(generate_woff).to(Hellbox.write('webfonts'))
 
 CLI
 ---
