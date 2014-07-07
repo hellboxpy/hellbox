@@ -57,10 +57,10 @@ You can then use your chute in your Hellfile as such:
 .. code-block:: python
   
   with Hellbox('build') as task:
-    filter = FilterFilesByExt('ufo')
-    task.source('*').to(filter).to(Hellbox.write('backup'))
+    get_ufos = FilterFilesByExt('ufo')
+    task.source('*').to(get_ufos).to(Hellbox.write('backup'))
 
-If your chute doesn't require arguments when initialized, you may prefer to use a function instead of a class. Using the `@Chute.create` function decorator makes a function definition act like a subclass of Chute:
+If your chute doesn't require arguments when initialized, you may prefer to use a function instead of a class. Using the ``@Chute.create`` function decorator makes a function definition act like a subclass of Chute:
 
 .. code-block:: python
 
@@ -70,6 +70,10 @@ If your chute doesn't require arguments when initialized, you may prefer to use 
   def GenerateWOFF(files):
     # do something to files...
     return files
+  
+  with Hellbox('woff') as task:
+    generate_woff = GenerateWOFF()
+    task.source('*.otf').to('generate_woff').to(Hellbox.write('webfonts'))
 
 CLI
 ---
