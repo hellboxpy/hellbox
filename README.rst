@@ -54,7 +54,7 @@ The basic setup for defining your own chutes requires you to create a new class 
 
 You can then use your chute in your Hellfile as such:
 
-.. cofe-block:: python
+.. code-block:: python
   
   with Hellbox('build') as task:
     filter = FilterFilesByExt('ufo')
