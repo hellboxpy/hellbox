@@ -1,3 +1,5 @@
+import inspect
+
 class Chute(object):
 
     @classmethod
@@ -14,6 +16,8 @@ class Chute(object):
         return files
 
     def to(self, chute):
+        if inspect.isclass(chute):
+            chute = chute()
         self.callbacks.append(chute)
         return chute
 

@@ -32,3 +32,10 @@ class TestChute(object):
         cb = Chute.create(Mock())()
         chute.to(cb)
         assert cb in chute.callbacks
+
+    def test_to_with_unintialized_chute(self):
+        chute = Chute.create(Mock())()
+        cb = Chute.create(Mock())
+        chute.to(cb)
+        assert chute.callbacks
+        assert isinstance(chute.callbacks[0], cb)
