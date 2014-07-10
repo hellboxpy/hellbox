@@ -51,6 +51,13 @@ def log(level, message, trace=None):
 
 def main():
 
+    executable_filename = 'Hellfile.py'
+    virtualenv_dir = '.hellbox'
+    bin_dir = './%s/bin' % virtualenv_dir
+    path_to_pip = '%s/pip' % bin_dir
+    path_to_python = '%s/python' % bin_dir
+    path_to_hell = '%s/hell' % bin_dir
+
     def init(options=None):
         path = os.getcwd()
         create_virtualenv(path)
@@ -62,11 +69,11 @@ def main():
         create_hellbox_py(path)
 
     def create_virtualenv(path):
-        if not os.path.isdir('.hellbox'):
-            subprocess.call(['virtualenv', os.path.join(path, '.hellbox')])
+        if not os.path.isdir(virtualenv_dir):
+            subprocess.call(['virtualenv', os.path.join(path, virtualenv_dir)])
 
     def create_hellbox_py(path):
-        path = os.path.join(path, 'Hellfile.py')
+        path = os.path.join(path, executable_filename)
         content = "from hellbox import Hellbox\n\nHellbox.autoimport()"
         if not os.path.exists(path):
             with open(path, 'w') as f:
@@ -76,7 +83,7 @@ def main():
         freeze_requirements()
 
     def freeze_requirements():
-        cmd = ['./.hellbox/bin/pip', 'freeze', '--local']
+        cmd = [path_to_pip, 'freeze', '--local']
         output = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         requirements, err = output.communicate()
         with open('requirements.txt', 'w') as f:
@@ -90,36 +97,36 @@ def main():
         freeze_requirements()
 
     def install_requirements():
-        cmd = ['./.hellbox/bin/pip', 'install', '-r', 'requirements.txt']
+        cmd = [path_to_pip, 'install', '-r', 'requirements.txt']
         subprocess.call(cmd)
 
     def install_package(package):
-        cmd = ['./.hellbox/bin/pip', 'install', package]
+        cmd = [path_to_pip, 'install', package]
         subprocess.call(cmd)
 
     def uninstall(options):
-        cmd = ['./.hellbox/bin/pip', 'uninstall', options.package, '--yes']
+        cmd = [path_to_pip, 'uninstall', options.package, '--yes']
         subprocess.call(cmd)
         freeze()
 
     def run(options):
-        if not os.path.exists('Hellfile.py'):
-            print('No Hellfile found')
+        if not os.path.exists(executable_filename):
+            print('No %s found' % executable_filename)
             return
 
-        if not os.path.isdir('.hellbox'):
+        if not os.path.isdir(virtualenv_dir):
             init()
 
         run_task(options.task or "default")
 
     def run_hellfile_commands(commands=None):
         script = [
-            'execfile("Hellfile.py")',
+            'execfile("%s")' % executable_filename,
             'import hellbox'
         ]
         if commands is not None:
             script.extend(commands)
-        cmd = ['./.hellbox/bin/python', '-c', ';'.join(script)]
+        cmd = [path_to_python, '-c', ';'.join(script)]
         subprocess.call(cmd)
 
     def run_task(task):
@@ -160,8 +167,8 @@ def main():
     uninstall_parser.set_defaults(func=uninstall)
 
     run_parser = subparsers.add_parser('run', description="""
-        Runs a task defined in Hellbox.py
-    """)
+        Runs a task defined in %s
+    """ % executable_filename)
     run_parser.add_argument('task', nargs='?')
     run_parser.set_defaults(func=run)
 
