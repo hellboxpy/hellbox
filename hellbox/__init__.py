@@ -107,7 +107,7 @@ def main():
     def uninstall(options):
         cmd = [path_to_pip, 'uninstall', options.package, '--yes']
         subprocess.call(cmd)
-        freeze()
+        freeze_requirements()
 
     def run(options):
         if not os.path.exists(executable_filename):
