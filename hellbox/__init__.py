@@ -1,5 +1,6 @@
 from __future__ import print_function
 import os
+import sys
 import subprocess
 import traceback
 from argparse import ArgumentParser
@@ -52,16 +53,18 @@ def log(level, message, trace=None):
 def main():
 
     executable_filename = 'Hellfile.py'
+    requirements_filename = 'requirements.txt'
     virtualenv_dir = '.hellbox'
     bin_dir = './%s/bin' % virtualenv_dir
     path_to_pip = '%s/pip' % bin_dir
     path_to_python = '%s/python' % bin_dir
     path_to_hell = '%s/hell' % bin_dir
+    path_to_requirements = './%s' % requirements_filename
 
     def init(options=None):
         path = os.getcwd()
         create_virtualenv(path)
-        if os.path.exists('requirements.txt'):
+        if os.path.exists(path_to_requirements):
             install_requirements()
         else:
             install_package('git+git://github.com/jackjennings/hellbox.git')
@@ -86,7 +89,7 @@ def main():
         cmd = [path_to_pip, 'freeze', '--local']
         output = subprocess.Popen(cmd, stdout=subprocess.PIPE)
         requirements, err = output.communicate()
-        with open('requirements.txt', 'w') as f:
+        with open(path_to_requirements, 'w') as f:
             f.write(requirements)
 
     def install(options=None):
@@ -97,7 +100,7 @@ def main():
         freeze_requirements()
 
     def install_requirements():
-        cmd = [path_to_pip, 'install', '-r', 'requirements.txt']
+        cmd = [path_to_pip, 'install', '-r', path_to_requirements]
         subprocess.call(cmd)
 
     def install_package(package):
