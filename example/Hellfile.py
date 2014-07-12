@@ -16,8 +16,8 @@ from packages.extension import BuildRoboFontExtension
 with Hellbox('font') as task:
     task.describe('Does a little generation dance.')
 
-    # make_otf = Hellbox.compose(TestUFO(), GenerateOTF(), Hellbox.write('otf'))
-    make_otf = Hellbox.write('otf') << GenerateOTF() << TestUFO()
+    make_otf = Hellbox.compose(TestUFO(), GenerateOTF(), Hellbox.write('otf'))
+    # make_otf = Hellbox.write('otf') << GenerateOTF() << TestUFO()
 
     task.source('*.ufo', 'src/*') >> make_otf
 
