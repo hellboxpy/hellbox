@@ -30,7 +30,22 @@ class TestChute(object):
     def test_to(self):
         chute = Chute.create(Mock())()
         cb = Chute.create(Mock())()
-        chute.to(cb)
+        result = chute.to(cb)
+        assert result is cb
+        assert cb in chute.callbacks
+
+    def test_rshift(self):
+        chute = Chute.create(Mock())()
+        cb = Chute.create(Mock())()
+        result = chute >> cb
+        assert result is cb
+        assert cb in chute.callbacks
+
+    def test_lshift(self):
+        chute = Chute.create(Mock())()
+        cb = Chute.create(Mock())()
+        result = cb << chute
+        assert result is chute
         assert cb in chute.callbacks
 
     def test_to_with_unintialized_chute(self):

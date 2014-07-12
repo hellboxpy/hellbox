@@ -12,6 +12,13 @@ class Chute(object):
         for callback in self.callbacks:
             callback(files)
 
+    def __rshift__(self, other):
+        return self.to(other)
+
+    def __lshift__(self, other):
+        other.to(self)
+        return other
+
     def run(self, files):
         return files
 
