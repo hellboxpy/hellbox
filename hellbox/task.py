@@ -1,4 +1,4 @@
-from .chute import Chute, OpenFiles
+from .chute import Chute, ReadFiles
 
 
 class Task(object):
@@ -8,8 +8,8 @@ class Task(object):
         self.description = None
         self.chains = []
 
-    def source(self, *globs):
-        return self.start_chain(OpenFiles(*globs))
+    def read(self, *globs):
+        return self.start_chain(ReadFiles(*globs))
 
     def start_chain(self, chute):
         self.chains.append(chute)

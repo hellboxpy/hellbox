@@ -15,7 +15,7 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 
   with Hellbox('build') as task:
       task.describe('Builds .otf files from .ufo source')
-      task.source('*.ufo').to(GenerateOTF()).to(Hellbox.write('./otf'))
+      task.read('*.ufo').to(GenerateOTF()).to(Hellbox.write('./otf'))
 
   Hellbox.default = 'build'
 

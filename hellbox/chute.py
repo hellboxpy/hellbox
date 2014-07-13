@@ -37,7 +37,7 @@ class Chute(object):
             return self.__callbacks
 
 
-class OpenFiles(Chute):
+class ReadFiles(Chute):
 
     def __init__(self, *globs):
         self.globs = globs
@@ -53,5 +53,5 @@ class WriteFiles(Chute):
     def __init__(self, path):
         self.path = path
 
-    def write_files(files):
+    def run(self, files):
         return files

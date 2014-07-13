@@ -8,9 +8,9 @@ class TestTask(object):
     def test_init(self):
         assert Task('foo').name is 'foo'
 
-    def test_source(self):
+    def test_open(self):
         task = Task('foo')
-        chute = task.source('*.ufo')
+        chute = task.read('*.ufo')
         assert isinstance(chute, Chute)
         assert chute in task.chains
 
