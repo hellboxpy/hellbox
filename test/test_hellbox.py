@@ -40,8 +40,10 @@ class TestHellbox:
         foo = Chute.create(noop)()
         bar = Chute.create(noop)()
         baz = Chute.create(noop)()
-        head = Hellbox.compose(foo, bar, baz)
-        assert head is foo
+        Composite = Hellbox.compose(foo, bar, baz)
+        composed = Composite()
+        assert composed.head is foo
+        assert composed.tail is baz
         assert bar in foo.callbacks
         assert baz in bar.callbacks
 
@@ -49,9 +51,25 @@ class TestHellbox:
         noop = lambda x: x
         foo = Chute.create(noop)()
         bar = Chute.create(noop)()
-        head = Hellbox.compose(foo, bar)
-        assert head is foo
+        Composite = Hellbox.compose(foo, bar)
+        composed = Composite()
+        assert composed.head is foo
+        assert composed.tail is bar
         assert bar in foo.callbacks
+
+    def test_multiple_compose(self):
+        noop = lambda x: x
+        foo = Chute.create(noop)()
+        bar = Chute.create(noop)()
+        Composite = Hellbox.compose(foo, bar)
+        composed = Composite()
+        assert composed.head is foo
+        assert composed.tail is bar
+        assert bar in foo.callbacks
+        composed2 = Composite()
+        assert composed is not composed2
+        # TODO: Clone initialized chutes for each composite instance
+        # assert composed.head is not composed2.head
 
     def test_write(self):
         assert isinstance(Hellbox.write('otf'), Chute)

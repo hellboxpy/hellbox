@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from hellbox.chute import Chute
+from hellbox.chute import Chute, CompositeChute
 from mock import Mock
 
 
@@ -54,3 +54,15 @@ class TestChute(object):
         chute.to(cb)
         assert chute.callbacks
         assert isinstance(chute.callbacks[0], cb)
+
+    def test_composite_chute(self):
+        noop = lambda x: x
+        foo = Chute.create(noop)()
+        bar = Chute.create(noop)()
+        baz = Chute.create(noop)()
+        qux = Chute.create(noop)()
+        composite = CompositeChute(foo, bar)
+        composite >> baz
+        qux >> composite
+        assert baz in composite.tail.callbacks
+        assert composite.head in qux.callbacks
