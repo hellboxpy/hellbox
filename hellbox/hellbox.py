@@ -33,6 +33,8 @@ class Hellbox(object):
     def run_task(cls, name):
         name = cls.get_task_name_or_default(name)
         task = cls.find_task_by_name(name)
+        for requirement in task.requirements:
+            Hellbox.run_task(requirement)
         task.run()
 
     @classmethod

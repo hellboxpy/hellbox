@@ -26,6 +26,7 @@ with Hellbox('font') as task:
 
 with Hellbox('extension') as task:
     task.describe('Builds a robofont extension in place.')
+    task.requires('font')
     task.read('src') >> MakeExt()
 
 Hellbox.default = 'font'

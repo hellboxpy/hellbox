@@ -82,6 +82,19 @@ class TestHellbox:
         Hellbox.run_task('foobaz')
         assert f.called
 
+    def test_run_task_with_requirements(self):
+        f = Mock()
+        f2 = Mock()
+        task = Task('fooqaaz')
+        task.requires('foobar')
+        task.start_chain(Chute.create(f)())
+        task2 = Task('foobar')
+        task2.start_chain(Chute.create(f2)())
+        Hellbox.add_task(task)
+        Hellbox.add_task(task2)
+        Hellbox.run_task('fooqaaz')
+        assert f2.called
+
     def test_proxy_decorator(self):
         @Hellbox.proxy
         def test_proxy_decorator_method(self): pass

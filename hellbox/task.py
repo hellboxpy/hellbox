@@ -6,6 +6,7 @@ class Task(object):
     def __init__(self, name):
         self.name = name
         self.description = None
+        self.requirements = []
         self.chains = []
 
     def read(self, *globs):
@@ -23,6 +24,9 @@ class Task(object):
 
     def describe(self, desc):
         self.description = desc
+
+    def requires(self, *requirements):
+        self.requirements = requirements
 
 
 class NullTask(Task):
