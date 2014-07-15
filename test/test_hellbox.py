@@ -20,7 +20,13 @@ class TestHellbox:
         assert Hellbox.find_task_by_name('foo')
 
     def test_find_missing_task(self):
-        assert type(Hellbox.find_task_by_name('bazzio')) is NullTask
+        task = Hellbox.find_task_by_name('bazzio')
+        assert type(task) is NullTask
+        Hellbox._warn = Hellbox.warn
+        Hellbox.warn = Mock()
+        task.run()
+        assert Hellbox.warn.called
+        Hellbox.warn = Hellbox._warn
 
     def test_with(self):
         with Hellbox('foo') as task: 

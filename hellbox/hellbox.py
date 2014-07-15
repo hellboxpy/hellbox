@@ -16,7 +16,7 @@ class Hellbox(object):
         if type is not None:
             message = "Error when setting up %s: %s" % (self.task.name, value)
             Hellbox.warn(message, trace=trace)
-            return True # Suppresses displaying error
+            return True  # Suppresses displaying error
         else:
             self.__class__.add_task(self.task)
 
@@ -43,7 +43,8 @@ class Hellbox(object):
 
     @classmethod
     def proxy(cls, fn):
-        def proxied_method(cls, *args, **kwargs): return fn(*args, **kwargs)
+        def proxied_method(cls, *args, **kwargs):
+            return fn(*args, **kwargs)
         setattr(cls, fn.__name__, classmethod(proxied_method))
         return fn
 
@@ -56,7 +57,7 @@ class Hellbox(object):
                 tab = len(box) * " " * indent
                 print(u"%s%s%s" % (tab, box, name))
                 print_chutes(chute.callbacks, indent=indent+1)
-        
+
         for task in cls.__tasks:
             print("Task: %s" % task.name)
             if task.description:

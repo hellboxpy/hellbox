@@ -1,11 +1,13 @@
 import inspect
 
+
 class Chute(object):
 
     @classmethod
     def create(cls, fn):
-        def run(self, files): fn(files)
-        return type(fn.__name__, (cls,), { 'run': run })
+        def run(self, files):
+            fn(files)
+        return type(fn.__name__, (cls,), {'run': run})
 
     def __call__(self, files=None):
         files = self.run(files)
@@ -71,7 +73,7 @@ class CompositeChute(Chute):
     def __rrshift__(self, other):
         other.to(self.head)
         return self.tail
-    
+
     def __clone(self, chute):
         c = object.__new__(chute.__class__)
         c.__dict__ = chute.__dict__.copy()

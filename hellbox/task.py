@@ -31,10 +31,13 @@ class Task(object):
 
 class NullTask(Task):
 
+    default_warning = "Trying to run default task but no default supplied"
+    definition_warning = "Trying to run %s task but no definition found"
+
     def run(self):
         from .hellbox import Hellbox
         if self.name is None:
-            warning = "Trying to run default task but no default supplied"
+            warning = self.default_warning
         else:
-            warning = "Trying to run task %s but no definition found" % self.name
+            warning = self.definition_warning % self.name
         Hellbox.warn(warning)

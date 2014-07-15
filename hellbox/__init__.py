@@ -16,9 +16,12 @@ __all__ = ['Hellbox']
 @Hellbox.proxy
 def compose(*chutes):
     from .chute import CompositeChute
-    def composite():
+
+    def make_composite_chute():
         return CompositeChute(*chutes)
-    return composite
+
+    return make_composite_chute
+
 
 @Hellbox.proxy
 def write(path):
