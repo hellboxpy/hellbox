@@ -13,20 +13,21 @@ from packages.test import TestUFO
 from packages.generate_otf import GenerateOTF
 from packages.extension import BuildRoboFontExtension
 
-MakeOTF = Hellbox.compose(TestUFO(),
-                          GenerateOTF(), 
-                          Hellbox.write('otf'))
 
-MakeExt = Hellbox.compose(BuildRoboFontExtension(info_format="yaml"),
-                          Hellbox.write('.'))
+MakeOTF = Hellbox.compose(TestUFO(),
+                          GenerateOTF())
+
+MakeExt = Hellbox.compose(BuildRoboFontExtension(info_format="yaml"))
+
 
 with Hellbox('font') as task:
     task.describe('Does a little generation dance.')
-    task.read('*.ufo', 'src/*') >> MakeOTF()
+    task.read('*.ufo', 'src/*') >> MakeOTF() >> task.write('otf')
 
 with Hellbox('extension') as task:
     task.describe('Builds a robofont extension in place.')
     task.requires('font')
-    task.read('src') >> MakeExt()
+    task.read('src') >> MakeExt() >> task.write('.')
+
 
 Hellbox.default = 'font'
