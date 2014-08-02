@@ -77,9 +77,6 @@ class TestHellbox:
         # TODO: Clone initialized chutes for each composite instance
         # assert composed.head is not composed2.head
 
-    def test_write(self):
-        assert isinstance(Hellbox.write('otf'), Chute)
-
     def test_run_task(self):
         f = Mock()
         task = Task('foobaz')

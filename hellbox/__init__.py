@@ -24,12 +24,6 @@ def compose(*chutes):
 
 
 @Hellbox.proxy
-def write(path):
-    from .chute import WriteFiles
-    return WriteFiles(path)
-
-
-@Hellbox.proxy
 def autoimport(path='requirements.txt'):
     from .autoimporter import Autoimporter
     Autoimporter(path).execute()
