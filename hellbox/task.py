@@ -1,4 +1,4 @@
-from .chute import Chute, ReadFiles
+from .chute import Chute, ReadFiles, WriteFiles
 
 
 class Task(object):
@@ -21,6 +21,9 @@ class Task(object):
         Hellbox.info("Running %s" % self.name)
         for chute in self.chains:
             chute([])
+
+    def write(self, path):
+        return WriteFiles(path)
 
     def describe(self, desc):
         self.description = desc

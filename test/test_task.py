@@ -14,6 +14,11 @@ class TestTask(object):
         assert isinstance(chute, Chute)
         assert chute in task.chains
 
+    def test_write(self):
+        task = Task('foo')
+        chute = task.write('ufo')
+        assert isinstance(chute, Chute)
+
     def test_run(self):
         f = Mock()
         task = Task('foo')
