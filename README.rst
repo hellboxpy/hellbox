@@ -58,7 +58,7 @@ You can then use your chute in your Hellfile as such:
 .. code-block:: python
   
   with Hellbox('build') as task:
-    task.read('*') >> FilterFilesByExt('ufo', 'txt') >> Hellbox.write('backup')
+    task.read('*') >> FilterFilesByExt('ufo', 'txt') >> task.write('backup')
 
 If your chute doesn't require arguments when initialized, you may prefer to define it with a function instead of a class. Using the ``@Chute.create`` function decorator makes a function definition act like a subclass of Chute:
 
@@ -72,7 +72,7 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
         return files
   
     with Hellbox('woff') as task:
-        task.read('*.otf') >> GenerateWOFF() >> Hellbox.write('webfonts')
+        task.read('*.otf') >> GenerateWOFF() >> task.write('webfonts')
 
 CLI
 ---
