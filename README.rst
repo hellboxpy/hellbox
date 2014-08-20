@@ -10,12 +10,12 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 
 .. code-block:: python
   
-  from hellbox import Hellbox
-  from hellbox_generate_otf import GenerateOTF
+    from hellbox import Hellbox
+    from hellbox_generate_otf import GenerateOTF
 
-  with Hellbox('build') as task:
-      task.describe('Builds .otf files from .ufo source')
-      task.read('*.ufo') >> GenerateOTF() >> task.write('./otf')
+    with Hellbox('build') as task:
+        task.describe('Builds .otf files from .ufo source')
+        task.read('*.ufo') >> GenerateOTF() >> task.write('./otf')
 
 Installation
 ------------
@@ -34,42 +34,45 @@ Goals
 Chutes
 ------
 
-There are two ways of defining a Hellbox chute, depending on the complexity and amound of configuration required.
+There are two ways of defining a Hellbox chute, depending on the complexity and amount of configuration required.
 
-The basic setup for defining your own chutes requires you to create a new class subclassing Chute. You must only define a method ``run`` which is called taking the ``files`` argument (an array) and returning a new array of modified files.
+The basic setup for defining your own chutes requires you to create a new subclass of ``Chute``. You must define a method ``run`` which accepts a single ``files`` argument (an array) and returns a new array of modified files. Besides ``run``, you can define any other methods you like on the new class.
 
 .. code-block:: python
 
-  from hellbox.chute import Chute
-  
-  class FilterFilesByExt(Chute):
-    
-    def __init__(self, ext="ufo"):
-      self.ext = ext
+    from hellbox.chute import Chute
+
+    class FilterFilesByExt(Chute):
+
+        def __init__(self, *exts):
+            self.exts = exts
       
-    def run(self, files):
-      return [f for f in files if f.ext is self.ext]
+        def run(self, files):
+            return self._filter(files)
+
+        def _filter(files):
+            return [f for f in files if f.ext in self.exts]
 
 You can then use your chute in your Hellfile as such:
 
 .. code-block:: python
   
   with Hellbox('build') as task:
-    task.read('*') >> FilterFilesByExt(ext='ufo') >> Hellbox.write('backup')
+    task.read('*') >> FilterFilesByExt('ufo', 'txt') >> Hellbox.write('backup')
 
-If your chute doesn't require arguments when initialized, you may prefer to use a function instead of a class. Using the ``@Chute.create`` function decorator makes a function definition act like a subclass of Chute:
+If your chute doesn't require arguments when initialized, you may prefer to define it with a function instead of a class. Using the ``@Chute.create`` function decorator makes a function definition act like a subclass of Chute:
 
 .. code-block:: python
 
-  from hellbox.chute import Chute
+    from hellbox.chute import Chute
+
+    @Chute.create
+    def GenerateWOFF(files):
+        # do something to files...
+        return files
   
-  @Chute.create
-  def GenerateWOFF(files):
-    # do something to files...
-    return files
-  
-  with Hellbox('woff') as task:
-    task.read('*.otf') >> GenerateWOFF() >> Hellbox.write('webfonts')
+    with Hellbox('woff') as task:
+        task.read('*.otf') >> GenerateWOFF() >> Hellbox.write('webfonts')
 
 CLI
 ---
