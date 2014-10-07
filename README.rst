@@ -27,9 +27,9 @@ First `install pip`_ (if not present), then run:
 Goals
 -----
 
-* **Consistency** Hellbox tasks don't take arguments by design, favoring consistent task output.
-* **Modularity** Hellbox packages should be resuable and composable, while maintaining flexibility for bespoke workflows.
-* **Isolation** Hellbox tasks and packages are version locked and isolated from other Python installations.
+* **Consistency** Hellbox tasks don't take arguments by design, favoring consistent task output
+* **Modularity** Hellbox packages should be resuable and composable, while maintaining flexibility for custom workflows
+* **Isolation** Hellbox tasks and packages are version locked and isolated from other Python installations
 
 Chutes
 ------
