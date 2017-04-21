@@ -1,8 +1,9 @@
 from __future__ import absolute_import
+from tests.mock import Mock
+
 from hellbox import Hellbox
 from hellbox.chute import Chute
 from hellbox.task import Task, NullTask
-from mock import Mock
 
 
 class TestHellbox:
@@ -29,7 +30,7 @@ class TestHellbox:
         Hellbox.warn = Hellbox._warn
 
     def test_with(self):
-        with Hellbox('foo') as task: 
+        with Hellbox('foo') as task:
             assert task
             assert type(task) is Task
         assert Hellbox.find_task_by_name('foo')

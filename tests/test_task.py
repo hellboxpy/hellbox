@@ -1,7 +1,9 @@
 from __future__ import absolute_import
+from tests.mock import Mock
+
 from hellbox.task import Task
 from hellbox.chute import Chute
-from mock import Mock
+
 
 class TestTask(object):
 

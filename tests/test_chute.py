@@ -1,6 +1,7 @@
 from __future__ import absolute_import
+from tests.mock import Mock
+
 from hellbox.chute import Chute, CompositeChute
-from mock import Mock
 
 
 class TestChute(object):

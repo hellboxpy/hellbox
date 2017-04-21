@@ -5,6 +5,6 @@ python:
   - "3.3"
   - "3.4"
   - "pypy"
-script: "py.test"
+script: "make test"
 install:
   - python setup.py install

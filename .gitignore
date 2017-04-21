@@ -6,3 +6,5 @@ dist/*
 sample.py
 .tox
 .hellbox
+.venv
+.cache

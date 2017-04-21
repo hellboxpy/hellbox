@@ -9,7 +9,7 @@ Hellbox is a modular, editor-agnostic build system designed for font development
     :target: https://travis-ci.org/hellboxpy/hellbox
 
 .. code-block:: python
-  
+
     from hellbox import Hellbox
     from hellbox_generate_otf import GenerateOTF
 
@@ -46,7 +46,7 @@ The basic setup for defining your own chutes requires you to create a new subcla
 
         def __init__(self, *exts):
             self.exts = exts
-      
+
         def run(self, files):
             return self._filter(files)
 
@@ -56,7 +56,7 @@ The basic setup for defining your own chutes requires you to create a new subcla
 You can then use your chute in your Hellfile as such:
 
 .. code-block:: python
-  
+
   with Hellbox('build') as task:
     task.read('*') >> FilterFilesByExt('ufo', 'txt') >> task.write('backup')
 
@@ -70,7 +70,7 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
     def GenerateWOFF(files):
         # do something to files...
         return files
-  
+
     with Hellbox('woff') as task:
         task.read('*.otf') >> GenerateWOFF() >> task.write('webfonts')
 
@@ -112,8 +112,8 @@ Freezes all installed modules into ``requirements.txt``
 
 Runs the ``Hellfile.py`` and displays the defined tasks:
 
-.. code-block:: 
-  
+.. code-block::
+
   Task: font
   ┗━ OpenFiles: '*.ufo'
      ┗━ GenerateOTF
@@ -121,3 +121,8 @@ Runs the ``Hellfile.py`` and displays the defined tasks:
 
 
 .. _`install pip`: https://pip.pypa.io/en/latest/installing.html
+
+Development
+-----------
+
+Run tests with `make test`.
