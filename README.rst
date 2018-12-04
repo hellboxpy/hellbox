@@ -31,6 +31,13 @@ Goals
 * **Modularity** Hellbox packages should be resuable and composable, while maintaining flexibility for custom workflows
 * **Isolation** Hellbox tasks and packages are version locked and isolated from other Python installations
 
+Overview
+--------
+
+Hellbox aims to provide both an environment and framework for defining build pipelines.
+
+Hellbox tasks are composed of "chutes" — modules that perform a single operation over one or more files.
+
 Chutes
 ------
 
