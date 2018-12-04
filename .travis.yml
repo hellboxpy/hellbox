@@ -7,4 +7,5 @@ python:
   - "pypy"
 script: "make test"
 install:
-  - python setup.py install
+  - pip install pipenv
+  - pip install .
