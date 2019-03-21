@@ -63,4 +63,4 @@ class Hellbox(object):
             if task.description:
                 print(task.description)
             print_chutes(task.chains)
-            print
+            print()

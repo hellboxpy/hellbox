@@ -84,49 +84,9 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
 CLI
 ---
 
-Hellbox comes with a command line tool ``hell`` which offers a thin layer over ``pip`` and ``virtualenv``. Using the CLI is optional, but makes working in isolation dead simple.
+Hellbox comes with a command line tool `hell`_ which offers a thin layer over ``pipenv``. Using the CLI is highly recommended, as it makes working in isolation dead simple.
 
-``hell init``
-
-Sets up a new project by:
-
-* Creating a new Python and ``pip`` install in the ``.hellbox`` directory
-* Installing ``hellbox``
-* Freezing all packages into ``requirements.txt``
-* Creating a minimal ``Hellfile.py`` for defining tasks
-
-``hell run {task}``
-
-Runs the task defined in ``Hellfile.py``. Defaults to the task named `default`.
-
-``hell install {package}``
-
-Installs a package using ``pip`` into the project's Python installation and freezes ``requirements.txt``
-
-``hell install``
-
-Installs all packages in ``requirements.txt`` into the project's Python installation.
-
-``hell uninstall {package}``
-
-Uninstalls a package using ``pip`` from the project's Python installation and freezes ``requirements.txt``
-
-``hell freeze``
-
-Freezes all installed modules into ``requirements.txt``
-
-``hell inspect``
-
-Runs the ``Hellfile.py`` and displays the defined tasks:
-
-.. code-block::
-
-  Task: font
-  ┗━ OpenFiles: '*.ufo'
-     ┗━ GenerateOTF
-        ┗━ WriteFiles: './otf'
-
-
+.. _`hell`: https://github.com/hellboxpy/hell
 .. _`install pip`: https://pip.pypa.io/en/latest/installing.html
 
 Development

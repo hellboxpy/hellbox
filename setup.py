@@ -14,10 +14,5 @@ setup(
     install_requires=[
         'virtualenv',
         'glob2'
-    ],
-    entry_points={
-        "console_scripts": [
-            "hell=hellbox:main"
-        ]
-    }
+    ]
 )
