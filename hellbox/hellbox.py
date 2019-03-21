@@ -39,12 +39,13 @@ class Hellbox(object):
 
     @classmethod
     def get_task_name_or_default(cls, name):
-        return cls.default if name == 'default' else name
+        return cls.default if name == "default" else name
 
     @classmethod
     def proxy(cls, fn):
         def proxied_method(cls, *args, **kwargs):
             return fn(*args, **kwargs)
+
         setattr(cls, fn.__name__, classmethod(proxied_method))
         return fn
 
@@ -56,7 +57,7 @@ class Hellbox(object):
                 box = u"\u2517\u2501 "
                 tab = len(box) * " " * indent
                 print(u"%s%s%s" % (tab, box, name))
-                print_chutes(chute.callbacks, indent=indent+1)
+                print_chutes(chute.callbacks, indent=indent + 1)
 
         for task in cls.__tasks:
             print("Task: %s" % task.name)

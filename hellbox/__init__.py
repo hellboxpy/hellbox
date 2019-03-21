@@ -3,10 +3,11 @@ import traceback
 from .hellbox import Hellbox
 
 from pkgutil import extend_path
+
 __path__ = extend_path(__path__, __name__)
 
 __version__ = "0.0.2"
-__all__ = ['Hellbox']
+__all__ = ["Hellbox"]
 
 
 @Hellbox.proxy
@@ -20,19 +21,20 @@ def compose(*chutes):
 
 
 @Hellbox.proxy
-def autoimport(path='requirements.txt'):
+def autoimport(path="requirements.txt"):
     from .autoimporter import Autoimporter
+
     Autoimporter(path).execute()
 
 
 @Hellbox.proxy
 def warn(*args, **kwargs):
-    log('WARN', *args, **kwargs)
+    log("WARN", *args, **kwargs)
 
 
 @Hellbox.proxy
 def info(*args, **kwargs):
-    log('INFO', *args, **kwargs)
+    log("INFO", *args, **kwargs)
 
 
 @Hellbox.proxy

@@ -2,12 +2,12 @@ import inspect
 
 
 class Chute(object):
-
     @classmethod
     def create(cls, fn):
         def run(self, files):
             fn(files)
-        return type(fn.__name__, (cls,), {'run': run})
+
+        return type(fn.__name__, (cls,), {"run": run})
 
     def __call__(self, files=None):
         files = self.run(files)
@@ -40,18 +40,17 @@ class Chute(object):
 
 
 class ReadFiles(Chute):
-
     def __init__(self, *globs):
         self.globs = globs
 
     def run(self, files):
         import glob2
+
         files = [f for g in self.globs for f in glob2.glob(g)]
         return files
 
 
 class WriteFiles(Chute):
-
     def __init__(self, path):
         self.path = path
 
@@ -60,7 +59,6 @@ class WriteFiles(Chute):
 
 
 class CompositeChute(Chute):
-
     def __init__(self, *chutes):
         # chutes = [self.__clone(c) for c in chutes]
         self.head = self.tail = chutes[0]

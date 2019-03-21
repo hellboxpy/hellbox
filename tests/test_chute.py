@@ -5,7 +5,6 @@ from hellbox.chute import Chute, CompositeChute
 
 
 class TestChute(object):
-
     def test_init(self):
         f = Mock()
         chute = Chute.create(f)()
@@ -16,8 +15,8 @@ class TestChute(object):
         f = Mock()
         chute = Chute.create(f)()
         assert chute.callbacks == []
-        chute.callbacks.append('foo')
-        assert 'foo' in chute.callbacks
+        chute.callbacks.append("foo")
+        assert "foo" in chute.callbacks
 
     def test_call(self):
         f = Mock()

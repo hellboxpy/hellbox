@@ -1,5 +1,4 @@
 class Mock(object):
-
     def __init__(self):
         self.called = False
 
@@ -9,4 +8,4 @@ class Mock(object):
 
     @property
     def __name__(self):
-        return 'Mock'
+        return "Mock"

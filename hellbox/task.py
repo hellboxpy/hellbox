@@ -2,7 +2,6 @@ from .chute import Chute, ReadFiles, WriteFiles
 
 
 class Task(object):
-
     def __init__(self, name):
         self.name = name
         self.description = None
@@ -18,6 +17,7 @@ class Task(object):
 
     def run(self):
         from .hellbox import Hellbox
+
         Hellbox.info("Running %s" % self.name)
         for chute in self.chains:
             chute([])
@@ -39,6 +39,7 @@ class NullTask(Task):
 
     def run(self):
         from .hellbox import Hellbox
+
         if self.name is None:
             warning = self.default_warning
         else:
