@@ -21,7 +21,7 @@ def compose(*chutes):
 
 
 @Hellbox.proxy
-def autoimport(path="requirements.txt"):
+def autoimport(path="Pipfile.lock"):
     from .autoimporter import Autoimporter
 
     Autoimporter(path).execute()
