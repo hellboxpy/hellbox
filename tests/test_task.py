@@ -23,7 +23,7 @@ class TestTask(object):
     def test_run(self):
         f = Mock()
         task = Task("foo")
-        task.start_chain(Chute.create(f)())
+        task << Chute.create(f)()
         task.run()
         assert f.called
         assert f.args == ([],)

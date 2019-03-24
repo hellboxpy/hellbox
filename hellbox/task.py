@@ -8,12 +8,12 @@ class Task(object):
         self.requirements = []
         self.chains = []
 
-    def read(self, *globs):
-        return self.start_chain(ReadFiles(*globs))
-
-    def start_chain(self, chute):
+    def __lshift__(self, chute):
         self.chains.append(chute)
         return chute
+
+    def read(self, *globs):
+        return self << ReadFiles(*globs)
 
     def run(self):
         from .hellbox import Hellbox

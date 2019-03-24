@@ -80,7 +80,7 @@ class TestHellbox:
     def test_run_task(self):
         f = Mock()
         task = Task("foobaz")
-        task.start_chain(Chute.create(f)())
+        task << Chute.create(f)()
         Hellbox.add_task(task)
         Hellbox.run_task("foobaz")
         assert f.called
@@ -90,9 +90,9 @@ class TestHellbox:
         f2 = Mock()
         task = Task("fooqaaz")
         task.requires("foobar")
-        task.start_chain(Chute.create(f)())
+        task << Chute.create(f)()
         task2 = Task("foobar")
-        task2.start_chain(Chute.create(f2)())
+        task2 << Chute.create(f2)()
         Hellbox.add_task(task)
         Hellbox.add_task(task2)
         Hellbox.run_task("fooqaaz")
