@@ -1,10 +1,10 @@
 """
-    Example hellfile.py
+Example hellfile.py
 
-    To run with development version of Hellbox, from this directory run:
-    > hell init (This will fail because pip doesn't know about hellbox yet)
-    > cd .. && ./example/.hellbox/bin/python setup.py install
-    > cd example && hell freeze && hell inspect
+To run with development version of Hellbox, from this directory run:
+> hell init (This will fail because pip doesn't know about hellbox yet)
+> cd .. && ./example/.hellbox/bin/python setup.py install
+> cd example && hell freeze && hell inspect
 """
 
 from hellbox import Hellbox
