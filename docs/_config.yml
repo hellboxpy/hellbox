@@ -1,0 +1,10 @@
+# Site settings
+title: Hellbox
+email: j@ckjennin.gs
+description: "Build system for font development"
+baseurl: ""
+url: "http://hellbox.io"
+
+# Build settings
+markdown: kramdown
+permalink: pretty
