@@ -11,7 +11,7 @@ main() {
     local _arch="$RETVAL"
     assert_nz "$_arch" "arch"
 
-    local _version="v0.1.0"
+    local _version="v0.1.1"
     local _url="${HELL_RELEASE_ROOT}/${_version}/hell-${_version}-${_arch}.tar.gz"
 
     local _dir
