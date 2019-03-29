@@ -21,6 +21,24 @@ class Chute(object):
         self.to(other)
         return self
 
+    def __eq__(self, other):
+        if self.__class__ is not other.__class__:
+            return False
+
+        ours = {
+            key: value
+            for (key, value) in self.__dict__.items()
+            if not key.startswith("_Chute")
+        }
+
+        theirs = {
+            key: value
+            for (key, value) in other.__dict__.items()
+            if not key.startswith("_Chute")
+        }
+
+        return ours == theirs
+
     def run(self, files):
         return files
 
@@ -60,7 +78,7 @@ class WriteFiles(Chute):
 
 class CompositeChute(Chute):
     def __init__(self, *chutes):
-        # chutes = [self.__clone(c) for c in chutes]
+        chutes = [self.__clone(c) for c in chutes]
         self.head = self.tail = chutes[0]
         for chute in chutes[1:]:
             self.tail = self.tail.to(chute)

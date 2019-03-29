@@ -40,27 +40,25 @@ class TestHellbox:
     def test_get_task_name(self):
         assert Hellbox.get_task_name_or_default("bar") is "bar"
 
+    def test_compose(self):
+        noop = lambda x: x
+        foo = Chute.create(noop)()
+        bar = Chute.create(noop)()
+        composed = Hellbox.compose(foo, bar)()
+        assert composed.head == foo
+        assert composed.head is not foo
+        assert composed.tail == bar
+        assert composed.tail is not bar
+        assert bar in composed.head.callbacks
+
     def test_compose_many(self):
         noop = lambda x: x
         foo = Chute.create(noop)()
         bar = Chute.create(noop)()
         baz = Chute.create(noop)()
-        Composite = Hellbox.compose(foo, bar, baz)
-        composed = Composite()
-        assert composed.head is foo
-        assert composed.tail is baz
-        assert bar in foo.callbacks
-        assert baz in bar.callbacks
-
-    def test_compose(self):
-        noop = lambda x: x
-        foo = Chute.create(noop)()
-        bar = Chute.create(noop)()
-        Composite = Hellbox.compose(foo, bar)
-        composed = Composite()
-        assert composed.head is foo
-        assert composed.tail is bar
-        assert bar in foo.callbacks
+        composed = Hellbox.compose(foo, bar, baz)()
+        assert composed.head == foo
+        assert composed.tail == baz
 
     def test_multiple_compose(self):
         noop = lambda x: x
@@ -68,13 +66,11 @@ class TestHellbox:
         bar = Chute.create(noop)()
         Composite = Hellbox.compose(foo, bar)
         composed = Composite()
-        assert composed.head is foo
-        assert composed.tail is bar
-        assert bar in foo.callbacks
+        assert composed.head == foo
+        assert composed.tail == bar
         composed2 = Composite()
         assert composed is not composed2
-        # TODO: Clone initialized chutes for each composite instance
-        # assert composed.head is not composed2.head
+        assert composed.head is not composed2.head
 
     def test_run_task(self):
         f = Mock()
