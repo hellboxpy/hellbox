@@ -5,7 +5,7 @@ from pkgutil import extend_path
 
 __path__ = extend_path(__path__, __name__)
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __all__ = ["Hellbox"]
 
 
@@ -23,7 +23,7 @@ def compose(*chutes):
 def autoimport(path="Pipfile.lock"):
     from .autoimporter import Autoimporter
 
-    Autoimporter(path).execute()
+    Autoimporter(path).execute(globals(), locals())
 
 
 @Hellbox.proxy
