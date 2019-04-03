@@ -9,6 +9,13 @@ class Chute(object):
 
         return type(fn.__name__, (cls,), {"run": run})
 
+    def __new__(cls, *args, **kwargs):
+        instance = super().__new__(cls)
+        instance.__init_signature = inspect.signature(cls.__init__)
+        instance.__init_args = args
+        instance.__init_kwargs = kwargs
+        return instance
+
     def __call__(self, files=None):
         files = self.run(files)
         for callback in self.callbacks:
@@ -38,6 +45,18 @@ class Chute(object):
         }
 
         return ours == theirs
+
+    def __str__(self):
+        if self.__init_args or self.__init_kwargs:
+            arguments = self.__init_signature.bind(
+                self,
+                *self.__init_args,
+                **self.__init_kwargs
+            ).arguments
+            values = ", ".join(f"{a}={b}" for (a, b) in arguments.items() if a != "self")
+            return f"{self.__class__.__name__}({values})"
+        else:
+            return self.__class__.__name__
 
     def run(self, files):
         return files

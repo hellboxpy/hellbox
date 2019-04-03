@@ -51,21 +51,31 @@ class Hellbox(object):
 
     @classmethod
     def inspect(cls):
-        def print_chutes(chutes, indent=0):
-            for chute in chutes:
-                name = chute.__class__.__name__
-                box = u"\u2517\u2501 "
-                tab = len(box) * " " * indent
-                print(u"%s%s%s" % (tab, box, name))
-                print_chutes(chute.callbacks, indent=indent + 1)
+        print(cls.usage())
+
+    @classmethod
+    def usage(cls):
+        lines = []
+
+        def print_chutes(chutes, indent=""):
+            for i, chute in enumerate(chutes):
+                branch = "\u2523" if i+1 < len(chutes) else "\u2517"
+                continuation = "\u2503" if i+1 < len(chutes) else " "
+                box = f"{branch}\u2501 "
+                lines.append(f"{indent}{box}{chute}")
+                print_chutes(chute.callbacks, indent=f"{indent}{continuation}  ")
 
         for task in cls.__tasks:
-            print("Task: %s" % task.name)
+            lines.append(f"\u2502 » {task.name}")
             if task.description:
-                print(task.description)
+                for line in task.description.splitlines():
+                    lines.append(f"\u2502   {line}")
+            lines.append("\u257D")
             print_chutes(task.chains)
-            print()
+            lines.append("")
+
+        return "\n".join(lines)
 
     @classmethod
     def reset_tasks(cls):
-        cls._Hellbox__tasks = []
+        cls.__tasks = []
