@@ -10,6 +10,11 @@ class TestChute(object):
         assert not f.called
         assert len(chute.callbacks) is 0
 
+    def test_runs(self):
+        f = Mock(returns=["path/to/file.ufo"])
+        chute = Chute.create(f)()
+        assert chute.run([]) == ["path/to/file.ufo"]
+
     def test_callbacks(self):
         f = Mock()
         chute = Chute.create(f)()
