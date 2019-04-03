@@ -5,6 +5,32 @@ from hellbox.chute import Chute
 from hellbox.task import Task
 
 
+USAGE = """\
+│ » build
+│   Does the building
+╽
+┣━ Bar(level=2, grade=3)
+┃  ┗━ Foo
+┗━ Foo
+   ┗━ Bar(level=2)
+
+│ » package
+│   Does the packaging
+│   Zips and tars
+╽
+┗━ Foo
+"""
+
+
+class Foo(Chute):
+    pass
+
+
+class Bar(Chute):
+    def __init__(self, level, grade=1):
+        pass
+
+
 class TestHellbox:
     def teardown(self):
         Hellbox.reset_tasks()
@@ -99,3 +125,17 @@ class TestHellbox:
 
         assert hasattr(Hellbox, "test_proxy_decorator_method")
         assert test_proxy_decorator_method is not None
+
+    def test_usage(self):
+        task = Task("build")
+        task.describe("Does the building")
+        task << (Foo() << Bar(2, grade=3))
+        task << (Bar(level=2) << Foo())
+        Hellbox.add_task(task)
+
+        task = Task("package")
+        task.describe("Does the packaging\nZips and tars")
+        task << Foo()
+        Hellbox.add_task(task)
+
+        assert Hellbox.usage() == USAGE
