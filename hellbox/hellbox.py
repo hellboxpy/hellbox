@@ -15,7 +15,7 @@ class Hellbox(object):
     def __exit__(self, type, value, trace):
         if type is not None:
             message = "Error when setting up %s: %s" % (self.task.name, value)
-            Hellbox.warn(message, trace=trace)
+            Hellbox.error(message, trace=trace)
             return True  # Suppresses displaying error
         else:
             self.__class__.add_task(self.task)
