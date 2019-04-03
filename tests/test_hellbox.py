@@ -2,12 +2,12 @@ from tests.mock import Mock
 
 from hellbox import Hellbox
 from hellbox.chute import Chute
-from hellbox.task import Task, NullTask
+from hellbox.task import Task
 
 
 class TestHellbox:
     def teardown(self):
-        Hellbox._Hellbox__tasks = []
+        Hellbox.reset_tasks()
 
     def test_init(self):
         h = Hellbox("foo")
@@ -20,7 +20,6 @@ class TestHellbox:
 
     def test_find_missing_task(self):
         task = Hellbox.find_task_by_name("bazzio")
-        assert type(task) is NullTask
         Hellbox._warn = Hellbox.warn
         Hellbox.warn = Mock()
         task.run()

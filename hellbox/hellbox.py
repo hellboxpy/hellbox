@@ -65,3 +65,7 @@ class Hellbox(object):
                 print(task.description)
             print_chutes(task.chains)
             print()
+
+    @classmethod
+    def reset_tasks(cls):
+        cls._Hellbox__tasks = []
