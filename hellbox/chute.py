@@ -5,7 +5,7 @@ class Chute(object):
     @classmethod
     def create(cls, fn):
         def run(self, files):
-            fn(files)
+            return fn(files)
 
         return type(fn.__name__, (cls,), {"run": run})
 
