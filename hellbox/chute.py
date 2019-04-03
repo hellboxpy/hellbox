@@ -29,22 +29,7 @@ class Chute(object):
         return self
 
     def __eq__(self, other):
-        if self.__class__ is not other.__class__:
-            return False
-
-        ours = {
-            key: value
-            for (key, value) in self.__dict__.items()
-            if not key.startswith("_Chute")
-        }
-
-        theirs = {
-            key: value
-            for (key, value) in other.__dict__.items()
-            if not key.startswith("_Chute")
-        }
-
-        return ours == theirs
+        return ChuteInspector(self) == ChuteInspector(other)
 
     def __str__(self):
         if self.__init_args or self.__init_kwargs:
@@ -113,3 +98,21 @@ class CompositeChute(Chute):
         c = object.__new__(chute.__class__)
         c.__dict__ = chute.__dict__.copy()
         return c
+
+
+class ChuteInspector(object):
+    def __init__(self, chute):
+        self.chute = chute
+
+    def __eq__(self, other):
+        if self.chute.__class__ is not other.chute.__class__:
+            return False
+
+        return self.as_dict() == other.as_dict()
+
+    def as_dict(self):
+        return {
+            key: value
+            for (key, value) in self.chute.__dict__.items()
+            if not key.startswith("_Chute")
+        }
