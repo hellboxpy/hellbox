@@ -28,17 +28,27 @@ def autoimport(path="Pipfile.lock"):
 
 
 @Hellbox.proxy
-def warn(*args, **kwargs):
-    log("WARN", *args, **kwargs)
+def debug(*args, **kwargs):
+    log("⋯", *args, **kwargs)
 
 
 @Hellbox.proxy
 def info(*args, **kwargs):
-    log("INFO", *args, **kwargs)
+    log("ℹ", *args, **kwargs)
+
+
+@Hellbox.proxy
+def warn(*args, **kwargs):
+    log("⚠", *args, **kwargs)
+
+
+@Hellbox.proxy
+def error(*args, **kwargs):
+    log("�", *args, **kwargs)
 
 
 @Hellbox.proxy
 def log(level, message, trace=None):
-    print("%s: %s" % (level, message))
+    print("%s \u2502 %s" % (level, message))
     if trace:
         print("\n".join(traceback.format_tb(trace)))
