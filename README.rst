@@ -1,12 +1,12 @@
 Hellbox
 =======
 
+.. image:: https://travis-ci.org/hellboxpy/hellbox.svg?branch=master
+    :target: https://travis-ci.org/hellboxpy/hellbox
+
 Hellbox is a modular, editor-agnostic build system designed for font development. Hellbox is similar to some "Flow-based Programming" environments, consisting of a system of chained blackbox components.
 
 **Hellbox is in the early stages of development. This document is more of a roadmap than documentation of the current implementation. Expect API changes without notice until v0.1.**
-
-.. image:: https://travis-ci.org/hellboxpy/hellbox.svg?branch=master
-    :target: https://travis-ci.org/hellboxpy/hellbox
 
 .. code-block:: python
 
@@ -20,9 +20,9 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 Installation
 ------------
 
-First `install pip`_ (if not present), then run:
+First `install hell`_, then run ``hell init`` inside of your project.
 
-``pip install git+git://github.com/jackjennings/hellbox.git``
+This will set up a new virtual environment with Python 3, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
 
 Goals
 -----
@@ -86,8 +86,8 @@ CLI
 
 Hellbox comes with a command line tool `hell`_ which offers a thin layer over ``pipenv``. Using the CLI is highly recommended, as it makes working in isolation dead simple.
 
-.. _`hell`: https://github.com/hellboxpy/hell
-.. _`install pip`: https://pip.pypa.io/en/latest/installing.html
+.. _`hell`: https://github.com/hellboxpy/hell/blob/master/README.md#installation
+.. _`install hell`: https://pip.pypa.io/en/latest/installing.html
 
 Development
 -----------
