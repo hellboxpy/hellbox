@@ -11,5 +11,5 @@ setup(
     license="LICENSE.txt",
     description="Build system for font development",
     long_description=open("README.rst").read(),
-    install_requires=["virtualenv", "glob2"],
+    install_requires=["glob2"],
 )
