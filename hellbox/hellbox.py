@@ -22,7 +22,6 @@ class Hellbox(object):
 
     @classmethod
     def add_task(cls, task):
-        Hellbox.info("Added %s" % task.name)
         cls.__tasks.append(task)
 
     @classmethod
