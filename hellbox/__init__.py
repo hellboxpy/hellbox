@@ -1,5 +1,6 @@
 import traceback
 from .hellbox import Hellbox
+from .chute import Chute
 
 from pkgutil import extend_path
 
