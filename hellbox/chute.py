@@ -38,7 +38,7 @@ class Chute(object):
                 *self.__init_args,
                 **self.__init_kwargs
             ).arguments
-            values = ", ".join(f"{a}={b}" for (a, b) in arguments.items() if a != "self")
+            values = ", ".join(f"{a}={repr(b)}" for (a, b) in arguments.items() if a != "self")
             return f"{self.__class__.__name__}({values})"
         else:
             return self.__class__.__name__
