@@ -1,5 +1,7 @@
 import inspect
 
+from .source_file import SourceFile
+
 
 class Chute(object):
     @classmethod
