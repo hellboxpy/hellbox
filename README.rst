@@ -24,7 +24,7 @@ First `install hell`_, a CLI for managing hellbox projects. Then run ``hell init
 
 This will set up a new virtual environment with Python 3 using `pipenv`, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
 
-.. _`install hell`: https://pip.pypa.io/en/latest/installing.html
+.. _`install hell`: https://github.com/hellboxpy/hell#installation
 
 Goals
 -----
