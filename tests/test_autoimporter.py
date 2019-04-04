@@ -9,4 +9,4 @@ class TestAutoimporter(object):
     def test_imports(self):
         importer = Autoimporter("./Pipfile.lock")
         importer.execute(globals(), locals())
-        assert glob2
+        assert globals()["glob2"]

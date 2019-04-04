@@ -8,7 +8,7 @@ class TestChute(object):
         f = Mock()
         chute = Chute.create(f)()
         assert not f.called
-        assert len(chute.callbacks) is 0
+        assert len(chute.callbacks) == 0
 
     def test_runs(self):
         f = Mock(returns=["path/to/file.ufo"])
@@ -60,11 +60,11 @@ class TestChute(object):
         assert isinstance(chute.callbacks[0], cb)
 
     def test_composite_chute(self):
-        noop = lambda x: x
-        foo = Chute.create(noop)()
-        bar = Chute.create(noop)()
-        baz = Chute.create(noop)()
-        qux = Chute.create(noop)()
+        Noop = Chute.create(lambda x: x)
+        foo = Noop()
+        bar = Noop()
+        baz = Noop()
+        qux = Noop()
         composite = CompositeChute(foo, bar)
         composite >> baz
         qux >> composite

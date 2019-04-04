@@ -22,6 +22,9 @@ USAGE = """\
 """
 
 
+Noop = Chute.create(lambda x: x)
+
+
 class Foo(Chute):
     pass
 
@@ -60,15 +63,14 @@ class TestHellbox:
 
     def test_get_default_task_name(self):
         Hellbox.default = "bar"
-        assert Hellbox.get_task_name_or_default("default") is "bar"
+        assert Hellbox.get_task_name_or_default("default") == "bar"
 
     def test_get_task_name(self):
-        assert Hellbox.get_task_name_or_default("bar") is "bar"
+        assert Hellbox.get_task_name_or_default("bar") == "bar"
 
     def test_compose(self):
-        noop = lambda x: x
-        foo = Chute.create(noop)()
-        bar = Chute.create(noop)()
+        foo = Noop()
+        bar = Noop()
         composed = Hellbox.compose(foo, bar)()
         assert composed.head == foo
         assert composed.head is not foo
@@ -77,18 +79,16 @@ class TestHellbox:
         assert bar in composed.head.callbacks
 
     def test_compose_many(self):
-        noop = lambda x: x
-        foo = Chute.create(noop)()
-        bar = Chute.create(noop)()
-        baz = Chute.create(noop)()
+        foo = Noop()
+        bar = Noop()
+        baz = Noop()
         composed = Hellbox.compose(foo, bar, baz)()
         assert composed.head == foo
         assert composed.tail == baz
 
     def test_multiple_compose(self):
-        noop = lambda x: x
-        foo = Chute.create(noop)()
-        bar = Chute.create(noop)()
+        foo = Noop()
+        bar = Noop()
         Composite = Hellbox.compose(foo, bar)
         composed = Composite()
         assert composed.head == foo

@@ -61,7 +61,10 @@ class Hellbox(object):
                 continuation = "\u2503" if i+1 < len(chutes) else " "
                 box = f"{branch}\u2501 "
                 lines.append(f"{indent}{box}{chute}")
-                print_chutes(chute.callbacks, indent=f"{indent}{continuation}  ")
+                print_chutes(
+                    chute.callbacks,
+                    indent=f"{indent}{continuation}  "
+                )
 
         for task in cls.__tasks:
             lines.append(f"\u2502 » {task.name}")
