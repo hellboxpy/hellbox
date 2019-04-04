@@ -68,8 +68,7 @@ class ReadFiles(Chute):
     def run(self, files):
         import glob2
 
-        files = [f for g in self.globs for f in glob2.glob(g)]
-        return files
+        return [SourceFile(path, path) for g in self.globs for path in glob2.glob(g)]
 
 
 class WriteFiles(Chute):
@@ -77,7 +76,7 @@ class WriteFiles(Chute):
         self.path = path
 
     def run(self, files):
-        return files
+        return [file.write(self.path) for file in files]
 
 
 class CompositeChute(Chute):
