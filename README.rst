@@ -20,9 +20,9 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 Installation
 ------------
 
-First `install hell`_, then run ``hell init`` inside of your project.
+First `install hell`_, a CLI for managing hellbox projects. Then run ``hell init`` inside of your project.
 
-This will set up a new virtual environment with Python 3, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
+This will set up a new virtual environment with Python 3 using `pipenv`, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
 
 .. _`install hell`: https://pip.pypa.io/en/latest/installing.html
 
