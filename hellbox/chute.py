@@ -40,7 +40,9 @@ class Chute(object):
                 *self.__init_args,
                 **self.__init_kwargs
             ).arguments
-            values = ", ".join(f"{a}={repr(b)}" for (a, b) in arguments.items() if a != "self")
+            values = ", ".join(
+                f"{a}={repr(b)}" for (a, b) in arguments.items() if a != "self"
+            )
             return f"{self.__class__.__name__}({values})"
         else:
             return self.__class__.__name__
@@ -70,7 +72,7 @@ class ReadFiles(Chute):
     def run(self, files):
         import glob2
 
-        return [SourceFile(path, path) for g in self.globs for path in glob2.glob(g)]
+        return [SourceFile(p, p) for g in self.globs for p in glob2.glob(g)]
 
 
 class WriteFiles(Chute):

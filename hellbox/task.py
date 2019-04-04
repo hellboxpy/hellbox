@@ -1,4 +1,4 @@
-from .chute import Chute, ReadFiles, WriteFiles
+from .chute import ReadFiles, WriteFiles
 
 
 class Task(object):

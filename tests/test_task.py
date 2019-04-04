@@ -6,7 +6,7 @@ from hellbox.chute import Chute
 
 class TestTask(object):
     def test_init(self):
-        assert Task("foo").name is "foo"
+        assert Task("foo").name == "foo"
 
     def test_open(self):
         task = Task("foo")
@@ -30,4 +30,4 @@ class TestTask(object):
     def test_describe(self):
         task = Task("foo")
         task.describe("something")
-        assert task.description is "something"
+        assert task.description == "something"
