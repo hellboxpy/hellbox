@@ -1,5 +1,4 @@
 from .task import Task, NullTask
-from .chute import WriteFiles
 
 
 class Hellbox(object):
