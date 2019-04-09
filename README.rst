@@ -8,15 +8,6 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 
 **Hellbox is in the early stages of development. This document is more of a roadmap than documentation of the current implementation. Expect API changes without notice until v1.0.**
 
-.. code-block:: python
-
-    from hellbox import Hellbox
-    from hellbox_generate_otf import GenerateOtf
-
-    with Hellbox("build") as task:
-        task.describe("Builds .otf files from .ufo source")
-        task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")
-
 Installation
 ------------
 
@@ -39,6 +30,17 @@ Overview
 Hellbox aims to provide both an environment and framework for defining build pipelines.
 
 Hellbox tasks are composed of "chutes" — modules that perform a single operation over one or more files.
+
+.. code-block:: python
+
+    from hellbox import Hellbox
+    from hellbox_generate_otf import GenerateOtf
+
+    with Hellbox("build") as task:
+        task.describe("Builds .otf files from .ufo source")
+        task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")
+
+With the above configuration, running ``hell run build`` will generate OTF files from all of the UFO sources, and write them to the ``otf`` directory.
 
 Chutes
 ------
