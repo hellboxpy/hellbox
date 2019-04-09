@@ -11,11 +11,11 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 .. code-block:: python
 
     from hellbox import Hellbox
-    from hellbox_generate_otf import GenerateOTF
+    from hellbox_generate_otf import GenerateOtf
 
     with Hellbox("build") as task:
         task.describe("Builds .otf files from .ufo source")
-        task.read("*.ufo") >> GenerateOTF() >> task.write("./otf")
+        task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")
 
 Installation
 ------------
