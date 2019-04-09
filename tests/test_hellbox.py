@@ -139,3 +139,6 @@ class TestHellbox:
         Hellbox.add_task(task)
 
         assert Hellbox.usage() == USAGE
+
+    def test_usage_without_tasks(self):
+        assert Hellbox.usage() == "No tasks have been defined in Hellfile.py"

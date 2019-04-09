@@ -1,6 +1,19 @@
 from .task import Task, NullTask
 
 
+def _print_chutes(lines, chutes, indent=""):
+    for i, chute in enumerate(chutes):
+        branch = "\u2523" if i+1 < len(chutes) else "\u2517"
+        continuation = "\u2503" if i+1 < len(chutes) else " "
+        box = f"{branch}\u2501 "
+        lines.append(f"{indent}{box}{chute}")
+        _print_chutes(
+            lines,
+            chute.callbacks,
+            indent=f"{indent}{continuation}  "
+        )
+
+
 class Hellbox(object):
     __tasks = []
     default = None
@@ -55,16 +68,8 @@ class Hellbox(object):
     def usage(cls):
         lines = []
 
-        def print_chutes(chutes, indent=""):
-            for i, chute in enumerate(chutes):
-                branch = "\u2523" if i+1 < len(chutes) else "\u2517"
-                continuation = "\u2503" if i+1 < len(chutes) else " "
-                box = f"{branch}\u2501 "
-                lines.append(f"{indent}{box}{chute}")
-                print_chutes(
-                    chute.callbacks,
-                    indent=f"{indent}{continuation}  "
-                )
+        if not cls.__tasks:
+            return "No tasks have been defined in Hellfile.py"
 
         for task in cls.__tasks:
             lines.append(f"\u2502 » {task.name}")
@@ -72,7 +77,7 @@ class Hellbox(object):
                 for line in task.description.splitlines():
                     lines.append(f"\u2502   {line}")
             lines.append("\u257D")
-            print_chutes(task.chains)
+            _print_chutes(lines, task.chains)
             lines.append("")
 
         return "\n".join(lines)
