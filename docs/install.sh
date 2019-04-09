@@ -25,6 +25,7 @@ main() {
     ensure tar -xvzf "$_file.tar.gz" -C $_dir
     ensure chmod u+x "$_file"
     ensure mv "$_file" /usr/local/bin/
+    ensure hell _postinstall
 }
 
 get_bitness() {
