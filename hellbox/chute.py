@@ -23,12 +23,14 @@ class Chute(object):
         for callback in self.callbacks:
             callback(files)
 
+    def __rshift__(self, other):
+        if self.__class__ is other.__class__:
+            return other.__rrshift__(self)
+        else:
+            return NotImplemented
+
     def __rrshift__(self, other):
         return other.to(self)
-
-    def __rlshift__(self, other):
-        self.to(other)
-        return self
 
     def __eq__(self, other):
         return ChuteInspector(self) == ChuteInspector(other)
@@ -46,6 +48,9 @@ class Chute(object):
             return f"{self.__class__.__name__}({values})"
         else:
             return self.__class__.__name__
+
+    def __repr__(self):
+        return str(self)
 
     def run(self, files):
         return files
@@ -81,26 +86,6 @@ class WriteFiles(Chute):
 
     def run(self, files):
         return [file.write(self.path) for file in files]
-
-
-class CompositeChute(Chute):
-    def __init__(self, *chutes):
-        chutes = [self.__clone(c) for c in chutes]
-        self.head = self.tail = chutes[0]
-        for chute in chutes[1:]:
-            self.tail = self.tail.to(chute)
-
-    def to(self, *args):
-        self.tail.to(*args)
-
-    def __rrshift__(self, other):
-        other.to(self.head)
-        return self.tail
-
-    def __clone(self, chute):
-        c = object.__new__(chute.__class__)
-        c.__dict__ = chute.__dict__.copy()
-        return c
 
 
 class ChuteInspector(object):

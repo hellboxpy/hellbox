@@ -129,8 +129,8 @@ class TestHellbox:
     def test_usage(self):
         task = Task("build")
         task.describe("Does the building")
-        task << (Foo() << Bar(2, grade=3))
-        task << (Bar(level=2) << Foo())
+        task << Bar(2, grade=3) >> Foo()
+        task << Foo() >> Bar(level=2)
         Hellbox.add_task(task)
 
         task = Task("package")

@@ -1,6 +1,34 @@
 from tests.mock import Mock
 
-from hellbox.chute import Chute, CompositeChute
+from hellbox.chute import Chute
+from hellbox.chutes.composite import CompositeChute
+
+
+@Chute.create
+def Noop(x):
+    return x
+
+
+@Chute.create
+def Add2(x):
+    print('add', x)
+    return x + 2
+
+
+@Chute.create
+def Multiply2(x):
+    print('mult', x)
+    return x * 2
+
+
+class Record(Chute):
+    def __init__(self, name, env):
+        self.name = name
+        self.env = env
+
+    def run(self, x):
+        print("record", x)
+        self.env[self.name] = x
 
 
 class TestChute(object):
@@ -45,11 +73,11 @@ class TestChute(object):
         assert result is cb
         assert cb in chute.callbacks
 
-    def test_lshift(self):
-        chute = Chute.create(Mock())()
-        cb = Chute.create(Mock())()
-        result = cb << chute
-        assert result is chute
+    def test_rshift_to_same_class(self):
+        chute = Noop()
+        cb = Noop()
+        result = chute >> cb
+        assert result is cb
         assert cb in chute.callbacks
 
     def test_to_with_unintialized_chute(self):
@@ -59,14 +87,32 @@ class TestChute(object):
         assert chute.callbacks
         assert isinstance(chute.callbacks[0], cb)
 
-    def test_composite_chute(self):
-        Noop = Chute.create(lambda x: x)
-        foo = Noop()
-        bar = Noop()
-        baz = Noop()
+    def test_composite_run(self):
+        output = {}
+        CompositeChute(Add2(), Multiply2(), Record("value", output))(1)
+        assert output["value"] == 6
+
+    def test_composite_nested_run(self):
+        output = {}
+        CompositeChute(
+            Add2(),
+            CompositeChute(Add2(), Multiply2()),
+            Record("value", output),
+        )(1)
+        assert output["value"] == 10
+
+    def test_composite_prepend(self):
+        foo = Add2()
+        bar = Multiply2()
         qux = Noop()
         composite = CompositeChute(foo, bar)
-        composite >> baz
         qux >> composite
-        assert baz in composite.tail.callbacks
         assert composite.head in qux.callbacks
+
+    def test_composite_apprend(self):
+        foo = Add2()
+        bar = Multiply2()
+        baz = Noop()
+        composite = CompositeChute(foo, bar)
+        composite >> baz
+        assert baz in composite.tail.callbacks
