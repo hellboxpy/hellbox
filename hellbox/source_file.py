@@ -1,9 +1,21 @@
+import atexit
 import os
 import shlex
+import shutil
 import subprocess
 import tempfile
 from collections import namedtuple
 from shutil import copyfile
+
+
+TEMPORARY_DIRECTORIES = []
+
+
+@atexit.register
+def _cleanup():
+    for directory in TEMPORARY_DIRECTORIES:
+        if os.path.exists(directory):
+            shutil.rmtree(directory)
 
 
 class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
@@ -14,7 +26,7 @@ class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
         if basename is None:
             basename = self.basename
 
-        directory = tempfile.mkdtemp()
+        directory = self._create_temporary_directory()
         destination = os.path.join(directory, basename)
         copyfile(self.content_path, destination)
 
@@ -28,7 +40,10 @@ class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
 
         if "{output}" in command_template:
             input_path = self.content_path
-            output_path = os.path.join(tempfile.mkdtemp(), filename)
+            output_path = os.path.join(
+                self._create_temporary_directory(),
+                filename
+            )
         else:
             copy = self.copy()
             input_path = copy.content_path
@@ -69,3 +84,8 @@ class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
     @property
     def root(self):
         return os.path.splitext(self.basename)[0]
+
+    def _create_temporary_directory(self):
+        directory = tempfile.mkdtemp()
+        TEMPORARY_DIRECTORIES.append(directory)
+        return directory
