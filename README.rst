@@ -13,9 +13,9 @@ Hellbox is a modular, editor-agnostic build system designed for font development
     from hellbox import Hellbox
     from hellbox_generate_otf import GenerateOTF
 
-    with Hellbox('build') as task:
-        task.describe('Builds .otf files from .ufo source')
-        task.read('*.ufo') >> GenerateOTF() >> task.write('./otf')
+    with Hellbox("build") as task:
+        task.describe("Builds .otf files from .ufo source")
+        task.read("*.ufo") >> GenerateOTF() >> task.write("./otf")
 
 Installation
 ------------
@@ -63,8 +63,8 @@ You can then use your chute in your Hellfile as such:
 
 .. code-block:: python
 
-  with Hellbox('backup') as task:
-      task.read('./build/*') >> FilterFilesByExt('otf', 'txt') >> task.write('backup')
+  with Hellbox("backup") as task:
+      task.read("build/*") >> FilterFilesByExt("otf", "txt") >> task.write("backup")
 
 If your chute doesn't require arguments when initialized, you may prefer to define it with a function instead of a class. Using the ``@Chute.create`` function decorator makes a function definition act like a subclass of Chute:
 
@@ -73,12 +73,12 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
     from hellbox.chute import Chute
 
     @Chute.create
-    def GenerateWOFF(files):
+    def GenerateWoff2(files):
         # do something to files...
         return files
 
-    with Hellbox('woff') as task:
-        task.read('*.otf') >> GenerateWOFF() >> task.write('webfonts')
+    with Hellbox("webfonts") as task:
+        task.read("build/*.ttf") >> GenerateWoff2() >> task.write("webfonts")
 
 CLI
 ---
@@ -90,4 +90,4 @@ Hellbox comes with a command line tool `hell`_ which offers a thin layer over ``
 Development
 -----------
 
-Run tests with ``make test``.
+Install development dependencies with ``make``. Run tests with ``make test``.
