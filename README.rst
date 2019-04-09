@@ -53,14 +53,11 @@ The basic setup for defining your own chutes requires you to create a new subcla
 
     class FilterFilesByExt(Chute):
 
-        def __init__(self, *exts):
-            self.exts = exts
+        def __init__(self, *extensions):
+            self.extensions = extensions
 
         def run(self, files):
-            return self._filter(files)
-
-        def _filter(files):
-            return [f for f in files if f.ext in self.exts]
+            return [f for f in files if f.extension in self.extensions]
 
 You can then use your chute in your Hellfile as such:
 
