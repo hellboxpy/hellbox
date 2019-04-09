@@ -31,7 +31,7 @@ Goals
 
 * **Consistency** Hellbox tasks don't take arguments by design, favoring consistent task output
 * **Modularity** Hellbox packages should be resuable and composable, while maintaining flexibility for custom workflows
-* **Isolation** Hellbox tasks and packages are version locked and isolated from other project and Python installations
+* **Isolation** Hellbox tasks and packages are version locked and isolated from other projects and Python installations
 
 Overview
 --------
