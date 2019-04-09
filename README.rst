@@ -8,15 +8,6 @@ Hellbox is a modular, editor-agnostic build system designed for font development
 
 **Hellbox is in the early stages of development. This document is more of a roadmap than documentation of the current implementation. Expect API changes without notice until v1.0.**
 
-Installation
-------------
-
-First `install hell`_, a CLI for managing hellbox projects. Then run ``hell init`` inside of your project.
-
-This will set up a new virtual environment with Python 3 using `pipenv`, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
-
-.. _`install hell`: https://github.com/hellboxpy/hell#installation
-
 Goals
 -----
 
@@ -29,7 +20,7 @@ Overview
 
 Hellbox aims to provide both an environment and framework for defining build pipelines.
 
-Hellbox tasks are composed of "chutes" — modules that perform a single operation over one or more files.
+Hellbox tasks are composed of "chutes" — modules that perform a single operation over one or more files. Chutes are connected together using the ``>>`` operator, linking the output of one chute to the input of the next.
 
 .. code-block:: python
 
@@ -41,6 +32,15 @@ Hellbox tasks are composed of "chutes" — modules that perform a single operati
         task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")
 
 With the above configuration, running ``hell run build`` will generate OTF files from all of the UFO sources, and write them to the ``otf`` directory.
+
+Installation
+------------
+
+First `install hell`_, a CLI for managing hellbox projects. Then run ``hell init`` inside of your project.
+
+This will set up a new virtual environment with Python 3 using `pipenv`, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
+
+.. _`install hell`: https://github.com/hellboxpy/hell#installation
 
 Chutes
 ------
