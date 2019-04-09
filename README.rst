@@ -6,7 +6,7 @@ Hellbox
 
 Hellbox is a modular, editor-agnostic build system designed for font development. Hellbox is similar to some "Flow-based Programming" environments, consisting of a system of chained blackbox components.
 
-**Hellbox is in the early stages of development. This document is more of a roadmap than documentation of the current implementation. Expect API changes without notice until v0.1.**
+**Hellbox is in the early stages of development. This document is more of a roadmap than documentation of the current implementation. Expect API changes without notice until v1.0.**
 
 .. code-block:: python
 
