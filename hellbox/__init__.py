@@ -15,7 +15,7 @@ __all__ = [
 
 @Hellbox.proxy
 def compose(*chutes):
-    from .chute import CompositeChute
+    from .chutes.composite import CompositeChute
 
     def make_composite_chute():
         return CompositeChute(*chutes)
