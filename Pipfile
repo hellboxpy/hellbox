@@ -8,6 +8,11 @@ python_version = "3.7"
 [dev-packages]
 pytest = "*"
 flake8 = "*"
+twine = "*"
+wheel = "*"
 
 [packages]
 glob2 = "*"
+
+[scripts]
+publish = "python setup.py upload"
