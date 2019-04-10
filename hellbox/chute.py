@@ -38,9 +38,7 @@ class Chute(object):
     def __str__(self):
         if self.__init_args or self.__init_kwargs:
             arguments = self.__init_signature.bind(
-                self,
-                *self.__init_args,
-                **self.__init_kwargs
+                self, *self.__init_args, **self.__init_kwargs
             ).arguments
             values = ", ".join(
                 f"{a}={repr(b)}" for (a, b) in arguments.items() if a != "self"

@@ -3,15 +3,11 @@ from .task import Task, NullTask
 
 def _print_chutes(lines, chutes, indent=""):
     for i, chute in enumerate(chutes):
-        branch = "\u2523" if i+1 < len(chutes) else "\u2517"
-        continuation = "\u2503" if i+1 < len(chutes) else " "
+        branch = "\u2523" if i + 1 < len(chutes) else "\u2517"
+        continuation = "\u2503" if i + 1 < len(chutes) else " "
         box = f"{branch}\u2501 "
         lines.append(f"{indent}{box}{chute}")
-        _print_chutes(
-            lines,
-            chute.callbacks,
-            indent=f"{indent}{continuation}  "
-        )
+        _print_chutes(lines, chute.callbacks, indent=f"{indent}{continuation}  ")
 
 
 class Hellbox(object):

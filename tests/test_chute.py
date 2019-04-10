@@ -11,13 +11,13 @@ def Noop(x):
 
 @Chute.create
 def Add2(x):
-    print('add', x)
+    print("add", x)
     return x + 2
 
 
 @Chute.create
 def Multiply2(x):
-    print('mult', x)
+    print("mult", x)
     return x * 2
 
 
@@ -95,9 +95,7 @@ class TestChute(object):
     def test_composite_nested_run(self):
         output = {}
         CompositeChute(
-            Add2(),
-            CompositeChute(Add2(), Multiply2()),
-            Record("value", output),
+            Add2(), CompositeChute(Add2(), Multiply2()), Record("value", output)
         )(1)
         assert output["value"] == 10
 
