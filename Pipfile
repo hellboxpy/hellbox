@@ -10,9 +10,14 @@ pytest = "*"
 flake8 = "*"
 twine = "*"
 wheel = "*"
+black = "*"
 
 [packages]
 glob2 = "*"
 
 [scripts]
 publish = "python setup.py upload"
+fmt = "black ."
+
+[pipenv]
+allow_prereleases = true

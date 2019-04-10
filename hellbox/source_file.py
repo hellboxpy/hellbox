@@ -19,7 +19,6 @@ def _cleanup():
 
 
 class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
-
     def copy(self, basename=None):
         # TODO: Should copy directories as well
 
@@ -40,10 +39,7 @@ class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
 
         if "{output}" in command_template:
             input_path = self.content_path
-            output_path = os.path.join(
-                self._create_temporary_directory(),
-                filename
-            )
+            output_path = os.path.join(self._create_temporary_directory(), filename)
         else:
             copy = self.copy()
             input_path = copy.content_path
