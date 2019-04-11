@@ -1,3 +1,7 @@
+import traceback
+
+from .autoimporter import Autoimporter
+from .chutes.composite import CompositeChute
 from .task import Task, NullTask
 
 
@@ -49,14 +53,6 @@ class Hellbox(object):
         return cls.default if name == "default" else name
 
     @classmethod
-    def proxy(cls, fn):
-        def proxied_method(cls, *args, **kwargs):
-            return fn(*args, **kwargs)
-
-        setattr(cls, fn.__name__, classmethod(proxied_method))
-        return fn
-
-    @classmethod
     def inspect(cls):
         print(cls.usage())
 
@@ -81,3 +77,36 @@ class Hellbox(object):
     @classmethod
     def reset_tasks(cls):
         cls.__tasks = []
+
+    @staticmethod
+    def compose(*chutes):
+        def make_composite_chute():
+            return CompositeChute(*chutes)
+
+        return make_composite_chute
+
+    @staticmethod
+    def autoimport(path="Pipfile.lock"):
+        Autoimporter(path).execute(globals(), locals())
+
+    @classmethod
+    def debug(cls, *args, **kwargs):
+        cls.log("⋯", *args, **kwargs)
+
+    @classmethod
+    def info(cls, *args, **kwargs):
+        cls.log("ℹ", *args, **kwargs)
+
+    @classmethod
+    def warn(cls, *args, **kwargs):
+        cls.log("⚠", *args, **kwargs)
+
+    @classmethod
+    def error(cls, *args, **kwargs):
+        cls.log("�", *args, **kwargs)
+
+    @classmethod
+    def log(cls, level, message, trace=None):
+        print("%s \u2502 %s" % (level, message))
+        if trace:
+            print("\n".join(traceback.format_tb(trace)))
