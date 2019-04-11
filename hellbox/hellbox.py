@@ -1,4 +1,5 @@
 import traceback
+from enum import IntEnum
 
 from .autoimporter import Autoimporter
 from .chutes.composite import CompositeChute
@@ -14,9 +15,17 @@ def _print_chutes(lines, chutes, indent=""):
         _print_chutes(lines, chute.callbacks, indent=f"{indent}{continuation}  ")
 
 
+class LogLevel(IntEnum):
+    DEBUG = 10
+    INFO = 20
+    WARN = 30
+    ERROR = 40
+
+
 class Hellbox(object):
     __tasks = []
     default = None
+    logLevel = LogLevel.INFO
 
     def __init__(self, task_name, *args, **kwargs):
         self.task = Task(task_name)
@@ -91,22 +100,25 @@ class Hellbox(object):
 
     @classmethod
     def debug(cls, *args, **kwargs):
-        cls.log("⋯", *args, **kwargs)
+        cls.__log(LogLevel.DEBUG, "⋯", *args, **kwargs)
 
     @classmethod
     def info(cls, *args, **kwargs):
-        cls.log("ℹ", *args, **kwargs)
+        cls.__log(LogLevel.INFO, "ℹ", *args, **kwargs)
 
     @classmethod
     def warn(cls, *args, **kwargs):
-        cls.log("⚠", *args, **kwargs)
+        cls.__log(LogLevel.WARN, "⚠", *args, **kwargs)
 
     @classmethod
     def error(cls, *args, **kwargs):
-        cls.log("�", *args, **kwargs)
+        cls.__log(LogLevel.ERROR, "�", *args, **kwargs)
 
     @classmethod
-    def log(cls, level, message, trace=None):
-        print("%s \u2502 %s" % (level, message))
+    def __log(cls, level, leader, message, trace=None):
+        if level < cls.logLevel:
+            return
+
+        print("%s \u2502 %s" % (leader, message))
         if trace:
             print("\n".join(traceback.format_tb(trace)))
