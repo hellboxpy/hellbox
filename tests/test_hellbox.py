@@ -118,14 +118,6 @@ class TestHellbox:
         Hellbox.run_task("fooqaaz")
         assert f2.called
 
-    def test_proxy_decorator(self):
-        @Hellbox.proxy
-        def test_proxy_decorator_method(self):
-            pass
-
-        assert hasattr(Hellbox, "test_proxy_decorator_method")
-        assert test_proxy_decorator_method is not None
-
     def test_usage(self):
         task = Task("build")
         task.describe("Does the building")
