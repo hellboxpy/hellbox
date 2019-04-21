@@ -51,7 +51,7 @@ The basic setup for defining your own chutes requires you to create a new subcla
 
 .. code-block:: python
 
-    from hellbox.chute import Chute
+    from hellbox import Chute
 
     class FilterFilesByExt(Chute):
 
@@ -72,7 +72,7 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
 
 .. code-block:: python
 
-    from hellbox.chute import Chute
+    from hellbox import Chute
 
     @Chute.create
     def GenerateWoff2(files):

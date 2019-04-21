@@ -1,4 +1,4 @@
-from hellbox.chute import Chute
+from hellbox.chutes.chute import Chute
 
 
 class CompositeChute(Chute):

@@ -1,7 +1,5 @@
 import inspect
 
-from .source_file import SourceFile
-
 
 class Chute(object):
     @classmethod
@@ -66,24 +64,6 @@ class Chute(object):
         except AttributeError:
             self.__callbacks = []
             return self.__callbacks
-
-
-class ReadFiles(Chute):
-    def __init__(self, *globs):
-        self.globs = globs
-
-    def run(self, files):
-        import glob2
-
-        return [SourceFile(p, p) for g in self.globs for p in glob2.glob(g)]
-
-
-class WriteFiles(Chute):
-    def __init__(self, path):
-        self.path = path
-
-    def run(self, files):
-        return [file.write(self.path) for file in files]
 
 
 class ChuteInspector(object):

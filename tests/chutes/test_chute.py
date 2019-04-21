@@ -1,6 +1,6 @@
 from tests.mock import Mock
 
-from hellbox.chute import Chute
+from hellbox.chutes.chute import Chute
 from hellbox.chutes.composite import CompositeChute
 
 

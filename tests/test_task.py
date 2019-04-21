@@ -1,7 +1,7 @@
 from tests.mock import Mock
 
+from hellbox import Chute
 from hellbox.task import Task
-from hellbox.chute import Chute
 
 
 class TestTask(object):
