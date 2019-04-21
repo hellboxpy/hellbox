@@ -1,9 +1,9 @@
 import traceback
 from enum import IntEnum
 
-from .autoimporter import Autoimporter
-from .chutes.composite import CompositeChute
-from .task import Task, NullTask
+from hellbox.autoimporter import Autoimporter
+from hellbox.chutes.composite import CompositeChute
+from hellbox.task import Task, NullTask
 
 
 def _print_chutes(lines, chutes, indent=""):

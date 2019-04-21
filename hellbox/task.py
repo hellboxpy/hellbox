@@ -1,4 +1,5 @@
-from .chute import ReadFiles, WriteFiles
+from hellbox.chutes.read_files import ReadFiles
+from hellbox.chutes.write_files import WriteFiles
 
 
 class Task(object):

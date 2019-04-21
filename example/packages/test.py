@@ -1,4 +1,4 @@
-from hellbox.chute import Chute
+from hellbox import Chute
 
 
 @Chute.create

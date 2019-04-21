@@ -1,7 +1,6 @@
 from tests.mock import Mock
 
-from hellbox import Hellbox
-from hellbox.chute import Chute
+from hellbox import Hellbox, Chute
 from hellbox.task import Task
 
 
