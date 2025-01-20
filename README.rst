@@ -33,6 +33,13 @@ Hellbox tasks are composed of "chutes" — modules that perform a single operati
 
 With the above configuration, running ``hell run build`` will generate OTF files from all of the UFO sources, and write them to the ``otf`` directory.
 
+CLI
+---
+
+Hellbox comes with a command line tool `hell`_ which offers a thin layer over the ``pipenv`` tool. Using the CLI is highly recommended, as it provides a simplified, opinionated interface for working with Python specifically for a ``hellbox`` project.
+
+.. _`hell`: https://github.com/hellboxpy/hell/blob/master/README.md#installation
+
 Installation
 ------------
 
@@ -81,13 +88,6 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
 
     with Hellbox("webfonts") as task:
         task.read("build/*.ttf") >> GenerateWoff2() >> task.write("webfonts")
-
-CLI
----
-
-Hellbox comes with a command line tool `hell`_ which offers a thin layer over the ``pipenv`` tool. Using the CLI is highly recommended, as it provides a simplified, opinionated interface for working with Python specifically for a ``hellbox`` project.
-
-.. _`hell`: https://github.com/hellboxpy/hell/blob/master/README.md#installation
 
 Development
 -----------
