@@ -85,7 +85,7 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
 CLI
 ---
 
-Hellbox comes with a command line tool `hell`_ which offers a thin layer over ``pipenv``. Using the CLI is highly recommended, as it makes working in isolation dead simple.
+Hellbox comes with a command line tool `hell`_ which offers a thin layer over the ``pipenv`` tool. Using the CLI is highly recommended, as it provides a simplified, opinionated interface for working with Python specifically for a ``hellbox`` project.
 
 .. _`hell`: https://github.com/hellboxpy/hell/blob/master/README.md#installation
 
