@@ -1,24 +1,26 @@
 [[source]]
+name = "pypi"
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [requires]
-python_version = "3.7"
+python_version = "3.13"
 
 [dev-packages]
-pytest = "*"
-flake8 = "*"
-twine = "*"
-wheel = "*"
-black = "*"
-urllib3 = ">=1.24.2"
+pytest = "==8.*"
+ruff = "==0.*"
+twine = "==6.*"
+urllib3 = "==2.*"
+wheel = "==0.*"
 
 [packages]
-glob2 = "*"
+glob2 = ">=0.7"
 
 [scripts]
+check = "ruff check ."
+fmt = "ruff format ."
 publish = "python setup.py upload"
-fmt = "black ."
+test = "py.test tests"
 
 [pipenv]
 allow_prereleases = true

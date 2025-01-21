@@ -34,7 +34,7 @@ class Bar(Chute):
 
 
 class TestHellbox:
-    def teardown(self):
+    def teardown_method(self):
         Hellbox.reset_tasks()
 
     def test_init(self):
