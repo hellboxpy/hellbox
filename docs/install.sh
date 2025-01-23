@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Based on rustup: https://github.com/rust-lang/rustup/blob/cb3556eaf68504e62b4e65a308a14b3a65c0bf1f/rustup-init.sh
+
 if [ -z "$HELL_RELEASE_ROOT" ]; then
     HELL_RELEASE_ROOT="https://github.com/hellboxpy/hell/releases/download"
 fi
@@ -11,21 +13,28 @@ main() {
     local _arch="$RETVAL"
     assert_nz "$_arch" "arch"
 
-    local _version="v0.1.3"
-    local _url="${HELL_RELEASE_ROOT}/${_version}/hell-${_version}-${_arch}.tar.gz"
+    local _version="v0.1.4"
+    local _url="${HELL_RELEASE_ROOT}/${_version}/hell-${_arch}"
 
     local _dir
     _dir="$(mktemp -d 2>/dev/null || ensure mktemp -d -t hell)"
     local _file="${_dir}/hell"
+    local _destination="$HOME/.hell/bin"
 
     printf '%s\n' 'info: downloading hell' 1>&2
 
     ensure mkdir -p "$_dir"
-    ensure downloader "$_url" "$_file.tar.gz"
-    ensure tar -xvzf "$_file.tar.gz" -C $_dir
+    ensure downloader "$_url" "$_file"
     ensure chmod u+x "$_file"
-    ensure mv "$_file" /usr/local/bin/
-    ensure hell _postinstall
+    ensure mkdir -p "$_destination"
+    ensure mv "$_file" "$_destination/hell"
+    ensure "$_destination/hell" _postinstall
+    cat <<EOF
+Ensure that you can run the CLI by adding ~/.hell/bin path to PATH:
+
+  PATH=~/.hell/bin:\$PATH
+
+EOF
 }
 
 get_bitness() {
@@ -67,24 +76,8 @@ get_architecture() {
 
     case "$_ostype" in
 
-        Android)
-            _ostype=linux-android
-            ;;
-
         Linux)
             _ostype=unknown-linux-gnu
-            ;;
-
-        FreeBSD)
-            _ostype=unknown-freebsd
-            ;;
-
-        NetBSD)
-            _ostype=unknown-netbsd
-            ;;
-
-        DragonFly)
-            _ostype=unknown-dragonfly
             ;;
 
         Darwin)
@@ -103,53 +96,12 @@ get_architecture() {
 
     case "$_cputype" in
 
-        i386 | i486 | i686 | i786 | x86)
-            _cputype=i686
-            ;;
-
-        xscale | arm)
-            _cputype=arm
-            if [ "$_ostype" = "linux-android" ]; then
-                _ostype=linux-androideabi
-            fi
-            ;;
-
-        armv6l)
-            _cputype=arm
-            if [ "$_ostype" = "linux-android" ]; then
-                _ostype=linux-androideabi
-            else
-                _ostype="${_ostype}eabihf"
-            fi
-            ;;
-
-        armv7l | armv8l)
-            _cputype=armv7
-            if [ "$_ostype" = "linux-android" ]; then
-                _ostype=linux-androideabi
-            else
-                _ostype="${_ostype}eabihf"
-            fi
-            ;;
-
-        aarch64)
+        aarch64 | arm64)
             _cputype=aarch64
             ;;
 
         x86_64 | x86-64 | x64 | amd64)
             _cputype=x86_64
-            ;;
-
-        ppc)
-            _cputype=powerpc
-            ;;
-
-        ppc64)
-            _cputype=powerpc64
-            ;;
-
-        ppc64le)
-            _cputype=powerpc64le
             ;;
 
         *)
