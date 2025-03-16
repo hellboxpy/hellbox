@@ -13,7 +13,7 @@ main() {
     local _arch="$RETVAL"
     assert_nz "$_arch" "arch"
 
-    local _version="v0.1.4"
+    local _version="v0.2.0"
     local _url="${HELL_RELEASE_ROOT}/${_version}/hell-${_arch}"
 
     local _dir
