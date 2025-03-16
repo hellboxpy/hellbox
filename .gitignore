@@ -8,3 +8,4 @@ sample.py
 .hellbox
 .venv
 .cache
+.DS_Store

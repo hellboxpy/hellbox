@@ -1,8 +1,6 @@
 @font-face {
-  src: local("Dover Serif Display"),
-       url("https://assets.hellbox.io/fonts/dover/DoverSerifDisplay-Regular-Web.woff2") format("woff2"),
-       url("https://assets.hellbox.io/fonts/dover/DoverSerifDisplay-Regular-Web.woff") format("woff");       
-  font-family: "Dover Serif Display";
+  src: url("./16th-Century-Gothic-regular.woff2") format("woff2");
+  font-family: "16th Century Gothic";
   font-weight: normal;
 }
 
@@ -17,11 +15,11 @@ body {
   max-width: 70rem;
   margin: 0 auto;
   padding: 8rem 4rem;
-  color: rgba(0, 0, 0, 0.8)
+  color: rgba(0, 0, 0, 0.8);
 }
 
 h1 {
-  font-family: "Dover Serif Display", "Times New Roman", Times, serif;
+  font-family: "16th Century Gothic", "Times New Roman", Times, serif;
   font-weight: normal;
   font-size: 8rem;
   margin: 0 0 4rem;
