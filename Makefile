@@ -1,5 +1,6 @@
 init:
 	uv sync
+	uv run lefthook install
 
 test:
 	# This runs all of the tests. To run an individual test, run pytest with
