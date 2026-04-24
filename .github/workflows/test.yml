@@ -25,10 +25,10 @@ jobs:
         run: uv run ruff check .
 
       - name: Check Markdown formatting
-        run: uv run mdformat --check .
+        run: git ls-files '*.md' | xargs -r uv run mdformat --check
 
       - name: Check shell formatting
-        run: shfmt -d .
+        run: git ls-files '*.sh' | xargs -r shfmt -d
 
   test:
     runs-on: ubuntu-latest
