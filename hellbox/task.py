@@ -34,7 +34,6 @@ class Task(object):
 
 
 class NullTask(Task):
-
     default_warning = "Trying to run default task but no default supplied"
     definition_warning = "Trying to run %s task but no definition found"
 
