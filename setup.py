@@ -14,11 +14,11 @@ DESCRIPTION = "Build system for font development."
 URL = "http://github.com/hellboxpy/hellbox"
 EMAIL = "jack@standard-library.com"
 AUTHOR = "Jack Jennings"
-REQUIRES_PYTHON = ">=3.6.0"
+REQUIRES_PYTHON = ">=3.8.0"
 VERSION = None
 
 # What packages are required for this module to be executed?
-REQUIRED = ["glob2"]
+REQUIRED = []
 
 # What packages are optional?
 EXTRAS = {
@@ -116,8 +116,12 @@ setup(
         "Topic :: Software Development :: Build Tools",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     # $ setup.py publish support.
