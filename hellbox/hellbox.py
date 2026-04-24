@@ -77,7 +77,7 @@ class Hellbox(object):
             if task.description:
                 for line in task.description.splitlines():
                     lines.append(f"\u2502   {line}")
-            lines.append("\u257D")
+            lines.append("\u257d")
             _print_chutes(lines, task.chains)
             lines.append("")
 

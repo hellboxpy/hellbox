@@ -9,4 +9,6 @@ class ReadFiles(Chute):
         self.globs = globs
 
     def run(self, files):
-        return [SourceFile(p, p) for g in self.globs for p in glob.glob(g, recursive=True)]
+        return [
+            SourceFile(p, p) for g in self.globs for p in glob.glob(g, recursive=True)
+        ]
