@@ -37,6 +37,8 @@ exclude = ["tests*"]
 
 [dependency-groups]
 dev = [
+    "lefthook>=2.1.6",
+    "mdformat>=0.7.17",
     "pytest>=8,<9",
     "ruff>=0,<1",
     "twine>=6,<7",

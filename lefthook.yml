@@ -1,0 +1,14 @@
+pre-commit:
+  commands:
+    format-python:
+      glob: "*.py"
+      run: uv run ruff format {staged_files}
+      stage_fixed: true
+    format-markdown:
+      glob: "*.md"
+      run: uv run mdformat {staged_files}
+      stage_fixed: true
+    format-shell:
+      glob: "*.sh"
+      run: shfmt -w {staged_files}
+      stage_fixed: true
