@@ -2,11 +2,12 @@ from hellbox.autoimporter import Autoimporter
 
 
 class TestAutoimporter(object):
-    def test_init(self):
-        importer = Autoimporter("./Pipfile.lock")
-        assert importer.path == "./Pipfile.lock"
+    def test_requirements(self):
+        importer = Autoimporter()
+        assert isinstance(importer.requirements, list)
+        assert len(importer.requirements) > 0
 
     def test_imports(self):
-        importer = Autoimporter("./Pipfile.lock")
+        importer = Autoimporter()
         importer.execute(globals(), locals())
-        assert globals()["glob2"]
+        assert globals()["pytest"]

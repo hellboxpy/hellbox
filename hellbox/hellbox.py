@@ -95,8 +95,8 @@ class Hellbox(object):
         return make_composite_chute
 
     @staticmethod
-    def autoimport(path="Pipfile.lock"):
-        Autoimporter(path).execute(globals(), locals())
+    def autoimport():
+        Autoimporter().execute(globals(), locals())
 
     @classmethod
     def debug(cls, *args, **kwargs):
