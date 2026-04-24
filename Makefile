@@ -1,10 +1,8 @@
 init:
-	pip install pipenv
-	pipenv lock
-	pipenv install --dev
+	uv sync
 
 test:
-	# This runs all of the tests. To run an individual test, run py.test with
-	# the -k flag, like "py.test -k test_path_is_not_double_encoded"
-	pipenv run test
-	pipenv run check
+	# This runs all of the tests. To run an individual test, run pytest with
+	# the -k flag, like "uv run pytest -k test_path_is_not_double_encoded"
+	uv run pytest tests
+	uv run ruff check .
