@@ -1,4 +1,3 @@
-_site
-build
-dist
-hellbox*
+dist/
+node_modules/
+.astro/
