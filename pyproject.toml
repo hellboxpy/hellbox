@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hellbox"
+dynamic = ["version"]
+description = "Build system for font development."
+readme = "README.rst"
+license = {text = "MIT"}
+authors = [{name = "Jack Jennings", email = "jack@standard-library.com"}]
+requires-python = ">=3.8"
+dependencies = []
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 3 - Alpha",
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+[project.urls]
+Homepage = "https://github.com/hellboxpy/hellbox"
+
+[tool.setuptools.dynamic]
+version = {attr = "hellbox.__version__.__version__"}
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8,<9",
+    "ruff>=0,<1",
+    "twine>=6,<7",
+    "wheel>=0,<1",
+]
