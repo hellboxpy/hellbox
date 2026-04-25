@@ -1,10 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CopyButton from "../components/CopyButton.svelte";
+
+const installCommand = "curl https://www.hellbox.io/install.sh -sSf | sh";
 ---
 
 <Layout>
   <div class="home">
     <h1>Hellbox</h1>
-    <pre>curl https://www.hellbox.io/install.sh -sSf | sh</pre>
+    <div class="command">
+      <pre>{installCommand}</pre>
+      <CopyButton text={installCommand} client:load />
+    </div>
   </div>
 </Layout>
+
+<style>
+  .command {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .command pre {
+    background-color: rgba(255, 255, 255, 1);
+    flex: 1;
+    margin: 0;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    text-align: left;
+  }
+</style>

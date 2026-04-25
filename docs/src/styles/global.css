@@ -55,8 +55,3 @@ code {
   font-family: "Input Mono Narrow", ui-monospace, monospace;
   font-weight: 400;
 }
-
-pre {
-  padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.5);
-}
