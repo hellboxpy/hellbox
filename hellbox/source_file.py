@@ -66,6 +66,13 @@ class SourceFile(NamedTuple):
             shutil.copy2(self.content_path, destination)
         return SourceFile(self.original_path, destination)
 
+    def __str__(self) -> str:
+        return str(self.display_path)
+
+    @property
+    def display_path(self) -> Path:
+        return self.original_path
+
     @property
     def basename(self) -> str:
         return self.content_path.name
