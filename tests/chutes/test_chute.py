@@ -11,13 +11,11 @@ def Noop(x):
 
 @Chute.create
 def Add2(x):
-    print("add", x)
     return x + 2
 
 
 @Chute.create
 def Multiply2(x):
-    print("mult", x)
     return x * 2
 
 
@@ -26,9 +24,9 @@ class Record(Chute):
         self.name = name
         self.env = env
 
-    def run(self, x):
-        print("record", x)
-        self.env[self.name] = x
+    def flush(self, files):
+        self.env[self.name] = files
+        return files
 
 
 class TestChute(object):
@@ -38,10 +36,10 @@ class TestChute(object):
         assert not f.called
         assert len(chute.callbacks) == 0
 
-    def test_runs(self):
-        f = Mock(returns=["path/to/file.ufo"])
+    def test_process(self):
+        f = Mock(returns="path/to/file.ufo")
         chute = Chute.create(f)()
-        assert chute.run([]) == ["path/to/file.ufo"]
+        assert chute.process("input") == "path/to/file.ufo"
 
     def test_callbacks(self):
         f = Mock()
@@ -51,13 +49,29 @@ class TestChute(object):
         assert "foo" in chute.callbacks
 
     def test_call(self):
-        f = Mock()
+        f = Mock(returns=2)
         f2 = Mock()
         chute = Chute.create(f)()
         chute.to(Chute.create(f2)())
-        chute()
+        chute([1])
         assert f.called
         assert f2.called
+
+    def test_call_filters_none(self):
+        f = Mock(returns=None)
+        downstream = Mock()
+        chute = Chute.create(f)()
+        chute.to(Chute.create(downstream)())
+        chute([1])
+        assert not downstream.called
+
+    def test_call_flattens_list(self):
+        f = Mock(returns=[10, 20])
+        received = {}
+        chute = Chute.create(f)()
+        chute.to(Record("out", received))
+        chute([1])
+        assert received["out"] == [10, 20]
 
     def test_to(self):
         chute = Chute.create(Mock())()
@@ -89,15 +103,15 @@ class TestChute(object):
 
     def test_composite_run(self):
         output = {}
-        CompositeChute(Add2(), Multiply2(), Record("value", output))(1)
-        assert output["value"] == 6
+        CompositeChute(Add2(), Multiply2(), Record("value", output))([1])
+        assert output["value"] == [6]
 
     def test_composite_nested_run(self):
         output = {}
         CompositeChute(
             Add2(), CompositeChute(Add2(), Multiply2()), Record("value", output)
-        )(1)
-        assert output["value"] == 10
+        )([1])
+        assert output["value"] == [10]
 
     def test_composite_prepend(self):
         foo = Add2()

@@ -1,3 +1,7 @@
+import os
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+
+import hellbox.chutes.chute as _chute_module
 from hellbox.chutes.read_files import ReadFiles
 from hellbox.chutes.write_files import WriteFiles
 
@@ -20,8 +24,16 @@ class Task(object):
         from .hellbox import Hellbox
 
         Hellbox.info("Running %s" % self.name)
-        for chute in self.chains:
-            chute([])
+        with ProcessPoolExecutor(max_workers=os.cpu_count()) as proc_exec:
+            with ThreadPoolExecutor() as branch_exec:
+                _chute_module._process_executor = proc_exec
+                _chute_module._branch_executor = branch_exec
+                try:
+                    for chute in self.chains:
+                        chute([])
+                finally:
+                    _chute_module._process_executor = None
+                    _chute_module._branch_executor = None
 
     def write(self, path):
         return WriteFiles(path)

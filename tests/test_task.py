@@ -1,5 +1,3 @@
-from tests.mock import Mock
-
 from hellbox import Chute
 from hellbox.task import Task
 
@@ -20,12 +18,17 @@ class TestTask(object):
         assert isinstance(chute, Chute)
 
     def test_run(self):
-        f = Mock()
+        received = {}
+
+        class Recorder(Chute):
+            def flush(self, files):
+                received["files"] = files
+                return files
+
         task = Task("foo")
-        task << Chute.create(f)()
+        task << Recorder()
         task.run()
-        assert f.called
-        assert f.args == ([],)
+        assert received["files"] == []
 
     def test_describe(self):
         task = Task("foo")

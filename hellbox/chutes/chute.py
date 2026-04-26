@@ -1,13 +1,27 @@
 import inspect
 
+_process_executor = None
+_branch_executor = None
+
+
+def _collect(result):
+    if result is None:
+        return []
+    if isinstance(result, list):
+        return result
+    return [result]
+
 
 class Chute(object):
     @classmethod
     def create(cls, fn):
-        def run(self, files):
-            return fn(files)
+        def process(self, file):
+            return fn(file)
 
-        return type(fn.__name__, (cls,), {"run": run})
+        new_cls = type(fn.__name__, (cls,), {"process": process})
+        new_cls.__module__ = getattr(fn, "__module__", cls.__module__)
+        new_cls.__qualname__ = getattr(fn, "__qualname__", fn.__name__)
+        return new_cls
 
     def __new__(cls, *args, **kwargs):
         instance = super().__new__(cls)
@@ -17,9 +31,27 @@ class Chute(object):
         return instance
 
     def __call__(self, files=None):
-        files = self.run(files)
-        for callback in self.callbacks:
-            callback(files)
+        if files is None:
+            files = []
+
+        outputs = []
+        if _process_executor is not None and files:
+            futures = [_process_executor.submit(self.process, f) for f in files]
+            for future in futures:
+                outputs.extend(_collect(future.result()))
+        else:
+            for f in files:
+                outputs.extend(_collect(self.process(f)))
+
+        outputs = self.flush(outputs)
+
+        if len(self.callbacks) > 1 and _branch_executor is not None:
+            futures = [_branch_executor.submit(cb, outputs) for cb in self.callbacks]
+            for future in futures:
+                future.result()
+        else:
+            for callback in self.callbacks:
+                callback(outputs)
 
     def __rshift__(self, other):
         if self.__class__ is other.__class__:
@@ -48,7 +80,18 @@ class Chute(object):
     def __repr__(self):
         return str(self)
 
-    def run(self, files):
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state.pop("_Chute__callbacks", None)
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+
+    def process(self, file):
+        return file
+
+    def flush(self, files):
         return files
 
     def to(self, chute):

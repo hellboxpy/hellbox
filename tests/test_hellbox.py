@@ -97,25 +97,39 @@ class TestHellbox:
         assert composed.head is not composed2.head
 
     def test_run_task(self):
-        f = Mock()
+        ran = {}
+
+        class Recorder(Chute):
+            def flush(self, files):
+                ran["called"] = True
+                return files
+
         task = Task("foobaz")
-        task << Chute.create(f)()
+        task << Recorder()
         Hellbox.add_task(task)
         Hellbox.run_task("foobaz")
-        assert f.called
+        assert ran.get("called")
 
     def test_run_task_with_requirements(self):
-        f = Mock()
-        f2 = Mock()
+        ran = {}
+
+        class Recorder(Chute):
+            def __init__(self, key):
+                self.key = key
+
+            def flush(self, files):
+                ran[self.key] = True
+                return files
+
         task = Task("fooqaaz")
         task.requires("foobar")
-        task << Chute.create(f)()
+        task << Recorder("main")
         task2 = Task("foobar")
-        task2 << Chute.create(f2)()
+        task2 << Recorder("req")
         Hellbox.add_task(task)
         Hellbox.add_task(task2)
         Hellbox.run_task("fooqaaz")
-        assert f2.called
+        assert ran.get("req")
 
     def test_usage(self):
         task = Task("build")

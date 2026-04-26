@@ -8,7 +8,7 @@ class ReadFiles(Chute):
     def __init__(self, *globs):
         self.globs = globs
 
-    def run(self, files):
+    def flush(self, files):
         return [
             SourceFile(p, p) for g in self.globs for p in glob.glob(g, recursive=True)
         ]
