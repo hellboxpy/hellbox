@@ -9,7 +9,7 @@ description = "Build system for font development."
 readme = "README.rst"
 license = {text = "MIT"}
 authors = [{name = "Jack Jennings", email = "jack@standard-library.com"}]
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 dependencies = []
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -17,9 +17,6 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",

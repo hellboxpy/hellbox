@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any, TypeVar
-
-_ChuteT = TypeVar("_ChuteT", bound="Chute")
+from typing import Any, Self
 
 
 def _collect(result: Any) -> list[Any]:
@@ -29,7 +27,7 @@ class Chute(object):
         new_cls.__qualname__ = getattr(fn, "__qualname__", fn.__name__)
         return new_cls
 
-    def __new__(cls: type[_ChuteT], *args: Any, **kwargs: Any) -> _ChuteT:
+    def __new__(cls, *args: Any, **kwargs: Any) -> Self:
         instance = super().__new__(cls)
         instance.__init_signature = inspect.signature(cls.__init__)
         instance.__init_args = args
