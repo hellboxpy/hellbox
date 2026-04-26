@@ -1,56 +1,52 @@
 from __future__ import annotations
 
 import atexit
-import os
 import shlex
 import shutil
 import subprocess
 import tempfile
-from collections import namedtuple
+from pathlib import Path
 from shutil import copyfile
+from typing import NamedTuple
 
 
-TEMPORARY_DIRECTORIES: list[str] = []
+TEMPORARY_DIRECTORIES: list[Path] = []
 
 
 @atexit.register
 def _cleanup() -> None:
     for directory in TEMPORARY_DIRECTORIES:
-        if os.path.exists(directory):
+        if directory.exists():
             shutil.rmtree(directory)
 
 
-class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
+class SourceFile(NamedTuple):
+    original_path: Path
+    content_path: Path
+
     def copy(self, basename: str | None = None) -> SourceFile:
         # TODO: Should copy directories as well
-
-        if basename is None:
-            basename = self.basename
-
+        name = basename or self.content_path.name
         directory = self._create_temporary_directory()
-        destination = os.path.join(directory, basename)
+        destination = directory / name
         copyfile(self.content_path, destination)
-
         return SourceFile(self.original_path, destination)
 
     def transform(
         self, command_template: str, extension: str | None = None
     ) -> SourceFile:
-        if extension is None:
-            extension = self.extension
-
-        filename = f"{self.root}.{extension}"
+        ext = extension or self.extension
+        filename = f"{self.stem}.{ext}"
 
         if "{output}" in command_template:
             input_path = self.content_path
-            output_path = os.path.join(self._create_temporary_directory(), filename)
+            output_path = self._create_temporary_directory() / filename
         else:
             copy = self.copy()
             input_path = copy.content_path
-            output_path = os.path.join(copy.directory, filename)
+            output_path = copy.content_path.parent / filename
 
         command = command_template.format(input=input_path, output=output_path)
-
         subprocess.run(
             shlex.split(command),
             stdout=subprocess.PIPE,
@@ -60,32 +56,30 @@ class SourceFile(namedtuple("SourceFile", ["original_path", "content_path"])):
 
         return SourceFile(self.original_path, output_path)
 
-    def write(self, path: str) -> SourceFile:
-        if not os.path.isdir(path):
-            os.makedirs(path)
-
-        destination = os.path.join(path, self.basename)
+    def write(self, path: str | Path) -> SourceFile:
+        dest_dir = Path(path)
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        destination = dest_dir / self.content_path.name
         copyfile(self.content_path, destination)
-
         return SourceFile(self.original_path, destination)
 
     @property
     def basename(self) -> str:
-        return os.path.basename(self.content_path)
+        return self.content_path.name
 
     @property
-    def directory(self) -> str:
-        return os.path.dirname(self.content_path)
+    def stem(self) -> str:
+        return self.content_path.stem
+
+    @property
+    def directory(self) -> Path:
+        return self.content_path.parent
 
     @property
     def extension(self) -> str:
-        return os.path.splitext(self.basename)[1][1:]
+        return self.content_path.suffix.lstrip(".")
 
-    @property
-    def root(self) -> str:
-        return os.path.splitext(self.basename)[0]
-
-    def _create_temporary_directory(self) -> str:
-        directory = tempfile.mkdtemp()
+    def _create_temporary_directory(self) -> Path:
+        directory = Path(tempfile.mkdtemp())
         TEMPORARY_DIRECTORIES.append(directory)
         return directory
