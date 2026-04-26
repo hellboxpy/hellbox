@@ -1,8 +1,27 @@
 ---
+import { Code } from "astro:components";
 import Layout from "../layouts/Layout.astro";
 import CopyButton from "../components/CopyButton.svelte";
 
 const installCommand = "curl https://www.hellbox.dev/install.sh -sSf | sh";
+
+const exampleCode = `\
+from hellbox import Hellbox
+from hellbox_generate_otf import GenerateOtf
+
+with Hellbox("build") as task:
+    task.describe("Builds .otf files from .ufo source")
+    task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")`;
+
+const chuteCode = `\
+from hellbox import Chute
+
+class FilterByExt(Chute):
+    def __init__(self, *extensions):
+        self.extensions = extensions
+
+    def run(self, files):
+        return [f for f in files if f.extension in self.extensions]`;
 ---
 
 <Layout>
@@ -20,16 +39,18 @@ const installCommand = "curl https://www.hellbox.dev/install.sh -sSf | sh";
   <section>
     <h2>Getting started</h2>
     <p>
-      The install command above installs <a href="https://github.com/hellboxpy/hell"><code>hell</code></a>,
-      the CLI for managing Hellbox projects. Once installed, run <code>hell init</code> inside
-      your project directory:
+      The install command above installs <a href="https://github.com/hellboxpy/hell"
+        ><code>hell</code></a
+      >, the CLI for managing Hellbox projects. Once installed, run <code
+        >hell init</code
+      > inside your project directory:
     </p>
-    <pre><code>hell init</code></pre>
+    <Code code="hell init" lang="sh" theme="css-variables" />
     <p>
       This creates a <code>Hellfile.py</code> where your tasks live, sets up an isolated
-      virtual environment, and installs <code>hellbox</code> itself. If you're joining an
-      existing Hellbox project, run <code>hell install</code> instead to install its
-      pinned dependencies.
+      virtual environment, and installs <code>hellbox</code> itself. If you're joining
+      an existing Hellbox project, run <code>hell install</code> instead to install
+      its pinned dependencies.
     </p>
   </section>
 
@@ -60,14 +81,7 @@ const installCommand = "curl https://www.hellbox.dev/install.sh -sSf | sh";
 
   <section>
     <h2>Example</h2>
-    <pre><code
-        >from hellbox import Hellbox
-from hellbox_generate_otf import GenerateOtf
-
-with Hellbox("build") as task:
-    task.describe("Builds .otf files from .ufo source")
-    task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")</code
-      ></pre>
+    <Code code={exampleCode} lang="python" theme="css-variables" />
     <p>Run with <code>hell run build</code>.</p>
   </section>
 
@@ -104,16 +118,7 @@ with Hellbox("build") as task:
       Subclass <code>Chute</code> and implement <code>run</code>. It receives
       an array of files and returns one.
     </p>
-    <pre><code
-        >from hellbox import Chute
-
-class FilterByExt(Chute):
-    def __init__(self, *extensions):
-        self.extensions = extensions
-
-    def run(self, files):
-        return [f for f in files if f.extension in self.extensions]</code
-      ></pre>
+    <Code code={chuteCode} lang="python" theme="css-variables" />
     <p>
       For chutes that need no configuration, use the <code>@Chute.create</code>
       decorator instead.
@@ -199,7 +204,7 @@ class FilterByExt(Chute):
 
   .step-label {
     font-size: 1.2rem;
-    font-family: "Input Sans Compressed", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -220,7 +225,7 @@ class FilterByExt(Chute):
   }
 
   .principles dt {
-    font-family: "Input Sans Compressed", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -230,13 +235,6 @@ class FilterByExt(Chute):
     margin: 0;
     line-height: 1.6;
     color: rgba(0, 0, 0, 0.6);
-  }
-
-  /* Code blocks */
-  pre {
-    text-align: left;
-    margin: 2rem 0;
-    overflow-x: auto;
   }
 
   /* Links */

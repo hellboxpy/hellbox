@@ -4,6 +4,29 @@
   font-weight: normal;
 }
 
+/*
+ * Syntax highlighting token colors (theme="css-variables").
+ *
+ * Alternatives:
+ *   theme="github-light"     — use any named Shiki theme, no CSS needed
+ *   theme="css-variables"    — control colors here (current approach)
+ *   themes={{ light: "github-light", dark: "github-dark" }}
+ *                            — automatic light/dark switching
+ */
+:root {
+  --astro-code-color-text: rgba(0, 0, 0, 0.85);
+  --astro-code-color-background: rgba(255, 255, 255, 0.5);
+  --astro-code-token-constant: #0070c0;
+  --astro-code-token-string: #a31515;
+  --astro-code-token-comment: rgba(0, 0, 0, 0.35);
+  --astro-code-token-keyword: #8700af;
+  --astro-code-token-parameter: rgba(0, 0, 0, 0.85);
+  --astro-code-token-function: #795e26;
+  --astro-code-token-string-expression: #a31515;
+  --astro-code-token-punctuation: rgba(0, 0, 0, 0.5);
+  --astro-code-token-link: #0070c0;
+}
+
 html {
   font-size: 62.5%;
 }
