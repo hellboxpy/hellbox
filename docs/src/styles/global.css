@@ -4,18 +4,6 @@
   font-weight: normal;
 }
 
-@font-face {
-  src: url("/fonts/InputSansCompressed-Medium.woff2") format("woff2");
-  font-family: "Input Sans Compressed";
-  font-weight: 500;
-}
-
-@font-face {
-  src: url("/fonts/InputMonoNarrow-Regular.woff2") format("woff2");
-  font-family: "Input Mono Narrow";
-  font-weight: 400;
-}
-
 html {
   font-size: 62.5%;
 }
@@ -46,12 +34,12 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Input Sans Compressed", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   font-weight: 500;
 }
 
 pre,
 code {
-  font-family: "Input Mono Narrow", ui-monospace, monospace;
+  font-family: "Geist Mono", ui-monospace, monospace;
   font-weight: 400;
 }

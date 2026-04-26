@@ -6,16 +6,154 @@ const installCommand = "curl https://www.hellbox.io/install.sh -sSf | sh";
 ---
 
 <Layout>
-  <div class="home">
+  <div class="hero">
     <h1>Hellbox</h1>
+    <p class="tagline">
+      A modular, editor-agnostic build system for font development.
+    </p>
     <div class="command">
       <pre>{installCommand}</pre>
       <CopyButton text={installCommand} client:load />
     </div>
   </div>
+
+  <section>
+    <h2>Getting started</h2>
+    <p>
+      The install command above installs <a href="https://github.com/hellboxpy/hell"><code>hell</code></a>,
+      the CLI for managing Hellbox projects. Once installed, run <code>hell init</code> inside
+      your project directory:
+    </p>
+    <pre><code>hell init</code></pre>
+    <p>
+      This creates a <code>Hellfile.py</code> where your tasks live, sets up an isolated
+      virtual environment, and installs <code>hellbox</code> itself. If you're joining an
+      existing Hellbox project, run <code>hell install</code> instead to install its
+      pinned dependencies.
+    </p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p>
+      Hellbox tasks are pipelines made of <em>chutes</em> — small, single-purpose
+      modules that pass files from one step to the next using the <code>&gt;&gt;</code>
+      operator. Chutes can be mixed, matched, and shared across projects.
+    </p>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <span class="step-label">Read</span>
+        <code>task.read("*.ufo")</code>
+      </div>
+      <span class="pipeline-arrow">&rsaquo;&rsaquo;</span>
+      <div class="pipeline-step">
+        <span class="step-label">Transform</span>
+        <code>GenerateOtf()</code>
+      </div>
+      <span class="pipeline-arrow">&rsaquo;&rsaquo;</span>
+      <div class="pipeline-step">
+        <span class="step-label">Write</span>
+        <code>task.write("./otf")</code>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <pre><code
+        >from hellbox import Hellbox
+from hellbox_generate_otf import GenerateOtf
+
+with Hellbox("build") as task:
+    task.describe("Builds .otf files from .ufo source")
+    task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")</code
+      ></pre>
+    <p>Run with <code>hell run build</code>.</p>
+  </section>
+
+  <section class="principles">
+    <h2>Principles</h2>
+    <dl>
+      <div>
+        <dt>Consistent</dt>
+        <dd>
+          Tasks don't take arguments by design. The same task always produces
+          the same output, regardless of who runs it or when.
+        </dd>
+      </div>
+      <div>
+        <dt>Modular</dt>
+        <dd>
+          Chutes are reusable and composable. Combine first-party and custom
+          packages to build exactly the workflow your project needs.
+        </dd>
+      </div>
+      <div>
+        <dt>Isolated</dt>
+        <dd>
+          Dependencies are version-locked per project, isolated from your
+          system Python and from other Hellbox projects.
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Writing a chute</h2>
+    <p>
+      Subclass <code>Chute</code> and implement <code>run</code>. It receives
+      an array of files and returns one.
+    </p>
+    <pre><code
+        >from hellbox import Chute
+
+class FilterByExt(Chute):
+    def __init__(self, *extensions):
+        self.extensions = extensions
+
+    def run(self, files):
+        return [f for f in files if f.extension in self.extensions]</code
+      ></pre>
+    <p>
+      For chutes that need no configuration, use the <code>@Chute.create</code>
+      decorator instead.
+    </p>
+  </section>
+
+  <section class="links">
+    <h2>Learn more</h2>
+    <ul>
+      <li>
+        <a href="https://github.com/hellboxpy/hellbox">hellboxpy/hellbox</a> —
+        source and issue tracker
+      </li>
+      <li>
+        <a href="https://github.com/hellboxpy/hell">hellboxpy/hell</a> — the <code
+          >hell</code
+        > CLI
+      </li>
+      <li>
+        <a href="https://github.com/hellboxpy">github.com/hellboxpy</a> — all packages
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>MIT License</p>
+  </footer>
 </Layout>
 
 <style>
+  .hero {
+    margin-bottom: 8rem;
+  }
+
+  .tagline {
+    font-size: 2.2rem;
+    color: rgba(0, 0, 0, 0.55);
+    margin: 0 0 4rem;
+  }
+
   .command {
     display: flex;
     align-items: center;
@@ -29,5 +167,104 @@ const installCommand = "curl https://www.hellbox.io/install.sh -sSf | sh";
     padding: 1rem 1.5rem;
     border-radius: 4px;
     text-align: left;
+  }
+
+  section {
+    margin-bottom: 8rem;
+    text-align: left;
+  }
+
+  p {
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* Pipeline diagram */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+  }
+
+  .pipeline-step {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 1.2rem 1.8rem;
+    border-radius: 4px;
+  }
+
+  .step-label {
+    font-size: 1.2rem;
+    font-family: "Input Sans Compressed", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .pipeline-arrow {
+    font-size: 2.4rem;
+    color: rgba(0, 0, 0, 0.25);
+  }
+
+  /* Principles */
+  .principles dl {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin: 3rem 0 0;
+  }
+
+  .principles dt {
+    font-family: "Input Sans Compressed", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .principles dd {
+    margin: 0;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  /* Code blocks */
+  pre {
+    text-align: left;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+
+  /* Links */
+  .links ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  a {
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  a:hover {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 3rem;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 1.6rem;
+  }
+
+  footer p {
+    color: inherit;
   }
 </style>
