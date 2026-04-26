@@ -1,8 +1,5 @@
 import inspect
 
-_process_executor = None
-_branch_executor = None
-
 
 def _collect(result):
     if result is None:
@@ -33,25 +30,12 @@ class Chute(object):
     def __call__(self, files=None):
         if files is None:
             files = []
-
         outputs = []
-        if _process_executor is not None and files:
-            futures = [_process_executor.submit(self.process, f) for f in files]
-            for future in futures:
-                outputs.extend(_collect(future.result()))
-        else:
-            for f in files:
-                outputs.extend(_collect(self.process(f)))
-
+        for f in files:
+            outputs.extend(_collect(self.process(f)))
         outputs = self.flush(outputs)
-
-        if len(self.callbacks) > 1 and _branch_executor is not None:
-            futures = [_branch_executor.submit(cb, outputs) for cb in self.callbacks]
-            for future in futures:
-                future.result()
-        else:
-            for callback in self.callbacks:
-                callback(outputs)
+        for callback in self.callbacks:
+            callback(outputs)
 
     def __rshift__(self, other):
         if self.__class__ is other.__class__:
