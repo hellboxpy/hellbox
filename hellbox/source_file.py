@@ -6,7 +6,6 @@ import shutil
 import subprocess
 import tempfile
 from pathlib import Path
-from shutil import copyfile
 from typing import NamedTuple
 
 
@@ -25,11 +24,12 @@ class SourceFile(NamedTuple):
     content_path: Path
 
     def copy(self, basename: str | None = None) -> SourceFile:
-        # TODO: Should copy directories as well
         name = basename or self.content_path.name
-        directory = self._create_temporary_directory()
-        destination = directory / name
-        copyfile(self.content_path, destination)
+        destination = self._create_temporary_directory() / name
+        if self.content_path.is_dir():
+            shutil.copytree(self.content_path, destination)
+        else:
+            shutil.copy2(self.content_path, destination)
         return SourceFile(self.original_path, destination)
 
     def transform(
@@ -60,7 +60,10 @@ class SourceFile(NamedTuple):
         dest_dir = Path(path)
         dest_dir.mkdir(parents=True, exist_ok=True)
         destination = dest_dir / self.content_path.name
-        copyfile(self.content_path, destination)
+        if self.content_path.is_dir():
+            shutil.copytree(self.content_path, destination)
+        else:
+            shutil.copy2(self.content_path, destination)
         return SourceFile(self.original_path, destination)
 
     @property
