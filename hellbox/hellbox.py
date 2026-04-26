@@ -1,7 +1,6 @@
 import traceback
 from enum import IntEnum
 
-from hellbox.autoimporter import Autoimporter
 from hellbox.chutes.composite import CompositeChute
 from hellbox.task import Task, NullTask
 
@@ -93,10 +92,6 @@ class Hellbox(object):
             return CompositeChute(*chutes)
 
         return make_composite_chute
-
-    @staticmethod
-    def autoimport():
-        Autoimporter().execute(globals(), locals())
 
     @classmethod
     def debug(cls, *args, **kwargs):
