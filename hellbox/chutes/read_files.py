@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import glob
 
 from hellbox.chutes.chute import Chute
@@ -5,10 +7,10 @@ from hellbox.source_file import SourceFile
 
 
 class ReadFiles(Chute):
-    def __init__(self, *globs):
+    def __init__(self, *globs: str) -> None:
         self.globs = globs
 
-    def flush(self, files):
+    def flush(self, files: list[SourceFile]) -> list[SourceFile]:
         return [
             SourceFile(p, p) for g in self.globs for p in glob.glob(g, recursive=True)
         ]

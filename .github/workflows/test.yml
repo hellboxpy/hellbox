@@ -27,6 +27,9 @@ jobs:
       - name: Lint Python
         run: uv run ruff check .
 
+      - name: Type check Python
+        run: uv run ty check hellbox/
+
       - name: Check Markdown formatting
         run: git ls-files '*.md' | xargs -r uv run mdformat --check
 

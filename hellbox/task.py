@@ -1,23 +1,26 @@
+from __future__ import annotations
+
+from hellbox.chutes.chute import Chute
 from hellbox.chutes.read_files import ReadFiles
 from hellbox.chutes.write_files import WriteFiles
 from hellbox.runner import Runner
 
 
-class Task(object):
-    def __init__(self, name):
+class Task:
+    def __init__(self, name: str) -> None:
         self.name = name
-        self.description = None
-        self.requirements = []
-        self.chains = []
+        self.description: str | None = None
+        self.requirements: tuple[str, ...] = ()
+        self.chains: list[Chute] = []
 
-    def __lshift__(self, chute):
+    def __lshift__(self, chute: Chute) -> Chute:
         self.chains.append(chute)
         return chute
 
-    def read(self, *globs):
+    def read(self, *globs: str) -> Chute:
         return self << ReadFiles(*globs)
 
-    def run(self):
+    def run(self) -> None:
         from .hellbox import Hellbox
 
         Hellbox.info("Running %s" % self.name)
@@ -25,13 +28,13 @@ class Task(object):
             for chute in self.chains:
                 runner.run(chute, [])
 
-    def write(self, path):
+    def write(self, path: str) -> WriteFiles:
         return WriteFiles(path)
 
-    def describe(self, desc):
+    def describe(self, desc: str) -> None:
         self.description = desc
 
-    def requires(self, *requirements):
+    def requires(self, *requirements: str) -> None:
         self.requirements = requirements
 
 
@@ -39,7 +42,7 @@ class NullTask(Task):
     default_warning = "Trying to run default task but no default supplied"
     definition_warning = "Trying to run %s task but no definition found"
 
-    def run(self):
+    def run(self) -> None:
         from .hellbox import Hellbox
 
         if self.name is None:

@@ -41,6 +41,7 @@ dev = [
     "mdformat>=0.7.17",
     "pytest>=8,<9",
     "ruff>=0,<1",
+    "ty>=0,<1",
     "twine>=6,<7",
     "wheel>=0,<1",
 ]
