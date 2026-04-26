@@ -9,28 +9,26 @@ from pathlib import Path
 from typing import NamedTuple
 
 
-TEMPORARY_DIRECTORIES: list[Path] = []
-
-
-@atexit.register
-def _cleanup() -> None:
-    for directory in TEMPORARY_DIRECTORIES:
-        if directory.exists():
-            shutil.rmtree(directory)
-
-
 class SourceFile(NamedTuple):
     original_path: Path
     content_path: Path
+    tmp_root: Path
+
+    def __str__(self) -> str:
+        return str(self.display_path)
+
+    @property
+    def display_path(self) -> Path:
+        return self.original_path
 
     def copy(self, basename: str | None = None) -> SourceFile:
         name = basename or self.content_path.name
-        destination = self._create_temporary_directory() / name
+        destination = self._make_tmp_dir() / name
         if self.content_path.is_dir():
             shutil.copytree(self.content_path, destination)
         else:
             shutil.copy2(self.content_path, destination)
-        return SourceFile(self.original_path, destination)
+        return SourceFile(self.original_path, destination, self.tmp_root)
 
     def transform(
         self, command_template: str, extension: str | None = None
@@ -40,7 +38,7 @@ class SourceFile(NamedTuple):
 
         if "{output}" in command_template:
             input_path = self.content_path
-            output_path = self._create_temporary_directory() / filename
+            output_path = self._make_tmp_dir() / filename
         else:
             copy = self.copy()
             input_path = copy.content_path
@@ -54,7 +52,7 @@ class SourceFile(NamedTuple):
             check=True,
         )
 
-        return SourceFile(self.original_path, output_path)
+        return SourceFile(self.original_path, output_path, self.tmp_root)
 
     def write(self, path: str | Path) -> SourceFile:
         dest_dir = Path(path)
@@ -64,14 +62,7 @@ class SourceFile(NamedTuple):
             shutil.copytree(self.content_path, destination)
         else:
             shutil.copy2(self.content_path, destination)
-        return SourceFile(self.original_path, destination)
-
-    def __str__(self) -> str:
-        return str(self.display_path)
-
-    @property
-    def display_path(self) -> Path:
-        return self.original_path
+        return SourceFile(self.original_path, destination, self.tmp_root)
 
     @property
     def basename(self) -> str:
@@ -89,7 +80,5 @@ class SourceFile(NamedTuple):
     def extension(self) -> str:
         return self.content_path.suffix.lstrip(".")
 
-    def _create_temporary_directory(self) -> Path:
-        directory = Path(tempfile.mkdtemp())
-        TEMPORARY_DIRECTORIES.append(directory)
-        return directory
+    def _make_tmp_dir(self) -> Path:
+        return Path(tempfile.mkdtemp(dir=self.tmp_root))

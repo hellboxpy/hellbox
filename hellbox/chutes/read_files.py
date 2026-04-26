@@ -4,6 +4,7 @@ import glob
 from pathlib import Path
 
 from hellbox.chutes.chute import Chute
+from hellbox.runner import run_tmp_root
 from hellbox.source_file import SourceFile
 
 
@@ -12,8 +13,9 @@ class ReadFiles(Chute):
         self.globs = globs
 
     def flush(self, files: list[SourceFile]) -> list[SourceFile]:
+        tmp_root = run_tmp_root.get()
         return [
-            SourceFile(Path(p), Path(p))
+            SourceFile(Path(p), Path(p), tmp_root)
             for g in self.globs
             for p in glob.glob(g, recursive=True)
         ]
