@@ -62,8 +62,10 @@ The basic setup for defining your own chutes requires you to create a new subcla
         def __init__(self, *extensions):
             self.extensions = extensions
 
-        def run(self, files):
-            return [f for f in files if f.extension in self.extensions]
+        def process(self, file):
+            if file.extension in self.extensions:
+                return file
+            return None
 
 You can then use your chute in your Hellfile as such:
 
@@ -79,9 +81,9 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
     from hellbox import Chute
 
     @Chute.create
-    def GenerateWoff2(files):
-        # do something to files...
-        return files
+    def GenerateWoff2(file):
+        # do something to file...
+        return file
 
     with Hellbox("webfonts") as task:
         task.read("build/*.ttf") >> GenerateWoff2() >> task.write("webfonts")

@@ -1,0 +1,25 @@
+---
+import { Code as AstroCode } from "astro:components";
+import type { ComponentProps } from "astro/types";
+
+type Props = Omit<ComponentProps<typeof AstroCode>, "theme">;
+
+const props = Astro.props;
+---
+
+<AstroCode theme="css-variables" class="code" {...props} />
+
+<style>
+  .code {
+    font-size: 1.7rem;
+    line-height: 1.6;
+    padding: 1rem 1.5rem;
+    border-radius: 1px;
+    border: 1px solid rgb(255, 255, 255);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    border-left-color: rgba(255, 255, 255, 1);
+    border-right-color: rgba(0, 0, 0, 0.2);
+    border-top-color: rgba(255, 255, 255, 1);
+    margin: 0;
+  }
+</style>

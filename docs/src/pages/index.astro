@@ -1,5 +1,5 @@
 ---
-import { Code } from "astro:components";
+import Code from "../components/Code.astro";
 import Layout from "../layouts/Layout.astro";
 import CopyButton from "../components/CopyButton.svelte";
 
@@ -20,18 +20,20 @@ class FilterByExt(Chute):
     def __init__(self, *extensions):
         self.extensions = extensions
 
-    def run(self, files):
-        return [f for f in files if f.extension in self.extensions]`;
+    def process(self, file):
+        if file.extension in self.extensions:
+            return file
+        return None`;
 ---
 
 <Layout>
   <div class="hero">
     <h1>Hellbox</h1>
     <p class="tagline">
-      A modular, editor-agnostic build system for font development.
+      A modular, editor-agnostic build system for font development
     </p>
     <div class="command">
-      <pre>{installCommand}</pre>
+      <Code code={installCommand} lang="sh" />
       <CopyButton text={installCommand} client:load />
     </div>
   </div>
@@ -45,7 +47,7 @@ class FilterByExt(Chute):
         >hell init</code
       > inside your project directory:
     </p>
-    <Code code="hell init" lang="sh" theme="css-variables" />
+    <Code code="$ hell init" lang="sh" />
     <p>
       This creates a <code>Hellfile.py</code> where your tasks live, sets up an isolated
       virtual environment, and installs <code>hellbox</code> itself. If you're joining
@@ -64,24 +66,24 @@ class FilterByExt(Chute):
     <div class="pipeline">
       <div class="pipeline-step">
         <span class="step-label">Read</span>
-        <code>task.read("*.ufo")</code>
+        <Code lang="python" code={`task.read("*.ufo")`} />
       </div>
       <span class="pipeline-arrow">&rsaquo;&rsaquo;</span>
       <div class="pipeline-step">
         <span class="step-label">Transform</span>
-        <code>GenerateOtf()</code>
+        <Code lang="python" code={`GenerateOtf()`} />
       </div>
       <span class="pipeline-arrow">&rsaquo;&rsaquo;</span>
       <div class="pipeline-step">
         <span class="step-label">Write</span>
-        <code>task.write("./otf")</code>
+        <Code lang="python" code={`task.write("./otf")`} />
       </div>
     </div>
   </section>
 
   <section>
     <h2>Example</h2>
-    <Code code={exampleCode} lang="python" theme="css-variables" />
+    <Code code={exampleCode} lang="python"  />
     <p>Run with <code>hell run build</code>.</p>
   </section>
 
@@ -115,14 +117,13 @@ class FilterByExt(Chute):
   <section>
     <h2>Writing a chute</h2>
     <p>
-      Subclass <code>Chute</code> and implement <code>run</code>. It receives
-      an array of files and returns one.
+      Subclass <code>Chute</code> and implement <code>process</code>, which is
+      called once per file and returns the file, a list of files, or <code
+        >None</code
+      > to drop it. Optionally implement <code>flush</code> to operate on the
+      full batch after all files have been processed.
     </p>
-    <Code code={chuteCode} lang="python" theme="css-variables" />
-    <p>
-      For chutes that need no configuration, use the <code>@Chute.create</code>
-      decorator instead.
-    </p>
+    <Code code={chuteCode} lang="python" />
   </section>
 
   <section class="links">
@@ -170,7 +171,7 @@ class FilterByExt(Chute):
     flex: 1;
     margin: 0;
     padding: 1rem 1.5rem;
-    border-radius: 4px;
+    border-radius: 1px;
     text-align: left;
   }
 
@@ -197,9 +198,6 @@ class FilterByExt(Chute):
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.6);
-    padding: 1.2rem 1.8rem;
-    border-radius: 4px;
   }
 
   .step-label {
@@ -218,17 +216,16 @@ class FilterByExt(Chute):
 
   /* Principles */
   .principles dl {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
     margin: 3rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   .principles dt {
     font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
     font-size: 2rem;
-    margin-bottom: 1rem;
   }
 
   .principles dd {

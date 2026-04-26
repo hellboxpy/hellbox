@@ -4,18 +4,9 @@
   font-weight: normal;
 }
 
-/*
- * Syntax highlighting token colors (theme="css-variables").
- *
- * Alternatives:
- *   theme="github-light"     — use any named Shiki theme, no CSS needed
- *   theme="css-variables"    — control colors here (current approach)
- *   themes={{ light: "github-light", dark: "github-dark" }}
- *                            — automatic light/dark switching
- */
 :root {
   --astro-code-color-text: rgba(0, 0, 0, 0.85);
-  --astro-code-color-background: rgba(255, 255, 255, 0.5);
+  --astro-code-background: rgba(255, 255, 255, 0.9);
   --astro-code-token-constant: #0070c0;
   --astro-code-token-string: #a31515;
   --astro-code-token-comment: rgba(0, 0, 0, 0.35);
@@ -34,7 +25,7 @@ html {
 body {
   text-align: center;
   font-size: 2rem;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(232, 230, 222);
   max-width: 70rem;
   margin: 0 auto;
   padding: 8rem 4rem;
