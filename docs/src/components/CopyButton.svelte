@@ -29,18 +29,27 @@
     justify-content: center;
     flex-shrink: 0;
     padding: 0.6rem;
-    background-color: rgba(255, 255, 255, 1);
-    border: none;
-    border-radius: 4px;
-    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgb(255,255,255);
+    border-bottom-color: rgba(0,0,0,0.2);
+    border-left-color: rgba(255,255,255,1);
+    border-right-color: rgba(0,0,0,0.2);
+    border-top-color: rgba(255,255,255,1);
+    border-radius: 1px;
+    color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
     transition:
       background 0.3s ease,
-      color 0.3s ease;
-    transform: rotate(-45deg);
+      color 0.3s ease,
+      border-color 0.3s ease;
   }
 
-  button:hover {
+  button:active {
     background: rgba(220, 220, 220, 1);
+    border-bottom-color: rgba(255,255,255,1);
+    border-left-color: rgba(0,0,0,0.2);    
+    border-right-color: rgba(255,255,255,1);
+    border-top-color: rgba(0,0,0,0.2);
+    transition: none;
   }
 </style>
