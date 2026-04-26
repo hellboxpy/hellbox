@@ -3,8 +3,10 @@ from __future__ import annotations
 import inspect
 from typing import Any, Self
 
+from hellbox.source_file import SourceFile
 
-def _collect(result: Any) -> list[Any]:
+
+def _collect(result: SourceFile | list[SourceFile] | None) -> list[SourceFile]:
     if result is None:
         return []
     if isinstance(result, list):
@@ -34,10 +36,10 @@ class Chute(object):
         instance.__init_kwargs = kwargs
         return instance
 
-    def __call__(self, files: list[Any] | None = None) -> None:
+    def __call__(self, files: list[SourceFile] | None = None) -> None:
         if files is None:
             files = []
-        outputs: list[Any] = []
+        outputs: list[SourceFile] = []
         for f in files:
             outputs.extend(_collect(self.process(f)))
         outputs = self.flush(outputs)
@@ -80,10 +82,10 @@ class Chute(object):
     def __setstate__(self, state: dict[str, Any]) -> None:
         self.__dict__.update(state)
 
-    def process(self, file: Any) -> Any:
+    def process(self, file: SourceFile) -> SourceFile | list[SourceFile] | None:
         return file
 
-    def flush(self, files: list[Any]) -> list[Any]:
+    def flush(self, files: list[SourceFile]) -> list[SourceFile]:
         return files
 
     def to(self, chute: Chute | type[Chute]) -> Chute:

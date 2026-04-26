@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import Any
-
 from hellbox.chutes.chute import Chute
+from hellbox.source_file import SourceFile
 
 
 class CompositeChute(Chute):
@@ -12,7 +11,7 @@ class CompositeChute(Chute):
         for chute in clones[1:]:
             self.tail = self.tail >> chute
 
-    def __call__(self, files: list[Any] | None = None) -> None:
+    def __call__(self, files: list[SourceFile] | None = None) -> None:
         self.head(files)
 
     def to(self, chute: Chute | type[Chute]) -> Chute:
