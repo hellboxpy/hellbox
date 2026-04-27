@@ -203,6 +203,6 @@ class TestWrite:
         dest = tmp_path / "output"
         d = make_dir(tmp_root)
         sf = SourceFile(Path("mydir"), d, tmp_root)
-        result = sf.write(dest)
+        sf.write(dest)
         assert (dest / "mydir").is_dir()
         assert (dest / "mydir" / "a.txt").read_text() == "a"
