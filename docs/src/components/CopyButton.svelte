@@ -29,14 +29,15 @@
     justify-content: center;
     flex-shrink: 0;
     padding: 0.6rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgb(255,255,255);
-    border-bottom-color: rgba(0,0,0,0.2);
-    border-left-color: rgba(255,255,255,1);
-    border-right-color: rgba(0,0,0,0.2);
-    border-top-color: rgba(255,255,255,1);
+    background-color: var(--color-button-bg);
+    border: 1px solid;
+    border-color:
+      var(--color-emboss-highlight)
+      var(--color-emboss-shadow)
+      var(--color-emboss-shadow)
+      var(--color-emboss-highlight);
     border-radius: 1px;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--color-text-muted);
     cursor: pointer;
     transition:
       background 0.3s ease,
@@ -45,11 +46,12 @@
   }
 
   button:active {
-    background: rgba(220, 220, 220, 1);
-    border-bottom-color: rgba(255,255,255,1);
-    border-left-color: rgba(0,0,0,0.2);    
-    border-right-color: rgba(255,255,255,1);
-    border-top-color: rgba(0,0,0,0.2);
+    background: var(--color-button-active-bg);
+    border-color:
+      var(--color-emboss-shadow)
+      var(--color-emboss-highlight)
+      var(--color-emboss-highlight)
+      var(--color-emboss-shadow);
     transition: none;
   }
 </style>

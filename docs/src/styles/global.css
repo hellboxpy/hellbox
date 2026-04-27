@@ -4,19 +4,71 @@
   font-weight: normal;
 }
 
+/* ─── Design tokens ───────────────────────────────────────────────────────── */
+
 :root {
-  --astro-code-color-text: rgba(0, 0, 0, 0.85);
-  --astro-code-background: rgba(255, 255, 255, 0.9);
-  --astro-code-token-constant: #0070c0;
-  --astro-code-token-string: #a31515;
-  --astro-code-token-comment: rgba(0, 0, 0, 0.35);
-  --astro-code-token-keyword: #8700af;
-  --astro-code-token-parameter: rgba(0, 0, 0, 0.85);
-  --astro-code-token-function: #795e26;
-  --astro-code-token-string-expression: #a31515;
-  --astro-code-token-punctuation: rgba(0, 0, 0, 0.5);
-  --astro-code-token-link: #0070c0;
+  /* Primitives */
+  --ink-100: rgba(232, 230, 222, 1);
+  --ink-800: rgba(37, 35, 31, 1);
+  --ink-900: rgba(26, 25, 22, 1);
+  --white: rgba(255, 255, 255, 1);
+
+  /* Semantic — color */
+  --color-bg: var(--ink-100);
+  --color-surface: var(--white);
+  --color-text: rgba(0, 0, 0, 0.8);
+  --color-text-strong: rgba(0, 0, 0, 1);
+  --color-text-muted: rgba(0, 0, 0, 0.6);
+  --color-text-subtle: rgba(0, 0, 0, 0.35);
+  --color-border: rgba(0, 0, 0, 0.1);
+
+  /* Emboss / button */
+  --color-emboss-highlight: rgba(255, 255, 255, 0.2);
+  --color-emboss-shadow: rgba(0, 0, 0, 0.2);
+  --color-button-bg: rgba(255, 255, 255, 0.1);
+  --color-button-active-bg: rgba(220, 220, 210, 1);
+
+  --astro-code-color-text: var(--color-text);
+  --astro-code-background: var(--color-surface);
+  --astro-code-token-constant: rgba(175, 90, 0, 1);
+  --astro-code-token-string: rgba(185, 40, 30, 1);
+  --astro-code-token-comment: var(--color-text-subtle);
+  --astro-code-token-keyword: rgba(155, 50, 0, 1);
+  --astro-code-token-parameter: var(--color-text);
+  --astro-code-token-function: rgba(148, 102, 0, 1);
+  --astro-code-token-string-expression: rgba(185, 40, 30, 1);
+  --astro-code-token-punctuation: var(--color-text-muted);
+  --astro-code-token-link: rgba(175, 90, 0, 1);
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Semantic overrides */
+    --color-bg: var(--ink-900);
+    --color-surface: var(--ink-800);
+    --color-text: rgba(255, 255, 255, 0.85);
+    --color-text-strong: rgba(255, 255, 255, 1);
+    --color-text-muted: rgba(255, 255, 255, 0.6);
+    --color-text-subtle: rgba(255, 255, 255, 0.35);
+    --color-border: rgba(255, 255, 255, 0.1);
+
+    /* Emboss / button */
+    --color-emboss-highlight: rgba(255, 255, 255, 0.12);
+    --color-emboss-shadow: rgba(0, 0, 0, 0.5);
+    --color-button-bg: rgba(255, 255, 255, 0.06);
+    --color-button-active-bg: rgba(18, 17, 14, 1);
+
+    /* Syntax token overrides (language colors only; the rest adapt automatically) */
+    --astro-code-token-constant: rgba(255, 195, 60, 1);
+    --astro-code-token-string: rgba(255, 130, 70, 1);
+    --astro-code-token-keyword: rgba(255, 90, 60, 1);
+    --astro-code-token-function: rgba(255, 215, 90, 1);
+    --astro-code-token-string-expression: rgba(255, 130, 70, 1);
+    --astro-code-token-link: rgba(255, 195, 60, 1);
+  }
+}
+
+/* ─── Base styles ─────────────────────────────────────────────────────────── */
 
 html {
   font-size: 62.5%;
@@ -25,11 +77,11 @@ html {
 body {
   text-align: center;
   font-size: 2rem;
-  background-color: rgb(232, 230, 222);
+  background-color: var(--color-bg);
   max-width: 70rem;
   margin: 0 auto;
   padding: 8rem 4rem;
-  color: rgba(0, 0, 0, 0.8);
+  color: var(--color-text);
   font-family:
     ui-sans-serif,
     system-ui,

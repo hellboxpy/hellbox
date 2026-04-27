@@ -15,11 +15,12 @@ const props = Astro.props;
     line-height: 1.6;
     padding: 1rem 1.5rem;
     border-radius: 1px;
-    border: 1px solid rgb(255, 255, 255);
-    border-bottom-color: rgba(0, 0, 0, 0.2);
-    border-left-color: rgba(255, 255, 255, 1);
-    border-right-color: rgba(0, 0, 0, 0.2);
-    border-top-color: rgba(255, 255, 255, 1);
+    border: 1px solid;
+    border-color:
+      var(--color-emboss-highlight)
+      var(--color-emboss-shadow)
+      var(--color-emboss-shadow)
+      var(--color-emboss-highlight);
     margin: 0;
   }
 </style>
