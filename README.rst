@@ -33,7 +33,7 @@ With the above configuration, running ``hell run build`` will generate OTF files
 CLI
 ---
 
-Hellbox comes with a command line tool `hell`_ which offers a thin layer over the ``pipenv`` tool. Using the CLI is highly recommended, as it provides a simplified, opinionated interface for working with Python specifically for a ``hellbox`` project.
+Hellbox comes with a command line tool `hell`_ which offers a thin layer over the ``uv`` tool. Using the CLI is highly recommended, as it provides a simplified, opinionated interface for working with Python specifically for a ``hellbox`` project.
 
 .. _`hell`: https://github.com/hellboxpy/hell/blob/master/README.md#installation
 
@@ -42,7 +42,7 @@ Installation
 
 First `install hell`_, a CLI for managing hellbox projects. Then run ``hell init`` inside of your project (or ``hell install`` inside of an existing hellbox-enabled project).
 
-This will set up a new virtual environment with Python 3 using `pipenv`, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
+This will set up a new virtual environment with Python 3 using ``uv``, create a ``Hellfile.py`` for defining tasks, and install the ``hellbox`` library itself.
 
 .. _`install hell`: https://github.com/hellboxpy/hell#installation
 
