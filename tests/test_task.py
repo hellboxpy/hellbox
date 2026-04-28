@@ -34,3 +34,14 @@ class TestTask(object):
         task = Task("foo")
         task.describe("something")
         assert task.description == "something"
+
+    def test_clean(self):
+        task = Task("foo")
+        task.clean("output")
+        assert "output" in task.clean_dirs
+
+    def test_clean_multiple(self):
+        task = Task("foo")
+        task.clean("output")
+        task.clean("dist")
+        assert task.clean_dirs == ["output", "dist"]

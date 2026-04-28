@@ -12,6 +12,7 @@ class Task:
         self.description: str | None = None
         self.requirements: tuple[str, ...] = ()
         self.chains: list[Chute] = []
+        self.clean_dirs: list[str] = []
 
     def __lshift__(self, chute: Chute) -> Chute:
         self.chains.append(chute)
@@ -24,7 +25,7 @@ class Task:
         from .hellbox import Hellbox
 
         Hellbox.info("Running %s" % self.name)
-        with Runner.create() as runner:
+        with Runner.create(clean_dirs=self.clean_dirs) as runner:
             for chute in self.chains:
                 runner.run(chute, [])
 
@@ -33,6 +34,9 @@ class Task:
 
     def describe(self, desc: str) -> None:
         self.description = desc
+
+    def clean(self, path: str) -> None:
+        self.clean_dirs.append(path)
 
     def requires(self, *requirements: str) -> None:
         self.requirements = requirements
