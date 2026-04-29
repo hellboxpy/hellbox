@@ -82,10 +82,7 @@ body {
   margin: 0 auto;
   padding: 8rem 4rem;
   color: var(--color-text);
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    sans-serif;
+  font-family: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 h1 {
@@ -100,12 +97,12 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  font-weight: 500;
+  font-family: "Libre Franklin Variable", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 900;
 }
 
 pre,
 code {
-  font-family: "Geist Mono", ui-monospace, monospace;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-weight: 400;
 }
