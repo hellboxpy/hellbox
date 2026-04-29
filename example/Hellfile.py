@@ -20,6 +20,7 @@ MakeExt = Hellbox.compose(BuildRoboFontExtension(info_format="yaml"))
 
 with Hellbox("font") as task:
     task.describe("Does a little generation dance.")
+    task.clean("otf")
     task.read("*.ufo", "src/*") >> MakeOTF() >> task.write("otf")
 
 with Hellbox("extension") as task:

@@ -26,6 +26,7 @@ Hellbox tasks are composed of "chutes" — modules that perform a single operati
 
     with Hellbox("build") as task:
         task.describe("Builds .otf files from .ufo source")
+        task.clean("./otf")
         task.read("*.ufo") >> GenerateOtf() >> task.write("./otf")
 
 With the above configuration, running ``hell run build`` will generate OTF files from all of the UFO sources, and write them to the ``otf`` directory.
@@ -86,6 +87,7 @@ If your chute doesn't require arguments when initialized, you may prefer to defi
         return file
 
     with Hellbox("webfonts") as task:
+        task.clean("webfonts")
         task.read("build/*.ttf") >> GenerateWoff2() >> task.write("webfonts")
 
 Development
