@@ -3,7 +3,8 @@ import Code from "../components/Code.astro";
 import Layout from "../layouts/Layout.astro";
 import CopyButton from "../components/CopyButton.svelte";
 
-const installCommand = "curl https://www.hellbox.dev/install.sh -sSf | sh";
+const curlInstallCommand = "curl https://www.hellbox.dev/install.sh -sSf | sh";
+const brewInstallCommand = "tap hellboxpy/hellbox && brew install hell";
 
 const exampleCode = `\
 from hellbox import Hellbox
@@ -33,8 +34,12 @@ class FilterByExt(Chute):
       A modular, editor-agnostic build system for font development
     </p>
     <div class="command">
-      <Code code={installCommand} lang="sh" />
-      <CopyButton text={installCommand} client:load />
+      <Code code={curlInstallCommand} lang="sh" />
+      <CopyButton text={curlInstallCommand} client:load />
+    </div>
+    <div class="command">
+      <Code code={brewInstallCommand} lang="sh" />
+      <CopyButton text={brewInstallCommand} client:load />
     </div>
   </div>
 
