@@ -1,3 +1,4 @@
+import subprocess
 import sys
 import traceback
 from enum import IntEnum
@@ -86,6 +87,12 @@ class Hellbox(object):
     @classmethod
     def reset_tasks(cls):
         cls.__tasks = []
+
+    @classmethod
+    def format(cls) -> None:
+        result = subprocess.run(["ruff", "format", "."])
+        if result.returncode != 0:
+            sys.exit(result.returncode)
 
     @staticmethod
     def compose(*chutes):

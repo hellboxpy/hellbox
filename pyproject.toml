@@ -10,7 +10,7 @@ readme = "README.rst"
 license = {text = "MIT"}
 authors = [{name = "Jack Jennings", email = "jack@standard-library.com"}]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["ruff>=0,<1"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Development Status :: 3 - Alpha",

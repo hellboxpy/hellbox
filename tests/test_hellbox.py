@@ -1,3 +1,7 @@
+import subprocess
+from types import SimpleNamespace
+from unittest.mock import patch
+
 from tests.mock import Mock
 
 from hellbox import Hellbox, Chute
@@ -147,3 +151,9 @@ class TestHellbox:
 
     def test_usage_without_tasks(self):
         assert Hellbox.usage() == "No tasks have been defined in Hellfile.py"
+
+    def test_format(self):
+        with patch("subprocess.run") as mock_run:
+            mock_run.return_value = SimpleNamespace(returncode=0)
+            Hellbox.format()
+            mock_run.assert_called_once_with(["ruff", "format", "."])
