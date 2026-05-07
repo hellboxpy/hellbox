@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import contextlib
+import io
 import os
 import shutil
 import tempfile
@@ -11,6 +13,20 @@ from urllib.parse import unquote
 
 from hellbox.chutes.chute import Chute, _collect
 from hellbox.source_file import SourceFile
+
+
+def _run_suppressed(
+    chute: Chute, file: SourceFile
+) -> SourceFile | list[SourceFile] | None:
+    """Run chute.process(file) with stdout and stderr suppressed.
+
+    Hellbox.info() and friends write to sys.__stderr__ (the original stderr
+    before any contextlib redirections) so they remain visible to the user.
+    """
+    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(
+        io.StringIO()
+    ):
+        return chute.process(file)
 
 # Set by Runner before firing chains; read by ReadFiles.flush() in the main process.
 run_tmp_root: ContextVar[Path] = ContextVar("run_tmp_root")
@@ -57,7 +73,7 @@ class Runner:
 
     def _execute(self, chute: Chute, files: list[SourceFile]) -> list[SourceFile]:
         if files:
-            futures = [self._proc.submit(chute.process, f) for f in files]
+            futures = [self._proc.submit(_run_suppressed, chute, f) for f in files]
             outputs = [r for future in futures for r in _collect(future.result())]
         else:
             outputs = []

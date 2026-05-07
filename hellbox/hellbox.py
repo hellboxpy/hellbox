@@ -1,3 +1,4 @@
+import sys
 import traceback
 from enum import IntEnum
 
@@ -114,6 +115,8 @@ class Hellbox(object):
         if level < cls.logLevel:
             return
 
-        print("%s \u2502 %s" % (leader, message))
+        out = sys.__stderr__ or sys.stderr
+        out.write("%s \u2502 %s\n" % (leader, message))
         if trace:
-            print("\n".join(traceback.format_tb(trace)))
+            out.write("\n".join(traceback.format_tb(trace)) + "\n")
+        out.flush()
