@@ -94,6 +94,15 @@ class Hellbox(object):
         if result.returncode != 0:
             sys.exit(result.returncode)
 
+    @classmethod
+    def check(cls) -> None:
+        results = [
+            subprocess.run(["ruff", "format", "--check", "."]),
+            subprocess.run(["ty", "check"]),
+        ]
+        if any(r.returncode != 0 for r in results):
+            sys.exit(1)
+
     @staticmethod
     def compose(*chutes):
         def make_composite_chute():

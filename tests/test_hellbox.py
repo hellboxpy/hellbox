@@ -157,3 +157,11 @@ class TestHellbox:
             mock_run.return_value = SimpleNamespace(returncode=0)
             Hellbox.format()
             mock_run.assert_called_once_with(["ruff", "format", "."])
+
+    def test_check(self):
+        with patch("subprocess.run") as mock_run:
+            mock_run.return_value = SimpleNamespace(returncode=0)
+            Hellbox.check()
+            assert mock_run.call_count == 2
+            mock_run.assert_any_call(["ruff", "format", "--check", "."])
+            mock_run.assert_any_call(["ty", "check"])

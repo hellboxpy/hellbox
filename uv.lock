@@ -209,6 +209,7 @@ name = "hellbox"
 source = { editable = "." }
 dependencies = [
     { name = "ruff" },
+    { name = "ty" },
 ]
 
 [package.dev-dependencies]
@@ -223,7 +224,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ruff", specifier = ">=0,<1" }]
+requires-dist = [
+    { name = "ruff", specifier = ">=0,<1" },
+    { name = "ty", specifier = ">=0,<1" },
+]
 
 [package.metadata.requires-dev]
 dev = [
