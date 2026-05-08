@@ -1,0 +1,9 @@
+name: Publish
+on:
+  release:
+    types: [published]
+permissions:
+  id-token: write
+jobs:
+  publish:
+    uses: hellboxpy/gh-actions/.github/workflows/publish.yml@main
