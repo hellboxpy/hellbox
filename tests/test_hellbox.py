@@ -1,4 +1,3 @@
-import subprocess
 from types import SimpleNamespace
 from unittest.mock import patch
 

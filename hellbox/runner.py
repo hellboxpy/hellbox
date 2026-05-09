@@ -23,10 +23,12 @@ def _run_suppressed(
     Hellbox.info() and friends write to sys.__stderr__ (the original stderr
     before any contextlib redirections) so they remain visible to the user.
     """
-    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(
-        io.StringIO()
+    with (
+        contextlib.redirect_stdout(io.StringIO()),
+        contextlib.redirect_stderr(io.StringIO()),
     ):
         return chute.process(file)
+
 
 # Set by Runner before firing chains; read by ReadFiles.flush() in the main process.
 run_tmp_root: ContextVar[Path] = ContextVar("run_tmp_root")
