@@ -13,13 +13,13 @@ def Noop(x):
 
 
 @Chute.create
-def Add2(x):
-    return x + 2
+def StepA(x):
+    return SourceFile(x.original_path, Path(str(x.content_path) + ".a"), x.tmp_root)
 
 
 @Chute.create
-def Multiply2(x):
-    return x * 2
+def StepB(x):
+    return SourceFile(x.original_path, Path(str(x.content_path) + ".b"), x.tmp_root)
 
 
 class Record(Chute):
@@ -110,27 +110,29 @@ class TestChute(object):
 
     def test_composite_run(self):
         output = {}
-        CompositeChute(Add2(), Multiply2(), Record("value", output))([1])
-        assert output["value"] == [6]
+        file = SourceFile(Path("input"), Path("input"), Path("/tmp"))
+        CompositeChute(StepA(), StepB(), Record("value", output))([file])
+        assert output["value"][0].content_path == Path("input.a.b")
 
     def test_composite_nested_run(self):
         output = {}
+        file = SourceFile(Path("input"), Path("input"), Path("/tmp"))
         CompositeChute(
-            Add2(), CompositeChute(Add2(), Multiply2()), Record("value", output)
-        )([1])
-        assert output["value"] == [10]
+            StepA(), CompositeChute(StepA(), StepB()), Record("value", output)
+        )([file])
+        assert output["value"][0].content_path == Path("input.a.a.b")
 
     def test_composite_prepend(self):
-        foo = Add2()
-        bar = Multiply2()
+        foo = StepA()
+        bar = StepB()
         qux = Noop()
         composite = CompositeChute(foo, bar)
         qux >> composite
         assert composite.head in qux.callbacks
 
     def test_composite_apprend(self):
-        foo = Add2()
-        bar = Multiply2()
+        foo = StepA()
+        bar = StepB()
         baz = Noop()
         composite = CompositeChute(foo, bar)
         composite >> baz
