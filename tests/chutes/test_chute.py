@@ -58,7 +58,7 @@ class TestChute(object):
         f2 = Mock()
         chute = Chute.create(f)()
         chute.to(Chute.create(f2)())
-        chute([1])
+        chute([SourceFile(Path("input.ttf"), Path("input.ttf"), Path("/tmp"))])
         assert f.called
         assert f2.called
 
@@ -67,7 +67,7 @@ class TestChute(object):
         downstream = Mock()
         chute = Chute.create(f)()
         chute.to(Chute.create(downstream)())
-        chute([1])
+        chute([SourceFile(Path("input.ttf"), Path("input.ttf"), Path("/tmp"))])
         assert not downstream.called
 
     def test_call_flattens_list(self):
