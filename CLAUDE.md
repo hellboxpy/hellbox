@@ -28,9 +28,10 @@ prefix with `uv run`.
 
 ## Pre-commit hooks (lefthook)
 
-Hooks are defined in `lefthook.yml` and installed as a Python package via uv
-(not the system binary). On commit, lefthook automatically formats staged
-`.py`, `.md`, and `.sh` files and re-stages the results.
+Hooks are defined in `gh-actions/lefthook.yml` (referenced via lefthook remotes
+in the local `lefthook.yml`) and installed as a Python package via uv (not the
+system binary). On commit, lefthook automatically formats staged `.py`, `.md`,
+and `.sh` files and re-stages the results.
 
 If the hooks aren't firing, run `uv run lefthook install`.
 
