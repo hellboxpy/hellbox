@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from tests.mock import Mock
 
 from hellbox.chutes.chute import Chute
 from hellbox.chutes.composite import CompositeChute
+from hellbox.source_file import SourceFile
 
 
 @Chute.create
@@ -39,7 +42,8 @@ class TestChute(object):
     def test_process(self):
         f = Mock(returns="path/to/file.ufo")
         chute = Chute.create(f)()
-        assert chute.process("input") == "path/to/file.ufo"
+        file = SourceFile(Path("input.ttf"), Path("input.ttf"), Path("/tmp"))
+        assert chute.process(file) == "path/to/file.ufo"
 
     def test_callbacks(self):
         f = Mock()
