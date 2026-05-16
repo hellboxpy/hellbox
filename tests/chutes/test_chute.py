@@ -49,8 +49,9 @@ class TestChute(object):
         f = Mock()
         chute = Chute.create(f)()
         assert chute.callbacks == []
-        chute.callbacks.append("foo")
-        assert "foo" in chute.callbacks
+        other = Chute.create(Mock())()
+        chute.callbacks.append(other)
+        assert other in chute.callbacks
 
     def test_call(self):
         f = Mock(returns=2)
