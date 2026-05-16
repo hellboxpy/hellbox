@@ -1,5 +1,6 @@
 from hellbox import Chute
 from hellbox.task import Task
+from tests.mock import SentinelFlush
 
 
 class TestTask(object):
@@ -17,18 +18,12 @@ class TestTask(object):
         chute = task.write("ufo")
         assert isinstance(chute, Chute)
 
-    def test_run(self):
-        received = {}
-
-        class Recorder(Chute):
-            def flush(self, files):
-                received["files"] = files
-                return files
-
+    def test_run(self, tmp_path):
+        sentinel = tmp_path / "ran.txt"
         task = Task("foo")
-        task << Recorder()
+        task << SentinelFlush(sentinel)
         task.run()
-        assert received["files"] == []
+        assert sentinel.exists()
 
     def test_describe(self):
         task = Task("foo")

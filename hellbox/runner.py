@@ -15,19 +15,34 @@ from hellbox.chutes.chute import Chute, _collect
 from hellbox.source_file import SourceFile
 
 
-def _run_suppressed(
-    chute: Chute, file: SourceFile
-) -> SourceFile | list[SourceFile] | None:
-    """Run chute.process(file) with stdout and stderr suppressed.
+@contextlib.contextmanager
+def _worker_context(tmp_root: Path):
+    """Set up the environment for a worker process invocation.
 
-    Hellbox.info() and friends write to sys.__stderr__ (the original stderr
-    before any contextlib redirections) so they remain visible to the user.
+    Sets run_tmp_root and suppresses stdout/stderr. Hellbox.info() and friends
+    write to sys.__stderr__ (the original stderr before any redirections) so
+    they remain visible to the user.
     """
+    run_tmp_root.set(tmp_root)
     with (
         contextlib.redirect_stdout(io.StringIO()),
         contextlib.redirect_stderr(io.StringIO()),
     ):
+        yield
+
+
+def _run_process(
+    chute: Chute, file: SourceFile, tmp_root: Path
+) -> SourceFile | list[SourceFile] | None:
+    with _worker_context(tmp_root):
         return chute.process(file)
+
+
+def _run_flush(
+    chute: Chute, files: list[SourceFile], tmp_root: Path
+) -> list[SourceFile]:
+    with _worker_context(tmp_root):
+        return chute.flush(files)
 
 
 # Set by Runner before firing chains; read by ReadFiles.flush() in the main process.
@@ -75,11 +90,11 @@ class Runner:
 
     def _execute(self, chute: Chute, files: list[SourceFile]) -> list[SourceFile]:
         if files:
-            futures = [self._proc.submit(_run_suppressed, chute, f) for f in files]
+            futures = [self._proc.submit(_run_process, chute, f, self._tmp_root) for f in files]
             outputs = [r for future in futures for r in _collect(future.result())]
         else:
             outputs = []
-        return chute.flush(outputs)
+        return self._proc.submit(_run_flush, chute, outputs, self._tmp_root).result()
 
     def _commit(self) -> None:
         # Pre-pass: clear all declared clean dirs unconditionally.

@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from tests.mock import Mock
+from tests.mock import Mock, SentinelFlush
 
 from hellbox import Hellbox, Chute
 from hellbox.task import Task
@@ -99,40 +99,25 @@ class TestHellbox:
         assert composed is not composed2
         assert composed.head is not composed2.head
 
-    def test_run_task(self):
-        ran = {}
-
-        class Recorder(Chute):
-            def flush(self, files):
-                ran["called"] = True
-                return files
-
+    def test_run_task(self, tmp_path):
+        sentinel = tmp_path / "ran.txt"
         task = Task("foobaz")
-        task << Recorder()
+        task << SentinelFlush(sentinel)
         Hellbox.add_task(task)
         Hellbox.run_task("foobaz")
-        assert ran.get("called")
+        assert sentinel.exists()
 
-    def test_run_task_with_requirements(self):
-        ran = {}
-
-        class Recorder(Chute):
-            def __init__(self, key):
-                self.key = key
-
-            def flush(self, files):
-                ran[self.key] = True
-                return files
-
+    def test_run_task_with_requirements(self, tmp_path):
+        sentinel_req = tmp_path / "req.txt"
         task = Task("fooqaaz")
         task.requires("foobar")
-        task << Recorder("main")
+        task << SentinelFlush(tmp_path / "main.txt")
         task2 = Task("foobar")
-        task2 << Recorder("req")
+        task2 << SentinelFlush(sentinel_req)
         Hellbox.add_task(task)
         Hellbox.add_task(task2)
         Hellbox.run_task("fooqaaz")
-        assert ran.get("req")
+        assert sentinel_req.exists()
 
     def test_usage(self):
         task = Task("build")
