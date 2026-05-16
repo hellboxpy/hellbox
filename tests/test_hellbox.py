@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from tests.mock import Mock, SentinelFlush
+from tests.mock import SentinelFlush
 
 from hellbox import Hellbox, Chute
 from hellbox.task import Task
@@ -51,11 +51,9 @@ class TestHellbox:
 
     def test_find_missing_task(self):
         task = Hellbox.find_task_by_name("bazzio")
-        Hellbox._warn = Hellbox.warn
-        Hellbox.warn = Mock()
-        task.run()
-        assert Hellbox.warn.called
-        Hellbox.warn = Hellbox._warn
+        with patch.object(Hellbox, "warn") as mock_warn:
+            task.run()
+            assert mock_warn.called
 
     def test_with(self):
         with Hellbox("foo") as task:
