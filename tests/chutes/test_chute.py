@@ -71,12 +71,14 @@ class TestChute(object):
         assert not downstream.called
 
     def test_call_flattens_list(self):
-        f = Mock(returns=[10, 20])
+        file1 = SourceFile(Path("a.ttf"), Path("a.ttf"), Path("/tmp"))
+        file2 = SourceFile(Path("b.ttf"), Path("b.ttf"), Path("/tmp"))
+        f = Mock(returns=[file1, file2])
         received = {}
         chute = Chute.create(f)()
         chute.to(Record("out", received))
-        chute([1])
-        assert received["out"] == [10, 20]
+        chute([SourceFile(Path("input.ttf"), Path("input.ttf"), Path("/tmp"))])
+        assert received["out"] == [file1, file2]
 
     def test_to(self):
         chute = Chute.create(Mock())()
