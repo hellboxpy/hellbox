@@ -90,7 +90,9 @@ class Runner:
 
     def _execute(self, chute: Chute, files: list[SourceFile]) -> list[SourceFile]:
         if files:
-            futures = [self._proc.submit(_run_process, chute, f, self._tmp_root) for f in files]
+            futures = [
+                self._proc.submit(_run_process, chute, f, self._tmp_root) for f in files
+            ]
             outputs = [r for future in futures for r in _collect(future.result())]
         else:
             outputs = []
