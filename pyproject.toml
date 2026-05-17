@@ -27,6 +27,7 @@ urls.Homepage = "https://github.com/hellboxpy/hellbox"
 
 [dependency-groups]
 dev = [
+  "commitizen>=4.16.2",
   "lefthook>=2.1.6",
   "mdformat>=0.7.17",
   "pyproject-fmt>=2.21.2",
