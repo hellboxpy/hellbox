@@ -1,45 +1,42 @@
 [build-system]
-requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
+requires = [ "setuptools>=68" ]
 
 [project]
 name = "hellbox"
-dynamic = ["version"]
 description = "Build system for font development."
 readme = "README.rst"
-license = {text = "MIT"}
-authors = [{name = "Jack Jennings", email = "jack@standard-library.com"}]
+license = { text = "MIT" }
+authors = [ { name = "Jack Jennings", email = "jack@standard-library.com" } ]
 requires-python = ">=3.11"
-dependencies = ["ruff>=0,<1", "ty>=0,<1"]
 classifiers = [
-    "License :: OSI Approved :: MIT License",
-    "Development Status :: 3 - Alpha",
-    "Topic :: Software Development :: Build Tools",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
-    "Programming Language :: Python :: Implementation :: CPython",
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Software Development :: Build Tools",
 ]
-
-[project.urls]
-Homepage = "https://github.com/hellboxpy/hellbox"
-
-[tool.setuptools.dynamic]
-version = {attr = "hellbox.__version__.__version__"}
-
-[tool.setuptools.packages.find]
-exclude = ["tests*"]
+dynamic = [ "version" ]
+dependencies = [ "ruff>=0,<1", "ty>=0,<1" ]
+urls.Homepage = "https://github.com/hellboxpy/hellbox"
 
 [dependency-groups]
 dev = [
-    "lefthook>=2.1.6",
-    "mdformat>=0.7.17",
-    "pytest>=8,<10",
-    "ruff>=0,<1",
-    "ty>=0,<1",
-    "twine>=6,<7",
-    "wheel>=0,<1",
+  "lefthook>=2.1.6",
+  "mdformat>=0.7.17",
+  "pyproject-fmt>=2.21.2",
+  "pytest>=8,<10",
+  "ruff>=0,<1",
+  "twine>=6,<7",
+  "ty>=0,<1",
+  "wheel>=0,<1",
 ]
+
+[tool.setuptools]
+dynamic.version = { attr = "hellbox.__version__.__version__" }
+packages.find.exclude = [ "tests*" ]
