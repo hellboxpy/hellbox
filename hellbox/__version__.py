@@ -1,3 +1,6 @@
-VERSION = (0, 1, 3)
+from importlib.metadata import PackageNotFoundError, version
 
-__version__ = ".".join(map(str, VERSION))
+try:
+    __version__ = version("hellbox")
+except PackageNotFoundError:
+    __version__ = "unknown"
