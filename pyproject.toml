@@ -4,7 +4,7 @@ requires = [ "setuptools>=68" ]
 
 [project]
 name = "hellbox"
-version = "0.1.3"
+version = "0.1.0"
 description = "Build system for font development."
 readme = "README.rst"
 license = { text = "MIT" }
