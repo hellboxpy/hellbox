@@ -18,7 +18,7 @@
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "astro": "^6.3.3",
     "lucide-svelte": "^1.0.1",
-    "svelte": "^5.55.7",
+    "svelte": "^5.55.9",
     "typescript": "^6.0.3"
   }
 }
