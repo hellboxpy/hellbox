@@ -33,7 +33,7 @@ dev = [
   "pyproject-fmt>=2.21.2",
   "pytest>=8,<10",
   "ruff>=0,<1",
-  "twine>=6,<7",
+  "twine>=6,<8",
   "ty>=0,<1",
   "wheel>=0,<1",
 ]
