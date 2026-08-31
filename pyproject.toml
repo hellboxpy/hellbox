@@ -22,7 +22,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Topic :: Software Development :: Build Tools",
 ]
-dependencies = [ "ruff>=0,<1", "ty>=0,<1" ]
+dependencies = [ "ruff>=0.16.5,<1", "ty>=0,<1" ]
 urls.Homepage = "https://github.com/hellboxpy/hellbox"
 
 [dependency-groups]
@@ -32,7 +32,7 @@ dev = [
   "mdformat>=0.7.17",
   "pyproject-fmt>=2.27.1",
   "pytest>=8,<10",
-  "ruff>=0,<1",
+  "ruff>=0.16.5,<1",
   "twine>=6,<8",
   "ty>=0,<1",
   "wheel>=0,<1",
